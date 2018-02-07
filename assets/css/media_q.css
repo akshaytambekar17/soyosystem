@@ -1,0 +1,11 @@
+@media screen and (max-width: 360px)
+{
+	.menu-bar
+	{
+		background-color:#444549;
+	}
+	.about-layer-part1
+	{
+		margin-left:0%;
+	}
+}

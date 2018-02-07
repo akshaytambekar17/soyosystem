@@ -1,0 +1,57 @@
+.footer {
+ margin-top:10%;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
+.logout
+{
+	margin-top:100%;
+}
+.dashboard
+{
+	padding:5%;
+}
+.edit-profile input[type=text]
+{
+	border-top:none;
+	border-right:none;
+	border-left:none;
+	border-radius:0px;
+}
+.edit-profile input[type=email]
+{
+	border-top:none;
+	border-right:none;
+	border-left:none;
+	border-radius:0px;
+}
+.form_part
+{
+	padding-top:12%;
+}
+@media only screen and (max-width: 400px)
+{
+	.form_part
+	{
+		display:none;
+	}
+}
+.edit-field
+{
+	padding:5%;
+}
+.edit-field input[type=text]
+{
+	border-top:none;
+	border-right:none;
+	border-left:none;
+	border-radius:0px;
+}
+.edit-field input[type=email]
+{
+	border-top:none;
+	border-right:none;
+	border-left:none;
+	border-radius:0px;
+}
