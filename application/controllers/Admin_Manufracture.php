@@ -11,40 +11,35 @@ class Admin_Manufracture extends CI_Controller
 		$this->load->helper('form');
 		$this->load->library('session');
 		$this->load->helper('date');
+	 	$this->load->helper(array('form', 'url'));
 	}
 
 	public function index()
 	{
   		$data['main_content'] = 'admin/admin_dashboard';
-        $this->load->view('includes/template',$data);
+  		$this->load->view('includes/template',$data);
 	}
 	public function profile()
 	{
-		if(isset($_POST['select_user']))
-		{
+		if(isset($_POST['select_user'])){
 			$uid=$this->input->post('uid');
 			$utype=$this->input->post('utype');
-		}
-		else
-		{
+		}else{
+
 			$uid=$this->uri->segment(3);
 		}
+
 		$data['user_details']=$this->Home_model->profile_details($uid);
-		if($this->session->userdata('user_id') == $uid)
-		{
+		if($this->session->userdata('user_id') == $uid){
 			$data['main_content']='profile';
-		}
-		else
-		{
-			if($utype == 2)
-			{
+		}else{
+			if($utype == 2){
 				$data['main_content']='admin/edit_distributer';
-			}
-			else
-			{
+			}else{
 				$data['main_content']='admin/edit_user';
 			}
 		}
+
 		$this->load->view('includes/header',$data);
 	}
 	public function add_distributer_view()
@@ -66,27 +61,20 @@ class Admin_Manufracture extends CI_Controller
 	{
 		$uid=$this->input->post('uid');
 		$utype=$this->input->post('utype');
+
 		$update_result=$this->Home_model->update();
-		if($update_result)
-		{
+		if($update_result){
 			$this->session->set_flashdata('update_success','Information Updated Successfully');
-		}
-		else
-		{
+		}else{
 			$this->session->set_flashdata('update_success','Information Not Updated');
 		}
-		if($this->session->userdata('user_id') == $uid)
-		{
-			redirect('Admin_Manufracture/profile');
+		if($this->session->userdata('user_id') == $uid){
+			redirect("Admin_Manufracture/profile/".$this->session->userdata('user_id'));
 		}
-		else
-		{
-			if($utype == 2)
-			{
+		else{
+			if($utype == 2){
 				redirect('Admin_Manufracture/edit_distributer_view');
-			}
-			else
-			{
+			}else{
 				redirect('Admin_Manufracture/edit_user_view');
 			}
 			

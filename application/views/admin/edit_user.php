@@ -19,12 +19,12 @@
 											<div class="profile-picture profile-picture-lg bg-gradient bg-primary mb-4">
 												<img src="assets/img/profile-pic.jpg" width="144" height="144">
 											</div>
-											<a class="btn btn-primary btn-block btn-gradient" href="#">
+											<a class="btn btn-primary btn-block btn-gradient" href="javascript:void(0)">
 												<i class="batch-icon batch-icon-user-alt-add-2"></i>
 												Change Profile
 											</a>
 										</div>
-										<div class="col-sm-6">
+										<!-- <div class="col-sm-6">
 											<h5 class="my-0">Followers</h5>
 											<div class="h3 my-0">
 												<a href="#">682</a>
@@ -35,7 +35,7 @@
 											<div class="h3 my-0">
 												<a href="#">341</a>
 											</div>
-										</div>
+										</div> -->
 									</div>
 									<hr />
 									<h5>
@@ -138,7 +138,11 @@
 												echo form_input(['type'=>'text','name'=>'city','class'=>'form-control form-group','value'=>$row->city]);
 
 												echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$row->mobile]);
+											?>	
+												
+												<!-- <input type="file" name="image" class="form-control form-group"> -->
 
+											<?php 
 												echo form_input(['type'=>'hidden','name'=>'uid','value'=>$row->user_id]);
 												echo form_input(['type'=>'hidden','name'=>'utype','value'=>$row->type]);
 

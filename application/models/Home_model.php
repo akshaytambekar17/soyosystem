@@ -88,6 +88,26 @@ class Home_model extends CI_Model
 	public function update()
 	{
 		$uid=$this->input->post('uid');
+		
+        
+		if(!empty($_FILES['profile_image']['name'])){
+
+                
+                $config['upload_path'] = './assets/uploads/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $config['file_name'] = $_FILES['profile_image']['name'];
+                 
+                //Load upload library and initialize configuration
+                $this->load->library('upload',$config);
+                $this->upload->initialize($config);
+                $this->upload->do_upload('profile_image');	
+        				        
+                $uploadData = $this->upload->data();
+                $picture = $uploadData['file_name'];
+            	
+        }else{
+        	$picture=$this->input->post('profile_image_hidden');
+        }
 		$data_to_update=array('fname'=>$this->input->post('fname'),
 								'lname'=>$this->input->post('lname'),
 								'lname'=>$this->input->post('lname'),
@@ -95,7 +115,10 @@ class Home_model extends CI_Model
 								'state'=>$this->input->post('state'),
 								'dist'=>$this->input->post('dist'),
 								'city'=>$this->input->post('city'),
-								'mobile'=>$this->input->post('mobile'));
+								'mobile'=>$this->input->post('mobile'),
+								'profile_image'=>$picture
+							);
+						
 		$result=$this->db->where('user_id',$uid)->update('soyo_users',$data_to_update);
 		if($result)
 		{

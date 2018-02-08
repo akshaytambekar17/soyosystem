@@ -358,6 +358,18 @@
 								</ul>
 							</li>
 						</ul>
+						</a>
+						<?php if(!empty($this->session->userdata('user_id'))){
+								$this->load->model('Home_model');
+								$user_details=$this->Home_model->profile_details($this->session->userdata('user_id'));
+								$image=$user_details[0]->profile_image;
+								if(empty($image)){
+									$image="admin.png";	
+								}
+							}else{
+								$image="admin.png";
+							}
+						?>
 						<ul class="navbar-nav ml-5 navbar-profile">
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" id="navbar-dropdown-navbar-profile" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
@@ -370,11 +382,11 @@
 										?>
 									</div>
 									<div class="profile-picture bg-gradient bg-primary has-message float-right">
-										<img src="assets/img/profile-pic.jpg" width="44" height="44">
+										<img src="<?php echo base_url();?>assets/uploads/<?= $image?>" width="44" height="44">
 									</div>
-								</a>
+
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-navbar-profile">
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile"><b>Profile</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile/<?php echo $this->session->userdata('user_id');?>"><b>Profile</b></a></li>
 									<li><a class="dropdown-item" href="#"><b>Settings</b></a></li>
 									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout"><b>Logout</b></a></li>
 								</ul>
