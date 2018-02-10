@@ -59,7 +59,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row dashboard">
+	<!-- <div class="row dashboard">
 		<div class="col-sm-4 mb-5">
 			<div class="card card-sm bg-info">
 				<div class="card-body">
@@ -116,7 +116,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<div class="row dashboard">
 		<div class="col-md-12 col-lg-12">
 			<div class="card">

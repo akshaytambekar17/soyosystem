@@ -86,12 +86,20 @@ class Admin_model extends CI_Model
        	
         return $insert_id;
     }
-    function add_device_paramter($data,$insert_id)
+    function add_device_paramter($data,$insert_id,$unique_id)
     {
     	foreach ($data as $key => $value) {
-    		$data_details=array('name'=>$value,
-    							 'device_id'=>$insert_id,
-    							);
+    		foreach ($unique_id as $key_u => $value_u) {
+    			if($key==$key_u){
+		    		$data_details=array('name'=>$value,
+	    								'unique_id'=>$value_u,
+		    							 'device_id'=>$insert_id,
+		    							);
+    				
+    			}
+    			# code...
+    		}
+
     		if($this->db->insert('soyo_device_paramters', $data_details)){
     			$insert=true;		
     		}else{
@@ -110,16 +118,24 @@ class Admin_model extends CI_Model
 	  	$update=true;
         return $update;
     }
-    function update_device_paramter($data,$device_id)
+    function update_device_paramter($data,$device_id,$unique_id)
     {
 
     	$this->db->where('device_id',$device_id);
     	$this->db->delete('soyo_device_paramters');
 
     	foreach ($data as $key => $value) {
-    		$data_details=array('name'=>$value,
-    							 'device_id'=>$device_id,
-    							);
+    		foreach ($unique_id as $key_u => $value_u) {
+    			if($key==$key_u){
+		    		$data_details=array('name'=>$value,
+	    								'unique_id'=>$value_u,
+		    							 'device_id'=>$device_id,
+		    							);
+    				
+    			}
+    			# code...
+    		}
+
     		if($this->db->insert('soyo_device_paramters', $data_details)){
     			$insert=true;		
     		}else{

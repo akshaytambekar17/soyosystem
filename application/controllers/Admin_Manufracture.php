@@ -199,7 +199,7 @@ class Admin_Manufracture extends CI_Controller
 
 			//echo "<pre>"; print_r($data_to_update); die;			
 			$insert_id=$this->Admin_model->add_device($data_to_update);
-			$result=$this->Admin_model->add_device_paramter($this->input->post('device_parameter'),$insert_id);
+			$result=$this->Admin_model->add_device_paramter($this->input->post('device_parameter'),$insert_id,$this->input->post('unique_id'));
 			if($result){
 				$this ->session-> set_flashdata('Message','Device Added Successfully'); 
 				redirect('Admin_Manufracture/add_device','refresh');
@@ -230,7 +230,7 @@ class Admin_Manufracture extends CI_Controller
 
 			//echo "<pre>"; print_r($data_to_update); die;			
 			$udpate=$this->Admin_model->update_device($data_to_update);
-			$result=$this->Admin_model->update_device_paramter($this->input->post('device_parameter'),$id);
+			$result=$this->Admin_model->update_device_paramter($this->input->post('device_parameter'),$id,$this->input->post('unique_id'));
 			if($result){
 				$this ->session-> set_flashdata('Message','Device Updated Successfully'); 
 				$data['device_details']=$this->Admin_model->get_device_by_id($id);	

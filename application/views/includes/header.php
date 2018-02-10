@@ -251,7 +251,7 @@
 							</li>
 						</ul>
 						<ul class="navbar-nav navbar-notifications float-right">
-							<li class="nav-item dropdown">
+							<!-- <li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" id="navbar-notification-search" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<i class="batch-icon batch-icon-search"></i>
 								</a>
@@ -267,7 +267,7 @@
 										</form>
 									</li>
 								</ul>
-							</li>
+							</li> -->
 							<li class="nav-item dropdown">
 								<!-- <a class="nav-link dropdown-toggle no-waves-effect" id="navbar-notification-calendar" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<i class="batch-icon batch-icon-calendar"></i>
