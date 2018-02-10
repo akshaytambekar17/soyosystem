@@ -63,6 +63,11 @@ class Distributer_model extends CI_Model
 
         return $query->result();
 	}
+	public function get_distributers_by_id($id)
+	{
+		$query = $this->db->where('user_id',$id)->get('soyo_users');
+		return $query->result();
+	}
 	public function all_distributer()
 	{
 		$query = $this->db->where('type','2')->get('soyo_users');

@@ -74,15 +74,15 @@
 						</a>
 						<ul class="nav nav-pills flex-column">
 							<li class="nav-item">
-								<a class="nav-link" href="layout-left-menu-hidden.html">
+								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/sales_report">
 									<i class="batch-icon batch-icon-star"></i>
 								Sales Report</a><br>
 							</li>
 						</ul>
 					</li>
 					<?php
-					if($this->session->userdata('user_type') == 1)
-					{
+					
+					
 					?>
 					<li class="nav-item"><br>
 						<a class="nav-link nav-parent" href="starter-kit.html">
@@ -95,11 +95,11 @@
 									<i class="batch-icon batch-icon-user-alt-add"></i>
 								Add Distributer</a>
 							</li>
-							<li class="nav-item">
+							<!-- <li class="nav-item">
 								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view">
 									<i class="batch-icon batch-icon-compose-alt-3"></i>
 								Edit Distributer</a>
-							</li>
+							</li> -->
 							<li class="nav-item">
 								<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/all_distributer_view">
 									<i class="batch-icon batch-icon-menu-alt"></i>
@@ -107,7 +107,7 @@
 							</li>
 						</ul>
 					</li>
-					<?php }?>
+					<?php ?>
 					<?php
 					if($this->session->userdata('user_type') == 3)
 					{
@@ -138,7 +138,11 @@
 					<?php
 					}
 					else
-					{?>
+					{
+
+						if($this->session->userdata('user_type') == 4){
+					
+					?>
 					<li class="nav-item"><br>
 						<a class="nav-link nav-parent" href="#">
 							<i class="batch-icon batch-icon-user-alt-3"></i>
@@ -162,12 +166,31 @@
 							</li>
 						</ul>
 					</li>
-					<?php } ?>
+					<?php }else{ ?>
+						<li class="nav-item"><br>
+							<a class="nav-link nav-parent" href="#">
+								<i class="batch-icon batch-icon-user-alt-3"></i>
+								Devices
+							</a>
+							<ul class="nav nav-pills flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/add_device">
+										<i class="batch-icon batch-icon-user-alt-add"></i>
+									Add Device</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/device_list">
+										<i class="batch-icon batch-icon-menu"></i>
+									Device List</a>
+								</li>
+							</ul>
+						</li>
+					<?php } }?>
 					<?php
 					if($this->session->userdata('user_type') != 3)
 					{
 					?>
-					<li class="nav-item"><br>
+					<!-- <li class="nav-item"><br>
 						<a class="nav-link nav-parent" href="#">
 							<i class="batch-icon batch-icon-exclude"></i>
 							Projects
@@ -189,7 +212,7 @@
 								Project List</a>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 					<?php } ?>
 					<li class="nav-item"><br>
 						<a class="nav-link" href="<?php echo base_url();?>Home_Controller/view_notification">
@@ -197,12 +220,12 @@
 							Notification
 						</a>
 					</li>
-					<li class="nav-item"><br>
+					<!-- <li class="nav-item"><br>
 						<a class="nav-link" href="starter-kit.html">
 							<i class="batch-icon batch-icon-watch"></i>
 							AMC Status
 						</a><br>
-					</li>
+					</li> -->
 					<li class="nav-item logout">
 						<a class="nav-link" href="<?php echo base_url();?>Home_Controller/logout">
 							<i class="batch-icon batch-icon-outgoing-alt"></i>
@@ -223,8 +246,8 @@
 					<div class="navbar-collapse" id="navbar-header-content">
 						<ul class="navbar-nav navbar-language-translation mr-auto">
 							<li class="nav-item dropdown">
-									<i class="batch-icon batch-icon-book-alt-"></i>
-									English
+									<!-- <i class="batch-icon batch-icon-book-alt-"></i>
+									English -->
 							</li>
 						</ul>
 						<ul class="navbar-nav navbar-notifications float-right">
@@ -246,11 +269,11 @@
 								</ul>
 							</li>
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle no-waves-effect" id="navbar-notification-calendar" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+								<!-- <a class="nav-link dropdown-toggle no-waves-effect" id="navbar-notification-calendar" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<i class="batch-icon batch-icon-calendar"></i>
 									<span class="notification-number">6</span>
-								</a>
-								<ul class="dropdown-menu dropdown-menu-right dropdown-menu-md" aria-labelledby="navbar-notification-calendar">
+								</a> -->
+								<!-- <ul class="dropdown-menu dropdown-menu-right dropdown-menu-md" aria-labelledby="navbar-notification-calendar">
 									<li class="media">
 										<a href="task-list.html">
 											<i class="batch-icon batch-icon-calendar batch-icon-xl d-flex mr-3"></i>
@@ -299,7 +322,7 @@
 											</div>
 										</a>
 									</li>
-								</ul>
+								</ul> -->
 							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle no-waves-effect" id="navbar-notification-misc" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
@@ -384,12 +407,13 @@
 									<div class="profile-picture bg-gradient bg-primary has-message float-right">
 										<img src="<?php echo base_url();?>assets/uploads/<?= $image?>" width="44" height="44">
 									</div>
-
+								</a>	
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-navbar-profile">
 									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile/<?php echo $this->session->userdata('user_id');?>"><b>Profile</b></a></li>
 									<li><a class="dropdown-item" href="#"><b>Settings</b></a></li>
 									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout"><b>Logout</b></a></li>
 								</ul>
+
 							</li>
 						</ul>
 					</div>
@@ -440,6 +464,8 @@
 
 	<!-- QuillPro Scripts -->
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/scripts.js"></script>
+
+	
         
 </body>
 

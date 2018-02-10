@@ -19,19 +19,37 @@
 										<hr />
 										<ul class="list-unstyled mt-5">
 										<?php
-										foreach($dist as $row)
+										foreach($distributer as $row)
 										{
 										?>
 											<li class="media">
-												<div class="profile-picture bg-gradient bg-primary mb-4">
-													<img src="assets/img/profile-pic.jpg" width="44" height="44">
-												</div>
-												<div class="media-body">
-													<div class="media-title mt-0 mb-1">
-														<a href="#"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
+												<div class="col-md-6">
+													<div class="row">
+														<div class="col-md-3">	
+															<div class="profile-picture bg-gradient bg-primary mb-4">
+																<img src="<?php echo base_url();?>assets/uploads/<?php echo !empty($row->profile_image)?$row->profile_image:'admin.png' ?>" width="55" height="55">
+															</div>
+														</div>
+														<div class="col-md-9">	
+															<div class="media-body">
+																<div class="media-title mt-0 mb-1">
+																	<a href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view?id=<?php echo $row->user_id?>"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
+																</div>
+																<em><?= $row->date?></em> |
+																<em><?= $row->time?></em>
+															</div>
+														</div>
 													</div>
-													<em>3 Projects</em> |
-													<em>9 Users</em>
+												</div>
+												<div class="col-md-6">
+													<div class="row">
+														<div class="col-md-6">
+															<a href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view?id=<?php echo $row->user_id?>" class="btn btn-success waves-effect waves-light">Edit Profile</a>
+														</div>
+														<div class="col-md-6">
+															<a href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view?id=<?php echo $row->user_id?>" class="btn btn-secondary waves-effect waves-light">Open Dashboard</a>
+														</div>
+													</div>
 												</div>
 											</li>
 										<?php

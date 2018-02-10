@@ -169,5 +169,21 @@ class Home_model extends CI_Model
 			return FALSE;
 		}
 	}
+	public function get_distributers_list()
+	{
+		$this->db->select('*');
+		$this->db->from('soyo_users');
+		$this->db->where('type',2);
+		$query = $this->db->get();
+		return $query->result_array(); 
+	}
+	public function get_users_list()
+	{
+		$this->db->select('*');
+		$this->db->from('soyo_users');
+		$this->db->where('type',3);
+		$query = $this->db->get();
+		return $query->result_array(); 
+	}
 }
 ?>

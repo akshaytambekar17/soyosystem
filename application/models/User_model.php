@@ -39,5 +39,10 @@ class User_model extends CI_Model
             $result= $this->db->get();
             return $result->result_array();
         }
-}
+    public function get_user_by_id($id)
+    {
+        $query = $this->db->where('user_id',$id)->get('soyo_users');
+        return $query->result();
+    }
+}   
 ?>

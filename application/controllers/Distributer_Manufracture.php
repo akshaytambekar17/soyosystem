@@ -19,7 +19,7 @@ class Distributer_Manufracture extends CI_Controller
 	}
 	public function all_distributer_view()
 	{
-		$data['dist']=$this->Distributer_model->get_all_distributer();
+		$data['distributer']=$this->Distributer_model->get_all_distributer();
 		$data['main_content'] = 'admin/list_distributer';
         $this->load->view('includes/header',$data);
 	}
