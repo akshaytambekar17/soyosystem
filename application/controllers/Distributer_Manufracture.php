@@ -15,7 +15,7 @@ class Distributer_Manufracture extends CI_Controller
 	public function index()
 	{
   		$data['main_content'] = 'distributer/distributer_dashboard';
-        $this->load->view('includes/template',$data);
+        $this->load->view('includes/header_d',$data);
 	}
 	public function all_distributer_view()
 	{

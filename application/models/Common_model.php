@@ -29,7 +29,7 @@ class Common_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from('soyo_drive_manufacture');
-		$this->where('id',$id);
+		$this->db->where('id',$id);
 		$query = $this->db->get();
 		return $query->result(); 
 	}

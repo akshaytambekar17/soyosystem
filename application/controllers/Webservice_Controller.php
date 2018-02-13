@@ -22,11 +22,31 @@ class Webservice_Controller extends CI_Controller
 		$vfd_data=$this->Admin_model->get_device_parameters_by_id($get['vfd']);
 		$result=$this->Webservice_model->insert_request($vfd_data,$get);
 		if($result){
-			echo 0;
+			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?status=0";
 		}else{
-			echo 2;
+			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?status=2";
 		}
 
+	}
+	public function getImei()
+	{
+		$get=$this->input->get();
+        $user_data=$this->Webservice_model->get_user_by_imei($get['imei']);
+        if($user_data){
+			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?status=0&username=".$user_data[0]['username']."&password=".$user_data[0]['password'];
+		}else{
+			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?status=2";
+		}
+
+	}
+	public function getstatus(){
+		$get=$this->input->get();
+        $user_data=$this->Webservice_model->get_user_by_imei_status($get);
+        if($user_data){
+			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?status=".$user_data[0]['status']."&username=".$user_data[0]['username']."&password=".$user_data[0]['password'];
+		}else{
+			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?error=1";
+		}		
 	}
 	
 }

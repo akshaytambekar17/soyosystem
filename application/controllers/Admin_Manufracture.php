@@ -5,19 +5,22 @@ class Admin_Manufracture extends CI_Controller
 	{
 		parent::__construct();
 		//$this->load->view('includes/include');
-		$this->load->model('Home_model');
+		/*$this->load->model('Home_model');
 		$this->load->model('Admin_model');
 		$this->load->model('Common_model');
 		$this->load->model('Distributer_model');
+		$this->load->model('User_model');*/
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 		$this->load->library('session');
 		$this->load->helper('date');
 	 	$this->load->helper(array('form', 'url'));
+                
 	}
 
 	public function index()
 	{
+                
 		$data['distributers_list']=$this->Home_model->get_distributers_list();
 		$data['users_list']=$this->Home_model->get_users_list();
 		$data['device_list']=$this->Admin_model->get_device_list();
@@ -26,26 +29,31 @@ class Admin_Manufracture extends CI_Controller
 	}
 	public function profile()
 	{
-		if(isset($_POST['select_user'])){
-			$uid=$this->input->post('uid');
-			$utype=$this->input->post('utype');
+                
+        $get=$this->input->get();
+        
+		if(isset($get['id'])){
+			$uid=$get['id'];	
 		}else{
-
-			$uid=$this->uri->segment(3);
+			$uid=1;
 		}
-
 		$data['user_details']=$this->Home_model->profile_details($uid);
-		if($this->session->userdata('user_id') == $uid){
-			$data['main_content']='profile';
+		$data['state']=$this->Common_model->get_state();	
+		$data['main_content']='profile';
+		/*if($get['type'] == 1){
+        	$data['main_content']='profile';
+		}else if($get['type'] == 2){
+			redirect("User_Manufracture/edit_user?id=".$get['id']);
 		}else{
-			if($utype == 2){
-				$data['main_content']='admin/edit_distributer';
-			}else{
-				$data['main_content']='admin/edit_user';
-			}
+			redirect("Distributer_Manufracture/edit_distributer_view?id=".$get['id']);
+		}*/
+		if($get['type'] == 1){
+			$this->load->view('includes/header',$data);
+		}else if($get['type'] == 2){
+			$this->load->view('includes/header_d',$data);
+		}else{
+			$this->load->view('includes/header_u',$data);
 		}
-
-		$this->load->view('includes/header',$data);
 	}
 	public function add_distributer_view()
 	{
@@ -168,8 +176,8 @@ class Admin_Manufracture extends CI_Controller
 		}else{
 			$this->session->set_flashdata('update_success','Information Not Updated');
 		}
-		if($this->session->userdata('user_id') == $uid){
-			redirect("Admin_Manufracture/profile/".$this->session->userdata('user_id'));
+		if($session['user_id'] == $uid){
+			redirect("Admin_Manufracture/profile/".$session['user_id']);
 		}
 		else{
 			if($utype == 2){
@@ -184,7 +192,7 @@ class Admin_Manufracture extends CI_Controller
 	public function device_list(){
 		$data['device_list']=$this->Admin_model->get_device_list();
 		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
-		$data['main_content']='admin/device_list';
+		$data['main_content']='admin/device/device_list';
 		$this->load->view('includes/header',$data);		
 	}
 	public function add_device()
@@ -193,7 +201,7 @@ class Admin_Manufracture extends CI_Controller
 			//echo "<pre>"; print_r($this->input->post()); die;
 
 			$data_to_update=array(	'device_name'=>$this->input->post('device_name'),
-									'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
+									//'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
 									'created_at'=>date('Y-m-d h:i:sa')									
 								);
 
@@ -210,7 +218,7 @@ class Admin_Manufracture extends CI_Controller
 		}
 
 		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
-		$data['main_content']='admin/form_device';
+		$data['main_content']='admin/device/form_device';
 		$this->load->view('includes/header',$data);
 	}
 	public function edit_device()
@@ -224,7 +232,7 @@ class Admin_Manufracture extends CI_Controller
 			//echo "<pre>"; print_r($this->input->post()); die;
 			$id=$this->input->post('id');
 			$data_to_update=array(	'device_name'=>$this->input->post('device_name'),
-									'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
+									//'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
 									'id'=>$id,
 								);
 
@@ -243,7 +251,7 @@ class Admin_Manufracture extends CI_Controller
 		}
 
 		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
-		$data['main_content']='admin/form_device';
+		$data['main_content']='admin/device/form_device';
 		$this->load->view('includes/header',$data);
 	}
 	public function delete_device(){
@@ -254,6 +262,74 @@ class Admin_Manufracture extends CI_Controller
 			redirect('Admin_Manufracture/device_list','refresh');
 		}
 	}
+	public function vfd_list(){
+		$data['vfd_list']=$this->Admin_model->get_vfd_list();
+		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
+		$data['main_content']='admin/vfd/vfd_list';
+		$this->load->view('includes/header',$data);		
+	}
+	public function add_vfd()
+	{
+		if($this->input->post()){
+			//echo "<pre>"; print_r($this->input->post()); die;
+
+			$data_to_update=array(	'vfd_name'=>$this->input->post('vfd_name'),
+									'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
+									'created_at'=>date('Y-m-d h:i:sa')									
+								);
+
+			//echo "<pre>"; print_r($data_to_update); die;			
+			$result=$this->Admin_model->add_vfd($data_to_update);
+			if($result){
+				$this ->session-> set_flashdata('Message','VFD Added Successfully'); 
+				redirect('Admin_Manufracture/add_vfd','refresh');
+			}else{
+				$this ->session-> set_flashdata('Error','Something went wrong'); 
+			}
+
+		}
+
+		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
+		$data['main_content']='admin/vfd/form_vfd';
+		$this->load->view('includes/header',$data);
+	}
+	public function edit_vfd()
+	{
+		if($this->input->get('id')){
+			$id=$this->input->get('id');
+			$data['vfd_details']=$this->Admin_model->get_vfd_by_id($id);	
+
+		}
+		if($this->input->post()){
+			//echo "<pre>"; print_r($this->input->post()); die;
+			$id=$this->input->post('id');
+		
+			$data_to_update=array(	'vfd_name'=>$this->input->post('vfd_name'),
+									'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
+									'id'=>$id,
+								);
+			$result=$this->Admin_model->update_vfd($data_to_update);
+			if($result){
+				$this ->session-> set_flashdata('Message','VFD Updated Successfully'); 
+				redirect('Admin_Manufracture/edit_vfd?id='.$id,'refresh');
+			}else{
+				$this ->session-> set_flashdata('Error','Something went wrong'); 
+				$data['vfd_details']=$this->Admin_model->get_vfd_by_id($id);	
+			}
+
+		}
+		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
+		$data['main_content']='admin/vfd/form_vfd';
+		$this->load->view('includes/header',$data);
+	}
+	public function delete_vfd(){
+		if($this->input->get('id')){
+			$id=$this->input->get('id');
+			$result=$this->Admin_model->delete_vfd($id);	
+			$this ->session-> set_flashdata('Message','VFD Deleted Successfully'); 
+			redirect('Admin_Manufracture/vfd_list','refresh');
+		}
+	}
 
 	public function sales_report(){
 		$data['device_parameters_data']=$this->Admin_model->get_device_parameters_data();
@@ -261,6 +337,37 @@ class Admin_Manufracture extends CI_Controller
 		$data['main_content']='admin/sales_report';
 		$this->load->view('includes/header',$data);
 	}
+	public function change_password(){
+		if($session['user_id']){
+			if($this->input->post()){
+
+				$this->form_validation->set_rules('new_password', 'New Password', 'required');
+				$this->form_validation->set_rules('confrim_password', 'Confirm Password', 'required|matches[new_password]');
+				if($this->form_validation->run() == TRUE){
+					
+					$result=$this->Admin_model->change_password($this->input->post('new_password'),$session['user_id']);
+					$this ->session-> set_flashdata('Message','Password has successfully changed'); 
+					redirect('Admin_Manufracture/change_password','refresh');
+
+				}else{
+					$data['main_content']='admin/change_password';
+					$this->load->view('includes/header',$data);		
+				}
+			}	
+			//$data['device_parameters_data']=$this->Admin_model->get_device_parameters_data();
+			//echo "<pre>"; print_r($data['device_parameters_data']); die;			
+			$data['main_content']='admin/change_password';
+			$this->load->view('includes/header',$data);
+		}else{
+			redirect('Home_Controller/index','refresh');			
+		}
+	}
+	/*public function view_noti(){
+		$data['device_parameters_data']=$this->Admin_model->get_device_parameters_data();
+		//echo "<pre>"; print_r($data['device_parameters_data']); die;			
+		$data['main_content']='admin/sales_report';
+		$this->load->view('includes/header',$data);
+	}*/
 
 	public function get_details()
 	{

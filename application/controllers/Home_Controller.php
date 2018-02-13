@@ -4,7 +4,10 @@ class Home_Controller extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Home_model');
+		/*$this->load->model('Home_model');
+		$this->load->model('Admin_model');
+		$this->load->model('Common_model');
+		$this->load->model('User_model');*/
 		$this->load->library('form_validation');
 		$this->load->helper('form');
 		$this->load->library('session');
@@ -21,6 +24,35 @@ class Home_Controller extends CI_Controller
 	}
 	public function login()
 	{
+
+		if(!empty($_GET['id'])){
+			$user_data=$this->User_model->get_user_by_id($_GET['id']);
+			$session_data=array('user_id'=>$user_data[0]->user_id,
+                                            'user_fname'=>$user_data[0]->fname,
+                                            'user_lname'=>$user_data[0]->lname,
+                                            'user_email'=>$user_data[0]->email,
+                                            'user_name'=>$user_data[0]->username,
+                                            'user_type'=>$user_data[0]->type);
+			
+			if($user_data[0]->type == 1){
+				$this->session->sess_expiration = '300'; // 5 Minutes
+			   	$this->session->sess_expire_on_close = 'true';
+				$this->session->set_userdata('admin',$session_data);
+				redirect(base_url().'Admin_Manufracture');
+			}else if($user_data[0]->type == 2){
+				$this->session->sess_expiration = '60'; // 15 Minutes
+			   	$this->session->sess_expire_on_close = 'true';
+				$this->session->set_userdata('distributer',$session_data);
+                redirect(base_url().'Distributer_Manufracture');
+			}else {
+				$this->session->sess_expiration = '60'; //5 Minutes
+			  	$this->session->sess_expire_on_close = 'true';
+			  	$this->session->set_userdata('user',$session_data);
+			  	//echo "<pre>"; print_r($this->session->all_userdata());die;
+                redirect(base_url().'User_Manufracture');
+			}
+
+		}
 		$this->form_validation->set_rules('uname','Username','trim|required');
 		$this->form_validation->set_rules('password','Password','trim|required');
 		
@@ -45,23 +77,18 @@ class Home_Controller extends CI_Controller
 									'user_email'=>$rows->email,
 									'user_name'=>$rows->username,
 									'user_type'=>$rows->type);
-					if($rows->type == 1)
-					{
-						$this->session->set_userdata($session_data);
+					if($rows->type == 1){
+						$this->session->set_userdata('admin',$session_data);
+                                                //echo  "<pre>"; print_r($this->session->userdata('admin')); die;
 						redirect(base_url().'Admin_Manufracture');
-					}
-					else if($rows->type == 2)
-					{
-						$this->session->set_userdata($session_data);
-						//$data['main_content'] = 'distributer/distributer_dashboard';
-        				//$this->load->view('includes/template',$data);
-        				redirect(base_url().'Distributer_Manufracture');
-					}
-					else 
-					{
-						$this->session->set_userdata($session_data);
+					}else if($rows->type == 2){
+						$this->session->set_userdata('distributer',$session_data);
+						redirect(base_url().'Distributer_Manufracture');
+					}else {
+						$this->session->set_userdata('user',$session_data);
 						redirect(base_url().'User_Manufracture');
 					}
+
 				}
 			}
 			else
@@ -113,17 +140,37 @@ class Home_Controller extends CI_Controller
 	}
 	public function logout()
 	{
-		$this->Home_model->destroy_session();
+		$utype=$this->uri->segment(3);
+		if($utype == 1){
+			$this->session->unset_userdata('admin');
+		}else if($utype == 2){
+			$this->session->unset_userdata('distributer');
+		}else{
+			$this->session->unset_userdata('user');
+		}
+		//echo "<pre>"; print_r($this->session->all_userdata()); die;
+		$this->load->view('login');
+		//$this->Home_model->destroy_session();
 	}
 	public function view_notification()
 	{
 		$query=$this->Home_model->get_notification();
-		if($query)
-		{
+		if($query){
 			$data['note']=$query;
 			$data['main_content']='admin/notification';
 			$this->load->view('includes/header',$data);
 		}
+	}
+	public function list_notification()
+	{
+		$query=$this->Home_model->get_notifications();
+		if($query){
+			$this->Home_model->update_notifcations_by_view();
+		}
+		$data['notifications']=$query;
+		$data['main_content']='admin/list_notifications';
+		$this->load->view('includes/header',$data);
+		
 	}
 	public function get_notify()
 	{

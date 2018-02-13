@@ -7,11 +7,16 @@
     <script data-require="bootstrap@3.3.7" data-semver="3.3.7" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css" rel="stylesheet" type="text/css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-    
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
     <style>
         .checkbox-inline{
             margin: 6px;
         }
+
+      .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+      .toggle.ios .toggle-handle { border-radius: 20px; }
+
     </style>
     
 </head>
@@ -23,7 +28,7 @@
                 <div class="right-column">
                     <main class="main-content p-5" role="main">
                         <div class="row mb-4">
-                            <div class="col-md-12">
+                            <div class="col-md-12 alert-box">
                                 <div class="card">
                                     <div class="">
                                         <div class="profile-page-center">
@@ -46,7 +51,7 @@
                                                             <div class="col-md-9">  
                                                                 <div class="media-body">
                                                                     <div class="media-title mt-0 mb-1">
-                                                                        <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
+                                                                        <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
                                                                     </div>
                                                                     <em><?= $row->date?></em> |
                                                                     <em><?= $row->time?></em>
@@ -57,14 +62,21 @@
                                                     <div class="col-md-6">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>" class="btn btn-success btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
+                                                                <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-success btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
                                                             </div>
                                                             <div class="col-md-4">
-                                                                <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>" class="btn btn-sm btn-secondary waves-effect waves-light" target="_blank">Open Dashboard</a>
+                                                                <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-secondary waves-effect waves-light" target="_blank">Open Dashboard</a>
                                                             </div>
-                                                            <div class="col-md-4">
-                                                                <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>" class="btn btn-sm btn-danger waves-effect waves-light" target="_blank">Delete User</a>
-                                                            </div>
+<!--                                                            <div class="col-md-4">
+                                                                <a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Delete User</a>
+                                                            </div>-->
+                                                            <?php if($user_type==1){ ?>
+                                                                <div class="col-md-4">
+                                                                    <!--a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Pump Enable</a-->
+                                                                    <!--label>PUMP ON/OFF</label-->
+        <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> >
+                                                                </div>
+                                                            <?php } ?>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -208,6 +220,31 @@
                 })
                 
             });
+            function status(ths){
+                var id=$(ths).data('id');
+                if($(ths).is(':checked')){
+                    var status=1;
+                    var status_name="Enabled";
+                }else{
+                    var status=0;
+                    var status_name="Disabled";
+                }
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url(); ?>" + "/User_Manufracture/updateuserstatus",
+                    data: { 'status' : status ,'id':id},
+                    dataType: 'html',
+                    success: function(data){
+                        
+                        $('html, body').animate({ scrollTop: 0 }, 'slow');
+                        $('.alert-box').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> User Status is '+status_name+' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                        $('.alert').fadeIn().delay(10000).fadeOut(function () {
+                            $(this).remove();
+                        });
+                    }
+                });
+
+            }
         </script>
         
 </body>

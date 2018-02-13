@@ -6,6 +6,13 @@ class Distributer_model extends CI_Model
 		//$this->load->library('database');
 		$this->load->library('session');
 	 	$this->load->driver('cache');
+                if($this->session->userdata('admin')){
+                    $session=$this->session->userdata('admin');
+                }else if($this->session->userdata('distributor')){
+                    $session=$this->session->userdata('distributor');
+                }else{
+                    $session=$this->session->userdata('user');
+                }
 	}
 	public function register_project()
 	{
@@ -30,13 +37,13 @@ class Distributer_model extends CI_Model
 	}
 	public function profile_details()
 	{
-		$uid=$this->session->userdata('user_id');
+		$uid=$session['user_id'];
 		$user_data=$this->db->where('user_id',$uid)->get('soyo_users');
 		return $user_data->result();
 	}
 	public function update($data_to_update)
 	{
-		$result=$this->db->where('user_id',$this->session->userdata('user_id'))->update('soyo_users',$data_to_update);
+		$result=$this->db->where('user_id',$session['user_id'])->update('soyo_users',$data_to_update);
 		if($result)
 		{
 			return TRUE;

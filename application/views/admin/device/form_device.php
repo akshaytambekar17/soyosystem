@@ -65,10 +65,10 @@
 												$attribute=array('method'=>'post');
 												echo form_open_multipart('',$attribute);
 
-												echo form_input(['type'=>'text','name'=>'device_name','class'=>'form-control form-group','placeholder'=>'VFD name','value'=>!empty($device_details[0]->device_name)?$device_details[0]->device_name:set_value('device_name')]);
+												echo form_input(['type'=>'text','name'=>'device_name','class'=>'form-control form-group','placeholder'=>'Device name','value'=>!empty($device_details[0]->device_name)?$device_details[0]->device_name:set_value('device_name')]);
 		
 											?>	
-											<select id="state" name="drive_manufacture" class="form-control select2" placeholder="Select Drive Manufacture" data-live-search="true" >
+											<!-- <select id="state" name="drive_manufacture" class="form-control select2" placeholder="Select Drive Manufacture" data-live-search="true" >
 
 						                             <option disabled selected>Select Drive Manufacture</option>
 						                                <?php foreach ($device_manufacture as $value) { 
@@ -84,7 +84,7 @@
 					                                   			<?php echo $value['name']; ?>      
 						                                   </option>
 					                                   <?php } ?>  
-				                            </select>
+				                            </select> -->
 				                            <select id="category" name="category" class="form-control select2" placeholder="Select Category" data-live-search="true" >
 				                            		
 				                             	<option disabled selected>Select Category</option>

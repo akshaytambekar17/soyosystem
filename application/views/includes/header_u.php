@@ -45,13 +45,14 @@
 <body>
     
     <?php 
-            if($this->session->userdata('admin')){
-                $session=$this->session->userdata('admin');
-            }else if($this->session->userdata('distributor')){
-                $session=$this->session->userdata('distributor');
-            }else{
-                $session=$this->session->userdata('user');
-            }
+           // if($this->session->userdata('admin')){
+               // $admin=$this->session->userdata('admin');
+            //}else if($this->session->userdata('distributor')){
+               // $distributer=$this->session->userdata('distributor');
+            //}else{
+                $user_session=$this->session->userdata('user');
+
+            //}
     ?>
 <div class="container-fluid">
 		<div class="row">
@@ -66,196 +67,18 @@
 					<li>
 						<h4 class="nav-header">General</h4>
 					</li>
-					<li class="nav-item">
-                                            
-                                            
-					<?php if($session['user_type']==1){ ?>
-						<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture">
-					<?php }else if($session['user_type']==2){ ?>
-						<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture">
-					<?php }else{ ?>
+					<li class="nav-item">	
 						<a class="nav-link" href="<?php echo base_url();?>User_Manufracture">
-					<?php } ?>
-                            <i class="batch-icon batch-icon-browser-alt"></i> Dashboard <span class="sr-only">(current)</span>
-						</a>
-                        <br>
+				             <i class="batch-icon batch-icon-browser-alt"></i> Dashboard <span class="sr-only">(current)</span>
+						</a><br>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/profile?id=<?php echo $session['user_id'];?>&type=<?php echo $session['user_type'];?>">
+						<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/profile?id=<?php echo $user_session['user_id'];?>&type=<?php echo $user_session['user_type'];?>">
 							<i class="batch-icon batch-icon-polaroid"></i>
 							Profile
 						</a><br>
 					</li>
-					
 					<li class="nav-item">
-						<?php if($session['user_type'] == 1){ ?>
-						<a class="nav-link nav-parent" href="starter-kit.html">
-							<i class="batch-icon batch-icon-paragraph-alt-justify"></i>
-							Reports
-						</a>
-						<ul class="nav nav-pills flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/sales_report">
-									<i class="batch-icon batch-icon-star"></i>
-								Sales Report</a><br>
-							</li>
-						</ul>
-						<?php
-						} ?>
-					</li>
-					<?php
-						if($session['user_type'] == 1)
-						{
-					
-					?>
-					<li class="nav-item"><br>
-						<a class="nav-link nav-parent" href="starter-kit.html">
-							<i class="batch-icon batch-icon-users"></i>
-							Distributers
-						</a>
-						<ul class="nav nav-pills flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/add_distributer_view">
-									<i class="batch-icon batch-icon-user-alt-add"></i>
-								Add Distributer</a>
-							</li>
-							<!-- <li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view">
-									<i class="batch-icon batch-icon-compose-alt-3"></i>
-								Edit Distributer</a>
-							</li> -->
-							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/all_distributer_view">
-									<i class="batch-icon batch-icon-menu-alt"></i>
-								List</a>
-							</li>
-						</ul>
-					</li>
-					<?php
-					} ?>
-					<?php
-					if($session['user_type'] == 4)
-					{
-					?>
-					<li class="nav-item"><br>
-						<a class="nav-link nav-parent" href="#">
-							<i class="batch-icon batch-icon-user-alt-3"></i>
-							Systems
-						</a>
-						<ul class="nav nav-pills flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/add_project_view">
-									<i class="batch-icon batch-icon-add"></i>
-								Add System</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/edit_project_view">
-									<i class="batch-icon batch-icon-compose-alt-3"></i>
-								Moniter System</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="layout-left-menu-normal.html">
-									<i class="batch-icon batch-icon-menu"></i>
-								List</a>
-							</li>
-						</ul>
-					</li>
-					<?php
-						}
-					?>
-					
-					<li class="nav-item"><br>
-						<a class="nav-link nav-parent" href="#">
-							<i class="batch-icon batch-icon-user-alt-3"></i>
-							Users
-						</a>
-						<ul class="nav nav-pills flex-column">
-						<?php if($session['user_type'] == 4){ ?>
-							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>User_Manufracture/add_user?user_type=<?= $session['user_type']?>">
-									<i class="batch-icon batch-icon-user-alt-add"></i>
-									Add User
-								</a>
-							</li>
-						<?php } ?>
-							<!-- <li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/edit_user_view">
-									<i class="batch-icon batch-icon-compose-alt-3"></i>
-								Edit User</a>
-							</li> -->
-							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>User_Manufracture/all_user_view?user_type=<?= $session['user_type']?>">
-									<i class="batch-icon batch-icon-menu"></i>
-								User List</a>
-							</li>
-						</ul>
-					</li>
-					<?php if($session['user_type'] == 1){ ?>
-						<li class="nav-item"><br>
-							<a class="nav-link nav-parent" href="#">
-								<i class="batch-icon batch-icon-user-alt-3"></i>
-								Device 
-							</a>
-							<ul class="nav nav-pills flex-column">
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/add_device">
-										<i class="batch-icon batch-icon-user-alt-add"></i>
-									Add Device</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/device_list">
-										<i class="batch-icon batch-icon-menu"></i>
-									Device List</a>
-								</li>
-							</ul>
-						</li>
-					<?php  }?>
-					<?php if($session['user_type'] == 1){ ?>
-						<li class="nav-item"><br>
-							<a class="nav-link nav-parent" href="#">
-								<i class="batch-icon batch-icon-user-alt-3"></i>
-								Add VFD
-							</a>
-							<ul class="nav nav-pills flex-column">
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/add_vfd">
-										<i class="batch-icon batch-icon-user-alt-add"></i>
-									Add VFD</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/vfd_list">
-										<i class="batch-icon batch-icon-menu"></i>
-									VFD List</a>
-								</li>
-							</ul>
-						</li>
-					<?php  }?>
-					<?php //if($session['user_type'] != 3){ ?>
-					<!-- <li class="nav-item"><br>
-						<a class="nav-link nav-parent" href="#">
-							<i class="batch-icon batch-icon-exclude"></i>
-							Projects
-						</a>
-						<ul class="nav nav-pills flex-column">
-							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/add_project_view">
-									<i class="batch-icon batch-icon-add"></i>
-								New Project</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/edit_project_view">
-									<i class="batch-icon batch-icon-compose-alt-3"></i>
-								Edit Project</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" href="layout-left-menu-normal.html">
-									<i class="batch-icon batch-icon-menu"></i>
-								Project List</a>
-							</li>
-						</ul>
-					</li> -->
-					<?php //} ?>
-					<li class="nav-item"><br>
 						<a class="nav-link" href="<?php echo base_url();?>Home_Controller/list_notification">
 							<i class="batch-icon batch-icon-watch"></i>
 							Notification
@@ -295,60 +118,6 @@
 
 
 							<li class="nav-item dropdown">
-								<!-- <a class="nav-link dropdown-toggle no-waves-effect" id="navbar-notification-calendar" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
-									<i class="batch-icon batch-icon-calendar"></i>
-									<span class="notification-number">6</span>
-								</a> -->
-								<!-- <ul class="dropdown-menu dropdown-menu-right dropdown-menu-md" aria-labelledby="navbar-notification-calendar">
-									<li class="media">
-										<a href="task-list.html">
-											<i class="batch-icon batch-icon-calendar batch-icon-xl d-flex mr-3"></i>
-											<div class="media-body">
-												<h6 class="mt-0 mb-1 notification-heading">Meeting with Project Manager</h6>
-												<div class="notification-text">
-													Cras sit amet nibh libero
-												</div>
-												<span class="notification-time">Right now</span>
-											</div>
-										</a>
-									</li>
-									<li class="media">
-										<a href="task-list.html">
-											<i class="batch-icon batch-icon-calendar batch-icon-xl d-flex mr-3"></i>
-											<div class="media-body">
-												<h6 class="mt-0 mb-1 notification-heading">Sales Call</h6>
-												<div class="notification-text">
-													Nibh amet cras sit libero
-												</div>
-												<span class="notification-time">One hour from now</span>
-											</div>
-										</a>
-									</li>
-									<li class="media">
-										<a href="task-list.html">
-											<i class="batch-icon batch-icon-calendar batch-icon-xl d-flex mr-3"></i>
-											<div class="media-body">
-												<h6 class="mt-0 mb-1 notification-heading">Email CEO new expansion proposal</h6>
-												<div class="notification-text">
-													Cras sit amet nibh libero
-												</div>
-												<span class="notification-time">In 3 days</span>
-											</div>
-										</a>
-									</li>
-									<li class="media">
-										<a href="task-list.html">
-											<i class="batch-icon batch-icon-calendar batch-icon-xl d-flex mr-3"></i>
-											<div class="media-body">
-												<h6 class="mt-0 mb-1 notification-heading">Team building exercise</h6>
-												<div class="notification-text">
-													Cras sit amet nibh libero
-												</div>
-												<span class="notification-time">In one week</span>
-											</div>
-										</a>
-									</li>
-								</ul> -->
 							</li>
 							<?php 
 								$notifications=$this->Home_model->get_notifcations_by_view();	
@@ -425,10 +194,10 @@
 							</li>
 						</ul>
 						</a>
-						<?php if(!empty($session['user_id'])){
+						<?php if(!empty($user_session['user_id'])){
 							//echo $this->session->userdata('user_id');die;
 								$this->load->model('Home_model');
-								$user_details=$this->Home_model->profile_details($session['user_id']);
+								$user_details=$this->Home_model->profile_details($user_session['user_id']);
 								$image=$user_details[0]->profile_image;
 								if(empty($image)){
 									$image="admin.png";	
@@ -441,8 +210,10 @@
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" id="navbar-dropdown-navbar-profile" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<div class="profile-name">
-										<?php if($session){
-											echo $session['user_fname']." ".$session['user_lname'];
+										<?php if($user_session){
+											//$logged_in = $this->session->userdata('user');
+											echo $user_session['user_fname']." ".$user_session['user_lname'];
+											//echo $logged_in['user_type'];
                                                                                     }
                                                                                 ?>
 									</div>
@@ -451,9 +222,9 @@
 									</div>
 								</a>	
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-navbar-profile">
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile/<?php echo $session['user_id'];?>"><b>Profile</b></a></li>
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/change_password/<?php echo $session['user_id'];?>"><b>Settings Profile</b></a></li>
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout"><b>Logout</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile/<?php echo $user_session['user_id'];?>"><b>Profile</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/change_password/<?php echo $user_session['user_id'];?>"><b>Settings Profile</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout/<?php echo $user_session['user_type']; ?>"><b>Logout</b></a></li>
 								</ul>
 
 							</li>

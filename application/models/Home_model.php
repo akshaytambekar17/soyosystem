@@ -185,5 +185,27 @@ class Home_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array(); 
 	}
-}
+	public function get_notifications()
+	{
+		//$uid=$this->session->userdata('user_id');
+		$this->db->select('*');
+		$this->db->from('soyo_notification');
+		$query = $this->db->get();
+		return $query->result_array(); 
+	}
+	function get_notifcations_by_view()
+    {
+    	$this->db->select('*');
+		$this->db->from('soyo_notification');
+		$this->db->where('view',0);
+		$query = $this->db->get();
+		return $query->result_array(); 
+    }
+    function update_notifcations_by_view()
+    {
+    	$data=array('view'=>1);
+    	$uid=$this->session->userdata('user_id');
+    	$this->db->where('send_to',$uid);
+    	$this->db->update('soyo_notification',$data);
+}	}
 ?>

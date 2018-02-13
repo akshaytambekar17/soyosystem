@@ -1,6 +1,6 @@
 <html>
 <head>
-	
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>			
 </head>
 
 <body>
@@ -141,8 +141,28 @@
 											echo form_input(['type'=>'text','name'=>'fname','class'=>'form-control form-group','value'=>$row->fname]);
 											echo form_input(['type'=>'text','name'=>'lname','class'=>'form-control form-group','value'=>$row->lname]);
 											echo form_input(['type'=>'email','name'=>'email','class'=>'form-control form-group','value'=>$row->email]);
-											echo form_input(['type'=>'text','name'=>'state','class'=>'form-control form-group','value'=>$row->state]);
-											echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control form-group','value'=>$row->dist]);
+											?>
+											<select id="state" name="state" class="form-control select2" placeholder="Select State" data-live-search="true" >
+
+					                             <option disabled selected>Select State</option>
+					                                <?php foreach ($state as $value) { 
+
+				                                		 	$sState = ($row->state == $value['id'])?'selected="selected"':'';
+				                                	?>
+					                                   <option value="<?php echo $value['id'];?>" <?= $sState?> >
+				                                   			<?php echo $value['name']; ?>      
+					                                   </option>
+				                                   <?php } ?>  
+				                            </select>
+				                            <input id="district_hidden" type='hidden' name="district_hidden" value="<?php echo $row->dist ;?>" />
+				                            <select id="district" name="dist" class="form-control select2" placeholder="Select District" data-live-search="true" >
+
+						                         	<option disabled selected>Select District</option>
+						                          
+					                        </select> 
+											<!-- echo form_input(['type'=>'text','name'=>'state','class'=>'form-control form-group','value'=>$row->state]);
+											echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control form-group','value'=>$row->dist]); -->
+											<?php 
 											echo form_input(['type'=>'text','name'=>'city','class'=>'form-control form-group','value'=>$row->city]);
 											echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$row->mobile]);
 											echo form_input(['type'=>'file','name'=>'profile_image','class'=>'form-control form-group']);
@@ -163,7 +183,34 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		districtlist();
+	    $("#state").change(districtlist);
+      	$(".alert").delay(5000).slideUp(200, function() {
+          	$(this).alert('close');
+      	});
+	});
+	function districtlist(){
+		var state = $("#state").val();
+		var district_hidden = $("#district_hidden").val();
+		
+        $.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getdistrictlist",
+                  data: { 'state' : state ,'district_hidden':district_hidden},
+                  dataType: 'html',
+                  success: function(data){
+                    var obj = $.parseJSON(data);
+                    console.log(obj);
+                    jQuery("#district").html('<option disabled selected> Select District</option>');
+                    jQuery("#district").append(obj);
 
+                  }
+        });
+
+	}
+</script>
 <?php $this->load->view('includes/footer');?>
 </body>
 

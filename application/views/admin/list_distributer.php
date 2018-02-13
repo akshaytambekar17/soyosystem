@@ -13,7 +13,7 @@
 					<div class="row mb-4">
 						<div class="col-md-12">
 							<div class="card">
-								<div class="card-user-profile">
+								<div class="">
 									<div class="profile-page-center">
 										<h1 class="card-user-profile-name">All Distributers</h1>
 										<hr />
@@ -43,11 +43,14 @@
 												</div>
 												<div class="col-md-6">
 													<div class="row">
-														<div class="col-md-6">
-															<a href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view?id=<?php echo $row->user_id?>" class="btn btn-success waves-effect waves-light">Edit Profile</a>
+														<div class="col-md-4">
+															<a href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view?id=<?php echo $row->user_id?>" class="btn btn-success btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
 														</div>
-														<div class="col-md-6">
-															<a href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view?id=<?php echo $row->user_id?>" class="btn btn-secondary waves-effect waves-light">Open Dashboard</a>
+														<div class="col-md-4">
+															<a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>" class="btn btn-secondary btn-sm waves-effect waves-light" target="_blank">Open Dashboard</a>
+														</div>
+														<div class="col-md-4">
+															<a href="#" class="btn btn-danger btn-sm waves-effect waves-light" target="_blank">Delete Distributer</a>
 														</div>
 													</div>
 												</div>

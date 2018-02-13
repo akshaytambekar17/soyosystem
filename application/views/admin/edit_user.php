@@ -1,6 +1,6 @@
 <html>
 <head>
-	
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>			
 </head>
 
 <body>
@@ -10,6 +10,22 @@
 			<main class="main-content p-5" role="main">
 				<div class="row mb-4">
 					<div class="col-md-12">
+						<?php if($message = $this ->session->flashdata('Message')){?>
+					            <div class="col-md-12 ">
+					                <div class="alert alert-dismissible alert-success">
+					                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+					                    <?=$message ?>
+					                </div>
+					            </div>
+				        <?php }?> 
+				        <?php if($message = $this ->session->flashdata('Error')){?>
+				            <div class="col-md-12 ">
+				                <div class="alert alert-dismissible alert-danger">
+				                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+				                    <?=$message ?>
+				                </div>
+				            </div>
+				        <?php }?> 
 						<div class="card">
 							
 							<div class="card-user-profile">
@@ -17,89 +33,18 @@
 									<div class="row">
 										<div class="col-lg-12 mb-4">
 											<div class="profile-picture profile-picture-lg bg-gradient bg-primary mb-4">
-												<img src="assets/img/profile-pic.jpg" width="144" height="144">
+												<!-- <img src="assets/img/profile-pic.jpg" width="144" height="144"> 
+												-->
+												<img src="<?php echo base_url();?>assets/uploads/<?php echo !empty($user_details[0]->profile_image)?$user_details[0]->profile_image:'admin.png' ?>" width="144" height="144">
+												
 											</div>
 											<a class="btn btn-primary btn-block btn-gradient" href="javascript:void(0)">
 												<i class="batch-icon batch-icon-user-alt-add-2"></i>
 												Change Profile
 											</a>
 										</div>
-										<!-- <div class="col-sm-6">
-											<h5 class="my-0">Followers</h5>
-											<div class="h3 my-0">
-												<a href="#">682</a>
-											</div>
-										</div>
-										<div class="col-sm-6">
-											<h5 class="my-0">Following</h5>
-											<div class="h3 my-0">
-												<a href="#">341</a>
-											</div>
-										</div> -->
 									</div>
-									<hr />
-									<h5>
-										<i class="batch-icon batch-icon-users"></i>
-										Search User
-									</h5>
-									<div class="profile-page-block-outer clearfix">
-										<?php
-										echo form_open('Admin_Manufracture/search_user');
-										?>
-										<div class="input-group">
-											<input type="search" name="euser" class="form-control" placeholder="Search for...">
-											<input type="hidden" name="utype" class="form-control" value="3">
-											<span class="input-group-btn">
-												<button class="btn btn-primary btn-gradient waves-effect waves-light" name="val_search" type="submit"><span class="gradient">Search</span></button>
-											</span>
-										</div>
-										</form>
-										<a class="float-right mt-2" href="#">More</a>
-									</div>
-									<hr />
-									<h5>
-										<i class="batch-icon batch-icon-image"></i>
-										Search Result
-									</h5>
-									<p class="text-danger">
-										<?php
-										if($this->session->flashdata('no_result'))
-										{
-											echo $this->session->flashdata('no_result');
-										}
-										?>
-									</p>
-									<ul class="search-results-lis list-unstyled">
-									<?php
-									if(isset($_POST['val_search']))
-									{
-										foreach($user as $row)
-										{?>
-										<li class="media mt-4">
-											<div class="profile-picture bg-gradient bg-primary mb-4">
-												<img src="<?php echo base_url();?>assets/img/featured.png" width="44" height="44">
-											</div>
-											<div class="media-body">
-												<div class="media-title mt-0 mb-1">
-													<?php echo $row->fname." ".$row->lname; ?>
-												</div>
-												<em>City : <?php echo $row->city; ?></em> 
-												<?php
-												echo form_open('Admin_Manufracture/profile');
-													?>
-													<div class="input-group">
-														<input type="hidden" name="uid" value="<?php echo $row->user_id;?>">
-														<input type="hidden" name="utype" value="3">
-														<button class="btn btn-primary btn-gradient waves-effect waves-light" name="select_user" type="submit"><span class="gradient"><em>Edit</em></span></button>
-													</div>
-												</form>
-											</div>
-										</li>
-										<?php
-										}
-									}
-									?>
-									</ul>
+									
 								</div>
 								<div class="profile-page-center">
 									<h1 class="card-user-profile-name">
@@ -113,17 +58,13 @@
 									<hr />
 									<div class="comment-block edit-profile">
 										<div class="form-group">
-											<h3>Edit User Personal Details</h3>
+											<h3>Edit Personal Details</h3>
 											<?php
-											if($this->session->flashdata('update_success'))
-											{
-												echo "<p class='text-success'>".$this->session->flashdata('update_success')."</p>";
-											}
-											if(isset($_POST['select_user']))
-											{
-												foreach($user_details as $row)
-												{
-												echo form_open('Admin_Manufracture/update_profile');
+											
+												foreach($user_details as $row){
+
+												$attribute=array('method'=>'post');
+												echo form_open_multipart('User_Manufracture/edit_user?id='.$row->user_id,$attribute);
 
 												echo form_input(['type'=>'text','name'=>'fname','class'=>'form-control form-group','value'=>$row->fname]);
 
@@ -131,24 +72,44 @@
 
 												echo form_input(['type'=>'email','name'=>'email','class'=>'form-control form-group','value'=>$row->email]);
 
-												echo form_input(['type'=>'text','name'=>'state','class'=>'form-control form-group','value'=>$row->state]);
+												echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$row->mobile]);
+												/*echo form_input(['type'=>'text','name'=>'state','class'=>'form-control form-group','value'=>$row->state]);
 
 												echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control form-group','value'=>$row->dist]);
-
-												echo form_input(['type'=>'text','name'=>'city','class'=>'form-control form-group','value'=>$row->city]);
-
-												echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$row->mobile]);
+*/
 											?>	
+												<select id="state" name="state" class="form-control select2" placeholder="Select State" data-live-search="true" >
+
+						                             <option disabled selected>Select State</option>
+						                                <?php foreach ($state as $value) { 
+
+					                                		 	$sState = ($row->state == $value['id'])?'selected="selected"':'';
+					                                	?>
+						                                   <option value="<?php echo $value['id'];?>" <?= $sState?> >
+					                                   			<?php echo $value['name']; ?>      
+						                                   </option>
+					                                   <?php } ?>  
+					                            </select>
+					                            <input id="district_hidden" type='hidden' name="district_hidden" value="<?php echo $row->dist ;?>" />
+					                            <select id="district" name="dist" class="form-control select2" placeholder="Select District" data-live-search="true" >
+
+							                         	<option disabled selected>Select District</option>
+							                          
+						                        </select> 
 												
 												<!-- <input type="file" name="image" class="form-control form-group"> -->
 
 											<?php 
-												echo form_input(['type'=>'hidden','name'=>'uid','value'=>$row->user_id]);
-												echo form_input(['type'=>'hidden','name'=>'utype','value'=>$row->type]);
+												echo form_input(['type'=>'text','name'=>'city','class'=>'form-control form-group','value'=>$row->city]);
 
+												echo form_input(['type'=>'file','name'=>'profile_image','class'=>'form-control form-group']);
+
+												echo form_input(['type'=>'hidden','name'=>'user_id','value'=>$row->user_id]);
+												echo form_input(['type'=>'hidden','name'=>'utype','value'=>$row->type]);
+												echo form_input(['type'=>'hidden','name'=>'profile_image_hidden','value'=>$row->profile_image]);
 												echo form_submit(['name'=>'submit','class'=>'btn btn-primary','value'=>'Save Changes']);
-												}
 											}
+											
 											?>
 											</form>
 										</div>
@@ -162,7 +123,33 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		districtlist();
+	    $("#state").change(districtlist);
+      	$(".alert").delay(5000).slideUp(200, function() {
+          	$(this).alert('close');
+      	});
+	});
+	function districtlist(){
+		var state = $("#state").val();
+		var district_hidden = $("#district_hidden").val();
+		$.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getdistrictlist",
+                  data: { 'state' : state ,'district_hidden':district_hidden},
+                  dataType: 'html',
+                  success: function(data){
+                    var obj = $.parseJSON(data);
+                    console.log(obj);
+                    jQuery("#district").html('<option disabled selected> Select District</option>');
+                    jQuery("#district").append(obj);
 
+                  }
+        });
+
+	}
+</script>
 <?php $this->load->view('includes/footer');?>
 </body>
 </html>

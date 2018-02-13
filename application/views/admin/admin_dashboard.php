@@ -1,6 +1,35 @@
 <html>
 <head>
-	
+<script>
+$('#myCarousel').carousel({
+  interval: 40000
+});
+
+$('.carousel .item').each(function(){
+  var next = $(this).next();
+  if (!next.length) {
+    next = $(this).siblings(':first');
+  }
+  next.children(':first-child').clone().appendTo($(this));
+
+  if (next.next().length>0) {
+ 
+      next.next().children(':first-child').clone().appendTo($(this)).addClass('rightest');
+      
+  }
+  else {
+      $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+     
+  }
+});
+</script>
+<style type="text/css">
+	.device-panel img
+	{
+		height:70%;
+		width:33%;
+	}
+</style>
 </head>
 
 <body>
@@ -171,10 +200,27 @@
 			</div>
 		</div>
 	</div>
+	<div class="row dashboard">		
+		<div class="col-md-12 col-lg-12">
+			<div class="card card-md">
+				<div class="card-header">
+					Our Products
+				</div>
+				<div class="card-body device-panel">
+					<img class="logo-default" src="<?php echo base_url()?>assets/img/solar-water.jpg" alt="logo" class="col-md-4" />
+					<img class="logo-default" src="<?php echo base_url()?>assets/img/solar-off-grid-power-plant.jpg" alt="logo" class="col-md-4" />
+					<img class="logo-default" src="<?php echo base_url()?>assets/img/led-lights.jpg" alt="logo" class="col-md-4" />
+					<!--img class="logo-default" src="<?php echo base_url()?>assets/img/battery.jpg" alt="logo" class="col-md-4" />
+					<img class="logo-default" src="<?php echo base_url()?>assets/img/inverter.jpg" alt="logo" class="col-md-4" />
+					<img class="logo-default" src="<?php echo base_url()?>assets/img/ups.jpg" alt="logo" class="col-md-4" /-->					
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-
 <?php $this->load->view('includes/footer');?>
+
 </body>
 
 </html>
