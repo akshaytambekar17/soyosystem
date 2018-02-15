@@ -547,7 +547,7 @@ class Admin_Manufracture extends CI_Controller
     }
     public function imagesave(){
 		$data = $_POST['data'];
-		$file = md5(uniqid()) . '.png';
+		$file = md5(uniqid()) . '.jpg';
 		 
 		// remove "data:image/png;base64,"
 		$uri =  substr($data,strpos($data,",")+1);
@@ -564,7 +564,7 @@ class Admin_Manufracture extends CI_Controller
 		// force user to download the image
 		if (file_exists($file)) {
 			header('Content-Description: File Transfer');
-			header('Content-Type: image/png');
+			header('Content-Type: image/jpg');
 			header('Content-Disposition: attachment; filename='.basename($file));
 			header('Content-Transfer-Encoding: binary');
 			header('Expires: 0');
