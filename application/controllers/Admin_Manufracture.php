@@ -24,6 +24,7 @@ class Admin_Manufracture extends CI_Controller
 		$data['distributers_list']=$this->Home_model->get_distributers_list();
 		$data['users_list']=$this->Home_model->get_users_list();
 		$data['device_list']=$this->Admin_model->get_device_list();
+		$data['product']=$this->Home_model->get_products();
 		$data['main_content'] = 'admin/admin_dashboard';
   		$this->load->view('includes/template',$data);
 	}
@@ -526,6 +527,15 @@ class Admin_Manufracture extends CI_Controller
             exit;
         }
     }
+<<<<<<< HEAD
+    public function view_devices()
+    {
+    	$get=$this->input->get();
+    	$data['devices']=$this->Admin_model->get_devices_by_user($get['id']);
+    	//echo $get['id'];
+		$data['main_content']='admin/view_devices';
+		$this->load->view('includes/header',$data);
+=======
     public function getsalebargraph(){
     	$post=$this->input->post();
     	$user_details=$this->User_model->get_user_list_by_devicetype($post['id']);
@@ -580,6 +590,7 @@ class Admin_Manufracture extends CI_Controller
 		else {
 			echo "$file not found";
 		}
+>>>>>>> 49cfb528ff1fc1da9c4c580dd32c1b40294d88cc
     }
 }
 ?>

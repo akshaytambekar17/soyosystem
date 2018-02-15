@@ -55,3 +55,29 @@
 	border-left:none;
 	border-radius:0px;
 }
+.product_div
+{
+	text-align:center;
+}
+.product_div h4
+{
+	padding:15% 0%;
+	text-align:center;
+	color:#5A5A5A;
+}
+.product_div h4:hover
+{
+	color:#18BBD5;
+}
+.product_div img:hover
+{
+	opacity:0.7;
+}
+.productdiv
+{
+	text-align:center;
+}
+.imgdiv div
+{
+	margin-bottom:50%;
+}

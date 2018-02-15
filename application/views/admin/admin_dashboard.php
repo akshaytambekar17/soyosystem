@@ -316,11 +316,10 @@ $('.carousel .item').each(function(){
 		</div>
 	</div>
 	<div class="row dashboard">		
-		<div class="col-md-12 col-lg-12">
-			<div class="card card-md">
-				<div class="card-header">
-					Our Products
-					<div class="header-btn-block">
+		<div class="card col-lg-12">
+			<div class="card-header">
+			All Products
+				<div class="header-btn-block">
 						<span class="data-range dropdown">
 							<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-traffic-sources-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 								<i class="batch-icon batch-icon-add "></i>
@@ -330,11 +329,21 @@ $('.carousel .item').each(function(){
 							</div>
 						</span>
 					</div>
-				</div>
-				<div class="card-body device-panel">
-					<img class="logo-default" src="<?php echo base_url()?>assets/img/solar-water.jpg" alt="logo" class="col-md-4" />
-					<img class="logo-default" src="<?php echo base_url()?>assets/img/solar-off-grid-power-plant.jpg" alt="logo" class="col-md-4" />
-					<img class="logo-default" src="<?php echo base_url()?>assets/img/led-lights.jpg" alt="logo" class="col-md-4" />				
+			</div>
+			<div class="card-body product_div">
+				<div class="col-lg-12">
+					<div class="row">
+						<!--div class="col-md-4"></div-->
+							<?php
+							foreach($product as $row)
+							{
+								echo "<div class='col-md-4'>";
+								echo "<img src='".base_url()."assets/uploads/".$row->product_img."' height='200px' width='200px'>";
+								echo "<div class='container'><a href='".base_url()."Home_Controller/add_product'><h4 class=''>".$row->product_name."</h4></a></div>";
+								echo "</div>";
+							}
+							?>
+					</div>
 				</div>
 			</div>
 		</div>
