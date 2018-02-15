@@ -36,11 +36,14 @@
 												<img src="<?php echo base_url();?>assets/uploads/<?php echo !empty($user_details[0]->profile_image)?$user_details[0]->profile_image:'admin.png' ?>" width="144" height="144">
 												
 											</div>
-											<a class="btn btn-primary btn-block btn-gradient" href="#">
+											<!--a class="btn btn-primary btn-block btn-gradient" href="#">
 												<i class="batch-icon batch-icon-user-alt-add-2"></i>
 												Change Profile
-											</a>
-											<br><br>
+											</a-->
+											<?php
+											/*echo form_input(['type'=>'file','name'=>'profile_image','class'=>'btn btn-primary btn-block btn-gradient form-group','placeholder'=>'Change Profile']);
+											*/?>
+											<br>
 											<h4 class="text-center"><?= $user_details[0]->fname." ".$user_details[0]->lname?></h4>
 										</div>
 										

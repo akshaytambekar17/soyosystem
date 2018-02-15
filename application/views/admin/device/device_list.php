@@ -55,10 +55,10 @@
 												<div class="col-md-6">
 													<div class="row">
 														<div class="col-md-6">
-															<a href="<?php echo base_url();?>Admin_Manufracture/edit_device?id=<?php echo $row['id']?>" class="btn btn-success waves-effect waves-light">Edit Device Details</a>
+															<a href="<?php echo base_url();?>Admin_Manufracture/edit_device?id=<?php echo $row['id']?>" class="btn btn-primary btn-sm waves-effect waves-light">Edit Device</a>
 														</div>
 														<div class="col-md-6">
-															<a href="<?php echo base_url();?>Admin_Manufracture/delete_device?id=<?php echo $row['id']?>" class="btn btn-secondary waves-effect waves-light">Delete Device</a>
+															<a href="<?php echo base_url();?>Admin_Manufracture/delete_device?id=<?php echo $row['id']?>" class="btn btn-secondary btn-sm waves-effect waves-light">Delete Device</a>
 														</div>
 													</div>
 												</div>
@@ -70,13 +70,6 @@
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<div class="row mb-4">
-						<div class="col-md-12">
-							<footer>
-								Powered by - <a href="http://base5builder.com/?click_source=quillpro_footer_link" target="_blank" style="font-weight:300;color:#ffffff;background:#1d1d1d;padding:0 3px;">Base<span style="color:#ffa733;font-weight:bold">5</span>Builder</a>
-							</footer>
 						</div>
 					</div>
 				</main>

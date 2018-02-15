@@ -158,8 +158,23 @@ class Home_model extends CI_Model
 	}
 	public function get_notification()
 	{
-		$uid=$this->session->userdata('user_id');
-		$note_data=$this->db->where('send_to',$uid)->get('soyo_notification');
+		//$uid=$this->session->userdata('user_id');
+		if($this->session->userdata('admin'))
+    	{
+    		$session=$this->session->userdata('admin');
+    		$uid=$session['user_id'];
+    	}
+    	else if($this->session->userdata('distributer'))
+    	{
+    		$session=$this->session->userdata('distributer');
+    		$uid=$session['user_id'];
+    	}
+    	else
+    	{
+    		$session=$this->session->userdata('user');
+    		$uid=$session['user_id'];
+    	}
+		$note_data=$this->db->where('send_to',$uid)->order_by('id','desc')->get('soyo_notification');
 		if($note_data)
 		{
 			return $note_data->result();
@@ -190,6 +205,7 @@ class Home_model extends CI_Model
 		//$uid=$this->session->userdata('user_id');
 		$this->db->select('*');
 		$this->db->from('soyo_notification');
+		$this->db->order_by('id','desc');
 		$query = $this->db->get();
 		return $query->result_array(); 
 	}
@@ -198,14 +214,55 @@ class Home_model extends CI_Model
     	$this->db->select('*');
 		$this->db->from('soyo_notification');
 		$this->db->where('view',0);
+		$this->db->order_by('id','desc');
 		$query = $this->db->get();
 		return $query->result_array(); 
     }
     function update_notifcations_by_view()
     {
     	$data=array('view'=>1);
-    	$uid=$this->session->userdata('user_id');
+    	if($this->session->userdata('admin'))
+    	{
+    		$session=$this->session->userdata('admin');
+    		$uid=$session['user_id'];
+    	}
+    	else if($this->session->userdata('distributer'))
+    	{
+    		$session=$this->session->userdata('distributer');
+    		$uid=$session['user_id'];
+    	}
+    	else
+    	{
+    		$session=$this->session->userdata('user');
+    		$uid=$session['user_id'];
+    	}
     	$this->db->where('send_to',$uid);
-    	$this->db->update('soyo_notification',$data);
-}	}
+    	$update=$this->db->update('soyo_notification',$data);
+    	if($update)
+    	{
+    		return true;
+    	}
+    	return true;
+	}	
+	public function add_product($data)
+	{
+		$insert=$this->db->insert('soyo_product',$data);
+		if($insert)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public function get_products()
+	{
+		$this->db->select('*');
+		$this->db->from('soyo_product');
+		$this->db->order_by('p_id','desc');
+		$query = $this->db->get();
+		return $query->result_array(); 
+	}
+}
 ?>

@@ -19,6 +19,7 @@ class Admin_model extends CI_Model
 		$query=$this->db->where('type',$utype)->like('fname',$value)->get('soyo_users');
 		return $query->result();
 	}
+    
 	function add_distributer($data)
     {
     	$this->db->select('*');

@@ -39,7 +39,7 @@ $('.carousel .item').each(function(){
 				<div class="card-body p-4">
 					<!-- Accepts .invisible: Makes the items. Use this only when you want to have an animation called on it later -->
 					<div class="tile-left">
-						<i class="batch-icon batch-icon-user-alt batch-icon-xxl"></i>
+						<i class="batch-icon batch-icon-switch-on batch-icon-xxl"></i>
 					</div>
 					<div class="tile-right">
 						<div class="tile-number"><?= count($device_list)?></div>
@@ -52,7 +52,7 @@ $('.carousel .item').each(function(){
 			<div class="card card-tile card-xs bg-secondary bg-gradient text-center">
 				<div class="card-body p-4">
 					<div class="tile-left">
-						<i class="batch-icon batch-icon-tag-alt-2 batch-icon-xxl"></i>
+						<i class="batch-icon batch-icon-users batch-icon-xxl"></i>
 					</div>
 					<div class="tile-right">
 						<div class="tile-number"><?= count($distributers_list)?></div>
@@ -65,7 +65,7 @@ $('.carousel .item').each(function(){
 			<div class="card card-tile card-xs bg-primary bg-gradient text-center">
 				<div class="card-body p-4">
 					<div class="tile-left">
-						<i class="batch-icon batch-icon-list batch-icon-xxl"></i>
+						<i class="batch-icon batch-icon-grid batch-icon-xxl"></i>
 					</div>
 					<div class="tile-right">
 						<div class="tile-number">26</div>
@@ -78,7 +78,7 @@ $('.carousel .item').each(function(){
 			<div class="card card-tile card-xs bg-secondary bg-gradient text-center">
 				<div class="card-body p-4">
 					<div class="tile-left">
-						<i class="batch-icon batch-icon-list batch-icon-xxl"></i>
+						<i class="batch-icon batch-icon-nope batch-icon-xxl"></i>
 					</div>
 					<div class="tile-right">
 						<div class="tile-number">7</div>
@@ -148,7 +148,7 @@ $('.carousel .item').each(function(){
 	</div> -->
 	<div class="row dashboard">
 		<div class="col-md-12 col-lg-12">
-			<div class="card">
+			<div class="card card-md">
 				<div class="card-header">
 					Revenue Graph
 					<div class="header-btn-block">
@@ -168,7 +168,7 @@ $('.carousel .item').each(function(){
 				<div class="card-body">
 					<div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Sales ($)" data-chart-legend-2="Orders" data-chart-height="281">
 						<canvas id="sales-overview"></canvas>
-					</div>
+						</div>
 				</div>
 			</div>
 		</div>
@@ -205,14 +205,21 @@ $('.carousel .item').each(function(){
 			<div class="card card-md">
 				<div class="card-header">
 					Our Products
+					<div class="header-btn-block">
+						<span class="data-range dropdown">
+							<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-traffic-sources-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+								<i class="batch-icon batch-icon-add "></i>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-traffic-sources-header-button">
+								<a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/add_product">Add Product</a>
+							</div>
+						</span>
+					</div>
 				</div>
 				<div class="card-body device-panel">
 					<img class="logo-default" src="<?php echo base_url()?>assets/img/solar-water.jpg" alt="logo" class="col-md-4" />
 					<img class="logo-default" src="<?php echo base_url()?>assets/img/solar-off-grid-power-plant.jpg" alt="logo" class="col-md-4" />
-					<img class="logo-default" src="<?php echo base_url()?>assets/img/led-lights.jpg" alt="logo" class="col-md-4" />
-					<!--img class="logo-default" src="<?php echo base_url()?>assets/img/battery.jpg" alt="logo" class="col-md-4" />
-					<img class="logo-default" src="<?php echo base_url()?>assets/img/inverter.jpg" alt="logo" class="col-md-4" />
-					<img class="logo-default" src="<?php echo base_url()?>assets/img/ups.jpg" alt="logo" class="col-md-4" /-->					
+					<img class="logo-default" src="<?php echo base_url()?>assets/img/led-lights.jpg" alt="logo" class="col-md-4" />				
 				</div>
 			</div>
 		</div>

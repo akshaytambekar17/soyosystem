@@ -58,21 +58,24 @@
 								echo form_input(['type'=>'password','name'=>'password','class'=>'form-control','id'=>'exampleInputPassword','placeholder'=>'Password']);
 							?>
 						</div>
-						<div class="form-check">
+						<!--div class="form-check">
 							<label class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input">
 								<span class="custom-control-indicator"></span>
 								<span class="custom-control-description"> Keep Me Signed In</span>
 							</label>
-						</div>
+						</div-->
 						<button type="submit" class="btn btn-primary btn-gradient btn-block">
 							<i class="batch-icon batch-icon-key"></i>
 							Sign In
 						</button>
 						<hr>
 						<p class="text-center">
-							Don't Have An Account? <a href="<?php echo base_url();?>Home_Controller/registration">Sign Up here</a>|<a href="<?php echo base_url();?>Home_Controller/registration">Forget Password</a
+							Don't Have An Password? <a href="<?php echo base_url();?>Home_Controller/registration">Forget Password?</a>
 						</p>
+						<!--p class="text-center">
+							Don't Have An Account? <a href="<?php echo base_url();?>Home_Controller/registration">Sign Up here</a>|<a href="<?php echo base_url();?>Home_Controller/registration">Forget Password</a>
+						</p-->
 					</form>
 			</div>
 		</div>
@@ -83,14 +86,13 @@
 	<div class="container-fluid">
 		<div class="col-md-12">
 			<div class="row address">
-				<address class="col-md-4">
+				<address class="col-md-5">
 					 <p>For more details contact :</p>
 						<h6>Soyo Systems</h6>
-						<h6>Kishor Dhake (Proprietor)</h6>
+						<h6>Kishor Dhake (Proprietor contact: 08079451944)</h6>
 						<h6>Plot No. M-91, M. I. D. C. Area,</h6>
 						<h6>Near Godavari Engineering Collage</h6>
 						<h6>Jalgaon - 425003, Maharashtra, India</h6>
-						<h6>08079451944</h6>
 				</address>
 			</div>
 		</div>

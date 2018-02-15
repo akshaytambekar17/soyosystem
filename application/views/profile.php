@@ -20,10 +20,11 @@
 
 												<img src="<?php echo base_url();?>assets/uploads/<?php echo !empty($user_details[0]->profile_image)?$user_details[0]->profile_image:'admin.png' ?>" width="144" height="144">
 											</div>
-											<a class="btn btn-primary btn-block btn-gradient" href="#">
+											<!--a class="btn btn-primary btn-block btn-gradient" href="#">
 												<i class="batch-icon batch-icon-user-alt-add-2"></i>
 												Change Profile
-											</a>
+											</a-->
+											<h4 class="text-center"><?= $user_details[0]->fname." ".$user_details[0]->lname?></h4>
 										</div>
 										<!-- <div class="col-sm-6">
 											<h5 class="my-0">Followers</h5>

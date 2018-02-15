@@ -38,10 +38,12 @@
                                                                     <img src="<?php echo base_url();?>assets/uploads/<?php echo !empty($user_details[0]->profile_image)?$user_details[0]->profile_image:'admin.png' ?>" width="144" height="144">
 
                                                             </div>
-                                                            <a class="btn btn-primary btn-block btn-gradient" href="javascript:void(0)">
+                                                            <!--a class="btn btn-primary btn-block btn-gradient" href="javascript:void(0)">
                                                                     <i class="batch-icon batch-icon-user-alt-add-2"></i>
                                                                     Change Profile
-                                                            </a>
+                                                            </a-->
+                                                            <br>
+                                                            <h4 class="text-center"><?= $user_details[0]->fname." ".$user_details[0]->lname?></h4>
                                                     </div>
                                             </div>
 
@@ -109,9 +111,9 @@
                                                     echo form_input(['type'=>'text','name'=>'installer','class'=>'form-control form-group','placeholder'=>'Installer','value'=>!empty($user_site_details[0]->installer)?$user_site_details[0]->installer:'']);
                                                     echo form_input(['type'=>'text','name'=>'warranty','class'=>'form-control form-group','placeholder'=>'Warranty','value'=>!empty($user_site_details[0]->warranty)?$user_site_details[0]->warranty:'']);
                                                 ?>  
-                                                <select id="project" name="project" class="form-control select2" placeholder="Select Project" data-live-search="true" >
+                                                <select id="project" name="project" class="form-control select2" placeholder="Select Device Type" data-live-search="true" >
 
-                                                    <option disabled selected>Select Project</option>
+                                                    <option disabled selected>Select Device Type</option>
                                                             <?php foreach ($project as $value) { 
                                                                 $sProject = ($user_site_details[0]->project == $value['id'])?'selected="selected"':'';
                                                             ?>

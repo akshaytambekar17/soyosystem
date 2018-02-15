@@ -220,9 +220,9 @@ class User_Manufracture extends CI_Controller
         $data['user_details']=$this->User_model->get_user_by_id($get['id']);
         $data['user_site_details']=$this->User_model->get_user_site_by_id($get['id']);
         $data['state']=$this->Common_model->get_state();    
-        $data['device_manufacture']=$this->Common_model->get_device_manufacture();	
-        $data['project']=$this->Admin_model->get_device_list();	
-        $data['get_user_type']=$get['user_type'];	
+        $data['device_manufacture']=$this->Common_model->get_device_manufacture();  
+        $data['project']=$this->Admin_model->get_device_list(); 
+        $data['get_user_type']=$get['user_type'];   
         $data['main_content']='user/form_user';
         if($get['user_type']==1){
             $this->load->view('includes/header',$data);
@@ -234,24 +234,24 @@ class User_Manufracture extends CI_Controller
     }
 	public function all_user_view()
 	{
-            $get=$this->input->get();
-            if($get['user_type']==1){
-                $data['user']=$this->User_model->get_all_user();
-            }
-            if($get['user_type']==2){
-                $data['user']=$this->User_model->get_all_user_by_distributer($this->session->userdata('distributer')['user_id']);
-            }
-            $data['device_param']=$this->User_model->get_soyo_device_param();
-            $data['main_content'] = 'user/list_user';
-            $data['user_type']=$get['user_type'];
-            if($get['user_type']==1){
-                $this->load->view('includes/header',$data);
-            }else if($get['user_type']==2){
-                $this->load->view('includes/header_d',$data);
-            }else{
-                $this->load->view('includes/header_u',$data);
-            }
+        $get=$this->input->get();
+        if($get['user_type']==1){
+            $data['user']=$this->User_model->get_all_user();
         }
+        if($get['user_type']==2){
+            $data['user']=$this->User_model->get_all_user_by_distributer($this->session->userdata('distributer')['user_id']);
+        }
+        $data['device_param']=$this->User_model->get_soyo_device_param();
+        $data['main_content'] = 'user/list_user';
+        $data['user_type']=$get['user_type'];
+        if($get['user_type']==1){
+            $this->load->view('includes/header',$data);
+        }else if($get['user_type']==2){
+            $this->load->view('includes/header_d',$data);
+        }else{
+            $this->load->view('includes/header_u',$data);
+        }
+    }
         public function export() {
 
         $device_ime = $_GET['device'];

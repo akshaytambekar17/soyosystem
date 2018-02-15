@@ -24,161 +24,153 @@
 <body>
 
 	<div class="container-fluid">
-            <div class="row">
-                <div class="right-column">
-                    <main class="main-content p-5" role="main">
-                        <div class="row mb-4">
-                            <div class="col-md-12 alert-box">
-                                <div class="card">
-                                    <div class="">
-                                        <div class="profile-page-center">
-                                                <h1 class="card-user-profile-name">All Users</h1>
-                                            <hr />
-                                            <ul class="list-unstyled mt-5">
-                                            <?php
-                                            foreach($user as $row)
-                                            {
-                                            ?>
-
-                                                <li class="media">
-                                                    <div class="col-md-6">
-                                                        <div class="row">
-                                                            <div class="col-md-3">  
-                                                                <div class="profile-picture bg-gradient bg-primary mb-4">
-                                                                    <img src="<?php echo base_url();?>assets/uploads/<?php echo !empty($row->profile_image)?$row->profile_image:'admin.png' ?>" width="55" height="55">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-9">  
-                                                                <div class="media-body">
-                                                                    <div class="media-title mt-0 mb-1">
-                                                                        <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
-                                                                    </div>
-                                                                    <em><?= $row->date?></em> |
-                                                                    <em><?= $row->time?></em>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="row">
-                                                            <div class="col-md-4">
-                                                                <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-success btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-secondary waves-effect waves-light" target="_blank">Open Dashboard</a>
-                                                            </div>
-<!--                                                            <div class="col-md-4">
-                                                                <a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Delete User</a>
-                                                            </div>-->
-                                                            <?php if($user_type==1){ ?>
-                                                                <div class="col-md-4">
-                                                                    <!--a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Pump Enable</a-->
-                                                                    <!--label>PUMP ON/OFF</label-->
-        <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> >
-                                                                </div>
-                                                            <?php } ?>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-
-                                                    <!-- <li class="media">
+        <div class="row">
+            <div class="right-column">
+                <main class="main-content p-5" role="main">
+                    <div class="row mb-4">
+                        <div class="col-md-12 alert-box">
+                            <div class="card">
+                                <div class="">
+                                    <div class="profile-page-center">
+                                            <h1 class="card-user-profile-name">&nbsp;All Users</h1>
+                                        <hr />
+                                        <ul class="list-unstyled mt-5">
+                                        <?php
+                                        foreach($user as $row)
+                                        {
+                                        ?>
+                                            <li class="media">
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-3">  
                                                             <div class="profile-picture bg-gradient bg-primary mb-4">
-                                                                    <img src="assets/img/profile-pic.jpg" width="44" height="44">
+                                                                <img src="<?php echo base_url();?>assets/uploads/<?php echo !empty($row->profile_image)?$row->profile_image:'admin.png' ?>" width="55" height="55">
                                                             </div>
+                                                        </div>
+                                                        <div class="col-md-9">  
                                                             <div class="media-body">
-                                                                    <div class="media-title mt-0 mb-1">
-                                                                            <a href="#"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
-                                                                    </div>
-                                                                    <em>3 Systems</em> |
-                                                                    <em>9 Devices</em>
+                                                                <div class="media-title mt-0 mb-1">
+                                                                    <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
+                                                                </div>
+                                                                <em><?= $row->date?></em> |
+                                                                <em><?= $row->time?></em>
                                                             </div>
-                                                    </li> -->
-                                            <?php
-                                            }
-                                            ?>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="">
-                                        <div class="profile-page-center" style="min-height: 210px;">
-                                            <h3>Export device data</h3>
-                                            <br>
-                                            <div class="col-md-12">
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="exportsradio" value="single" >Single device data
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="exportsradio" value="all">All device data
-                                                </label>
-                                            </div>
-                                            <div class="col-md-5" id="device-div">
-                                                <br>
-                                                <select id="device" name="device" class="form-control"  data-live-search="true">
-                                                    <option selected="selected" disabled="disabled">Select Device</option>
-                                                    <?php foreach($device_param as $dp){ ?>
-                                                        <option value="<?= $dp['dvc_id']?>"><?= $dp['dev_imei']?></option>
-                                                    <?php } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-info btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-secondary waves-effect waves-light" target="_blank">Open Dashboard</a>
+                                                        </div>
+<!--                                                            <div class="col-md-4">
+                                                            <a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Delete User</a>
+                                                        </div>-->
+                                                        <?php if($user_type==1){ ?>
+                                                            <div class="col-md-4">
+                                                                <!--a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Pump Enable</a-->
+                                                                <!--label>PUMP ON/OFF</label-->
+                                                        <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> >
+                                                            </div>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </li>
 
-                                                </select>
-                                            </div>
-                                            <br> <br>
-                                            <div class="col-md-12">
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="itv">itv</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="itc">itc</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="itp">itp</label> 
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acc1">acc1</label> 
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acc2">acc2</label> 
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acc3">acc3</label> 
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv1">acv1</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv2">acv2</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv3">acv3</label> 
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv1">frq</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv2">enrg</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv3">lph</label> 
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="temp">temp</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="sig_str">sig_str</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="p_stat">p_stat</label> 
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="nlc">nlc</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="drc">drc</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="srt_ckt">srt_ckt</label> 
-                                            </div>
-                                            <div class="col-md-12">
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="x_heat">x_heat</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="o_load">o_load</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="dcb_err">dcb_err</label> 
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="temp_sen_abst">temp_sen_abst</label>
-                                                <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="emrg">emrg</label>
-                                            </div>
-                                            <br> <br>
-                                            <div class="col-md-12">
-                                                <button type="button" class="btn btn-success" id="export">Export</button>
-                                            </div>
+
+                                                <!-- <li class="media">
+                                                        <div class="profile-picture bg-gradient bg-primary mb-4">
+                                                                <img src="assets/img/profile-pic.jpg" width="44" height="44">
+                                                        </div>
+                                                        <div class="media-body">
+                                                                <div class="media-title mt-0 mb-1">
+                                                                        <a href="#"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
+                                                                </div>
+                                                                <em>3 Systems</em> |
+                                                                <em>9 Devices</em>
+                                                        </div>
+                                                </li> -->
+                                        <?php
+                                        }
+                                        ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="">
+                                    <div class="profile-page-center" style="min-height: 210px;">
+                                        <h3>Export device data</h3>
+                                        <br>
+                                        <div class="col-md-12">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="exportsradio" value="single" >Single device data
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="exportsradio" value="all">All device data
+                                            </label>
+                                        </div>
+                                        <div class="col-md-5" id="device-div">
+                                            <br>
+                                            <select id="device" name="device" class="form-control"  data-live-search="true">
+                                                <option selected="selected" disabled="disabled">Select Device</option>
+                                                <?php foreach($device_param as $dp){ ?>
+                                                    <option value="<?= $dp['dvc_id']?>"><?= $dp['dev_imei']?></option>
+                                                <?php } ?>
+
+                                            </select>
+                                        </div>
+                                        <br> <br>
+                                        <div class="col-md-12">
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="itv">itv</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="itc">itc</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="itp">itp</label> 
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acc1">acc1</label> 
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acc2">acc2</label> 
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acc3">acc3</label> 
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv1">acv1</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv2">acv2</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv3">acv3</label> 
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv1">frq</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv2">enrg</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv3">lph</label> 
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="temp">temp</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="sig_str">sig_str</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="p_stat">p_stat</label> 
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="nlc">nlc</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="drc">drc</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="srt_ckt">srt_ckt</label> 
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="x_heat">x_heat</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="o_load">o_load</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="dcb_err">dcb_err</label> 
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="temp_sen_abst">temp_sen_abst</label>
+                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="emrg">emrg</label>
+                                        </div>
+                                        <br> <br>
+                                        <div class="col-md-12">
+                                            <button type="button" class="btn btn-success" id="export">Export</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-4">
-                                <div class="col-md-12">
-                                        <footer>
-                                                Powered by - <a href="http://base5builder.com/?click_source=quillpro_footer_link" target="_blank" style="font-weight:300;color:#ffffff;background:#1d1d1d;padding:0 3px;">Base<span style="color:#ffa733;font-weight:bold">5</span>Builder</a>
-                                        </footer>
-                                </div>
-                        </div>
-                    </main>
-                </div>
+                    </div-->
+                </main>
             </div>
+        </div>
 	</div>
 
 
@@ -246,6 +238,6 @@
 
             }
         </script>
-        
+<?php $this->load->view('includes/footer');?>
 </body>
 </html>

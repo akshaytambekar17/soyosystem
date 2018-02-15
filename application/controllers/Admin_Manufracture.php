@@ -332,12 +332,39 @@ class Admin_Manufracture extends CI_Controller
 	}
 
 	public function sales_report(){
+
+		if($this->input->post()){
+			$post=$this->input->post();
+			$this->form_validation->set_rules('distributer', 'Select Distributer', 'required');
+			$this->form_validation->set_rules('user', 'Select User', 'required');
+			if($this->form_validation->run() == TRUE){
+				$data['user_details']=$this->User_model->get_all_user_with_user_site_information_by_user($post['user']);		
+				$data['user_id']=$post['user'];
+			}else{
+				$data['user_details']=$this->User_model->get_all_user_with_user_site_information();
+			}
+			
+		}else{
+			$data['user_details']=$this->User_model->get_all_user_with_user_site_information();	
+		}
 		$data['device_parameters_data']=$this->Admin_model->get_device_parameters_data();
-		//echo "<pre>"; print_r($data['device_parameters_data']); die;			
+		$data['distributer']=$this->Distributer_model->get_all_distributer();
 		$data['main_content']='admin/sales_report';
 		$this->load->view('includes/header',$data);
 	}
 	public function change_password(){
+		if($this->session->userdata('admin'))
+		{
+			$session=$this->session->userdata('admin');
+		}
+		else if($this->session->userdata('distributer'))
+		{
+			$session=$this->session->userdata('distributer');
+		}
+		else
+		{
+			$session=$this->session->userdata('user');
+		}
 		if($session['user_id']){
 			if($this->input->post()){
 
@@ -359,7 +386,8 @@ class Admin_Manufracture extends CI_Controller
 			$data['main_content']='admin/change_password';
 			$this->load->view('includes/header',$data);
 		}else{
-			redirect('Home_Controller/index','refresh');			
+			$data['main_content']='admin/change_password';
+			$this->load->view('includes/header',$data);			
 		}
 	}
 	/*public function view_noti(){
@@ -425,6 +453,78 @@ class Admin_Manufracture extends CI_Controller
 
      	 
      	echo json_encode($html);
+    }
+    public function get_user_by_distributer() {
+        
+        $distributer=$this->input->post('distributer'); 
+        
+        $user= $this ->User_model->get_all_user_by_distributer($distributer);
+     	  
+        $data=array();
+        if($user){
+        	foreach ($user as $value) { 
+	       		$data2 =' <option data-tokens="'.$value->fname." ".$value->lname.'"  value="'.$value->user_id.'" > '.$value->fname." ".$value->lname.'</option>';
+	            $data[]=$data2;
+	     	}	
+        }else{
+        	$data='<option>No user Found</option>';
+        }
+     	$html= $data;  
+
+     	 
+     	echo json_encode($html);
+    }
+    public function sale_reports_export() {
+    	if($_GET['user_id']){
+            $user_details = $this->User_model->get_all_user_with_user_site_information_by_user($_GET['user_id']);
+        }else{
+            $user_details = $this->User_model->get_all_user_with_user_site_information();
+        }
+        //echo "<pre>"; print_r($device_details[0]); die;
+        if (!empty($user_details)) {
+            if($_GET['user_id']){
+                $name=$user_details[0]->fname."_". $user_details[0]->lname;
+            }else{
+                $name="All_Users_";
+            }
+            $filename = $name."_reports_" . rand() . ".csv";
+            ob_clean();
+            header('Content-Type: text/csv; charset=utf-8');
+            header("Content-Disposition: attachment; filename=\"$filename\"");
+
+            $out = fopen("php://output", 'w');
+            $flag = false;
+            if (!$flag) {
+                
+                $header=array( 0=>'#',
+            			       1=>'Name',
+                			   2=>'Aadhar number',
+                			   3=>'Device Type',
+                			   4=>'Device Imei',
+                			   5=>'Installation Date',
+                		);
+                fputcsv($out, array_values($header), ',', '"');
+                $flag = true;
+            }
+            $footer=array();
+            $flag=false;
+            $i=1;
+            foreach ($user_details as $value) {
+                
+                $footer[0]=$i;
+                $footer[1]=$value->fname." ". $value->lname;
+                $footer[2]=$value->adhar;
+                $device_type=$this->Admin_model->get_device_by_id($value->project);
+				$footer[3]=$device_type[0]->device_name;
+				$footer[4]=$value->imei_no;
+                $footer[5]=$value->installation_date;
+                fputcsv($out, array_values($footer), ',', '"');
+                $footer=array();
+                $i++;
+            }
+            fclose($out);
+            exit;
+        }
     }
 }
 ?>

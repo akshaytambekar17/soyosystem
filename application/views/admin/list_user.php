@@ -57,7 +57,7 @@
                                                     <div class="col-md-6">
                                                         <div class="row">
                                                             <div class="col-md-4">
-                                                                <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>" class="btn btn-success btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
+                                                                <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>" class="btn btn-default btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
                                                             </div>
                                                             <div class="col-md-4">
                                                                 <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>" class="btn btn-sm btn-secondary waves-effect waves-light" target="_blank">Open Dashboard</a>

@@ -38,10 +38,10 @@
 												<img src="<?php echo base_url();?>assets/uploads/<?php echo !empty($user_details[0]->profile_image)?$user_details[0]->profile_image:'admin.png' ?>" width="144" height="144">
 												
 											</div>
-											<a class="btn btn-primary btn-block btn-gradient" href="javascript:void(0)">
+											<!--a class="btn btn-primary btn-block btn-gradient" href="javascript:void(0)">
 												<i class="batch-icon batch-icon-user-alt-add-2"></i>
 												Change Profile
-											</a>
+											</a-->
 										</div>
 									</div>
 									

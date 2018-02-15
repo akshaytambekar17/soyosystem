@@ -179,8 +179,55 @@ class Home_Controller extends CI_Controller
 		{
 			$data['note']=$query;
 			$data['main_content']='admin/notification';
-			$this->load->view('includes/heaere',$data);
+			$this->load->view('includes/header',$data);
 		}
+	}
+	public function add_product()
+	{
+		if(isset($_POST['product_submit']))
+		{
+			 if(!empty($_FILES['pimage']['name'])){
+
+                
+                $config['upload_path'] = './assets/uploads/';
+                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+                $config['file_name'] = $_FILES['pimage']['name'];
+                 
+                //Load upload library and initialize configuration
+                $this->load->library('upload',$config);
+                $this->upload->initialize($config);
+                $this->upload->do_upload('pimage');  
+                                
+                $uploadData = $this->upload->data();
+                $picture = $uploadData['file_name'];
+                
+            }else{
+                $picture=$this->input->post('profile_image_hidden');
+            }
+            $product_data=array('product_name'=>$this->input->post('pname'),
+        						'product_img'=>$picture,
+        						'added_by'=>$this->input->post('addedby'));
+            $query=$this->Home_model->add_product($product_data);
+            //if($query){
+				//$data['note']=$query;
+				$data['main_content']='admin/add_product';
+				$this->load->view('includes/header',$data);
+			//}
+			//else
+			//{
+
+			//}
+		}
+		$query=$this->Home_model->get_products();
+		if($query){
+			$data['product']=$query;
+			$data['main_content']='admin/add_product';
+			$this->load->view('includes/header',$data);
+		}
+	}
+	public function get_products()
+	{
+		//$this-
 	}
 }
 ?>
