@@ -70,6 +70,15 @@ class User_model extends CI_Model
         $query = $this->db->where('user_id',$id)->get('soyo_user_site_information');
         return $query->result();
     }
+    public function get_user_list_by_devicetype($id)
+    {
+        $this->db->select('*');
+        $this->db->from('soyo_users su');
+        $this->db->join('soyo_user_site_information susi','susi.user_id=su.user_id');
+        $this->db->where('susi.project',$id);
+        $query=$this->db->get();
+        return $query->result();
+    }
     function update_user($data)
     {
 

@@ -526,5 +526,60 @@ class Admin_Manufracture extends CI_Controller
             exit;
         }
     }
+    public function getsalebargraph(){
+    	$post=$this->input->post();
+    	$user_details=$this->User_model->get_user_list_by_devicetype($post['id']);
+    	$state=$this->Common_model->get_state();
+    	$result_data=array();
+    	foreach($state as $state_value){
+    		$i=0;
+    		foreach ($user_details as $key => $value) {
+    			if($state_value['id']==$value->state){
+    				$i++;
+    				$result_data[$state_value['name']]=$i;
+    			}else{
+    				$result_data[$state_value['name']]=$i;
+    			}
+    		}
+    	}
+    	echo json_encode($result_data);
+
+    }
+    public function imagesave(){
+		$data = $_POST['data'];
+		$file = md5(uniqid()) . '.png';
+		 
+		// remove "data:image/png;base64,"
+		$uri =  substr($data,strpos($data,",")+1);
+		 
+		// save to file
+		file_put_contents('./'.$file, base64_decode($uri));
+		 
+		// return the filename
+		echo $file; exit;
+    }
+    public function download(){
+		$file = trim($_GET['path']);
+ 
+		// force user to download the image
+		if (file_exists($file)) {
+			header('Content-Description: File Transfer');
+			header('Content-Type: image/png');
+			header('Content-Disposition: attachment; filename='.basename($file));
+			header('Content-Transfer-Encoding: binary');
+			header('Expires: 0');
+			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+			header('Pragma: public');
+			header('Content-Length: ' . filesize($file));
+			ob_clean();
+			flush();
+			readfile($file);
+			unlink($file);
+			exit;
+		}
+		else {
+			echo "$file not found";
+		}
+    }
 }
 ?>
