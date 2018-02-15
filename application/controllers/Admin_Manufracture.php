@@ -24,6 +24,7 @@ class Admin_Manufracture extends CI_Controller
 		$data['distributers_list']=$this->Home_model->get_distributers_list();
 		$data['users_list']=$this->Home_model->get_users_list();
 		$data['device_list']=$this->Admin_model->get_device_list();
+		$data['product']=$this->Home_model->get_products();
 		$data['main_content'] = 'admin/admin_dashboard';
   		$this->load->view('includes/template',$data);
 	}
@@ -525,6 +526,14 @@ class Admin_Manufracture extends CI_Controller
             fclose($out);
             exit;
         }
+    }
+    public function view_devices()
+    {
+    	$get=$this->input->get();
+    	$data['devices']=$this->Admin_model->get_devices_by_user($get['id']);
+    	//echo $get['id'];
+		$data['main_content']='admin/view_devices';
+		$this->load->view('includes/header',$data);
     }
 }
 ?>

@@ -139,9 +139,9 @@
 								</li>
 							</ul>
 						</li>
-					<?php if($session['user_type'] == 2)
-					{ ?>
-						<li class="nav-item"><br>
+					<?php //if($session['user_type'] == 2)
+					//{ ?>
+						<!--li class="nav-item"><br>
 							<a class="nav-link nav-parent" href="#">
 								<i class="batch-icon batch-icon-user-alt-3"></i>
 								Device
@@ -158,8 +158,8 @@
 									Device List</a>
 								</li>
 							</ul>
-						</li>
-					<?php  }?>
+						</li-->
+					<?php  //}?>
 					<li class="nav-item"><br>
 						<a class="nav-link" href="<?php echo base_url();?>Home_Controller/list_notification">
 							<i class="batch-icon batch-icon-watch"></i>
