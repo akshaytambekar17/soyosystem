@@ -137,7 +137,7 @@
 									Add Project</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">
+									<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/list_project_view">
 										<i class="batch-icon batch-icon-menu"></i>
 									Project List</a>
 								</li>

@@ -205,30 +205,47 @@ class Admin_Manufracture extends CI_Controller
 	{
 		$uid=$this->input->post('uid');
 		$utype=$this->input->post('type');
-
-		$update_result=$this->Home_model->update();
+		/*$update_result=$this->Home_model->update();
 		if($update_result){
 			$this->session->set_flashdata('update_success','Information Updated Successfully');
 		}else{
 			$this->session->set_flashdata('update_success','Information Not Updated');
 		}
 
-		redirect("Admin_Manufracture/profile?id=".$uid."&type=".$utype);
+		redirect("Admin_Manufracture/profile?id=".$uid."&type=".$utype);*/
 
-		redirect("Admin_Manufracture/profile/?id=".$uid."&type=".$utype);
-	
+		$this->form_validation->set_rules('fname', 'First Name', 'trim|required|alpha');
+		$this->form_validation->set_rules('lname', 'Last Name', 'trim|required|alpha');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required');
+		$this->form_validation->set_rules('mobile', 'Mobile Number', 'trim|required|numeric');
+		$this->form_validation->set_rules('state', 'State', 'required');
+		$this->form_validation->set_rules('dist', 'District', 'required');
+		$this->form_validation->set_rules('city', 'City', 'trim|required|alpha');
 
-		/*if($session['user_id'] == $uid){
-			redirect("Admin_Manufracture/profile/".$session['user_id']);
-		}
-		else{
-			if($utype == 2){
-				redirect('Admin_Manufracture/edit_distributer_view');
+		if($this->form_validation->run() == TRUE){
+
+			$update_result=$this->Home_model->update();
+			if($update_result){
+				$this->session->set_flashdata('update_success','Information Updated Successfully');
+				redirect("Admin_Manufracture/profile/?id=".$uid."&type=".$utype);
+
 			}else{
-				redirect('Admin_Manufracture/edit_user_view');
+				$this->session->set_flashdata('update_success','Information Not Updated');
 			}
-			
-		}*/		
+		}
+		
+		$data['user_details']=$this->Home_model->profile_details($uid);
+		$data['state']=$this->Common_model->get_state();	
+		$data['main_content']='profile';
+		
+		if($utype == 1){
+			$this->load->view('includes/header',$data);
+		}else if($utype == 2){
+			$this->load->view('includes/header_d',$data);
+		}else{
+			$this->load->view('includes/header_u',$data);
+		}
+		
 	}
 	public function device_list(){
 		$data['device_list']=$this->Admin_model->get_device_list();

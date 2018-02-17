@@ -49,13 +49,13 @@
     {
     	redirect(base_url());
     }
-            if($this->session->userdata('admin')){
-                $session=$this->session->userdata('admin');
-            }else if($this->session->userdata('distributor')){
-                $session=$this->session->userdata('distributor');
-            }else{
-                $session=$this->session->userdata('user');
-            }
+    if($this->session->userdata('admin')){
+        $session=$this->session->userdata('admin');
+    }else if($this->session->userdata('distributor')){
+        $session=$this->session->userdata('distributor');
+    }else{
+        $session=$this->session->userdata('user');
+    }
     ?>
 <div class="container-fluid">
 		<div class="row">
