@@ -706,6 +706,38 @@ class Admin_Manufracture extends CI_Controller
     	echo json_encode($result_data);
 
     }
+    public function getrevenuegraph(){
+    	$post=$this->input->post();
+    	$user_details=$this->User_model->get_user_list_by_devicetype($post['device_id']);
+    	
+    	$months = array('1' => 'Jan', '2'=>'Feb', '3'=>'Mar', '4'=>'Apr', '5'=>'May', '6'=>'Jun', '7'=>'Jul', '8'=>'Aug', '9'=>'Sep', '10'=>'Oct', '11'=>'Nov', '12'=>'Dec');
+    	$years = array('2018' => '2018', '2019'=>'2019', '2020'=>'2020', '2021'=>'2021', '2022'=>'2022');
+    	if($post['time_id']=='year'){
+    		$time=$years;
+    		$date_inital="Y";
+    	}else if($post['time_id']=='month'){
+    		$time=$months;
+    		$date_inital="m";
+    	}else{
+    		$time=$day;
+    		$date_inital="d";
+    	}
+
+    	$result_data=array();
+		foreach($time as $time_key=>$time_value){
+    		$i=0;
+    		foreach ($user_details as $key => $value) {
+    			if($time_key==date($date_inital,strtotime($value->installation_date))){
+    				$i++;
+    				$result_data[$time_value]=$i;
+    			}else{
+    				$result_data[$time_value]=$i;
+    			}
+    		}
+    	}
+    	echo json_encode($result_data);
+
+    }
     public function imagesave(){
 		$data = $_POST['data'];
 		$file = md5(uniqid()) . '.png';

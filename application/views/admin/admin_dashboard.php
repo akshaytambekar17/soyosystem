@@ -43,6 +43,7 @@ $('.carousel .item').each(function(){
 	}
 	function sale_bar_graph(ths){	
   		var id=$(ths).data('id');
+  		var name=$(ths).data('name');
 		$.ajax({
           	type: "POST",
           	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getsalebargraph",
@@ -65,7 +66,7 @@ $('.carousel .item').each(function(){
 			      	var options = {
 				        chart: {
 				          title: 'Sales Graph',
-				          subtitle: 'Show States and Count of Device'
+				          subtitle: 'Device name '+ name,
 				        },
 				        width: 1100,
 				        height: 300,
@@ -85,8 +86,65 @@ $('.carousel .item').each(function(){
           		
           	}
         });  		
-        
-  }
+    }
+    function revenue_line_graph(ths){
+    	var device_id=$(ths).data('id');
+  		var device_name=$(ths).data('name');
+    	var time_id=$('#revenue_report_time').find('.revenue_report_a.active').data('id');
+    	if(time_id==''){
+    		alert("Please select time period");
+    	}else{
+    		if(time_id=='year'){
+    			var time_name="Year";
+    		}else if(time_id="month"){
+    			var time_name="Month";	
+    		}else{
+    			var time_name="Day";	
+    		}
+
+    		$.ajax({
+	          	type: "POST",
+	          	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getrevenuegraph",
+	          	data: { 'device_id' : device_id,'device_name' : device_name,'time_id' : time_id },
+	          	dataType: 'json',
+	          	success: function(data1){
+	          		
+					google.charts.load("current", {packages:['corechart', 'line']});
+				    google.charts.setOnLoadCallback(drawChart);
+					function drawChart() {
+						var data = new google.visualization.DataTable();
+	  
+				      	data.addColumn('string', time_name);
+				      	data.addColumn('number', 'Values');
+			      	 	$.each(data1, function (index, value) {
+				      	 	data.addRow([index, parseInt(value)]);
+		                    	
+	             		});
+				      	
+				      	var options = {
+					        chart: {
+					          title: 'Revenue Graph',
+					          subtitle: 'Device name '+ device_name,
+					        },
+					        width: 1100,
+					        height: 300,
+					        colors: ['blue' ]
+
+
+				      	};
+				      	var chart = new google.charts.Line(document.getElementById('linechart_values'));
+	      				chart.draw(data, options);
+	      				
+			  		}
+	      		 	
+	          		
+	          	}
+	        });
+    	}
+
+
+		
+    }
   </script>
 <style type="text/css">
 	.device-panel img
@@ -238,7 +296,7 @@ $('.carousel .item').each(function(){
 													$active='';
 												}
 										?>
-											<a class="dropdown-item sales_bar_graph_class <?= $active?>" href="javascript:void(0)" id="<?= $device['id']?>_device" onclick="sale_bar_graph(this)" data-id="<?= $device['id']?>"><?= $device['device_name']?></a>
+											<a class="dropdown-item sales_bar_graph_class <?= $active?>" href="javascript:void(0)" id="<?= $device['id']?>_device" onclick="sale_bar_graph(this)" data-id="<?= $device['id']?>" data-name="<?= $device['device_name']?>"><?= $device['device_name']?></a>
 										<?php } ?>
 										
 									</div>
@@ -269,19 +327,34 @@ $('.carousel .item').each(function(){
 	<div class="row dashboard">
 		<div class="col-md-12 col-lg-12">
 			<div class="card card-md" style="height: 500px;">
+				<div class="card-header revenue_graph_div">
 				<div class="row" style="padding: 10px">
 						<div class="col-md-5">
 							<h2>Revenue Graph</h2> 
+						</div>
+						<div class="col-md-3">
+							<div class="">
+								<span class="data-range dropdown">
+									<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+										<i class="batch-icon batch-icon-calendar"></i>
+									</a>
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button" id="revenue_report_time">
+										<a class="dropdown-item revenue_report_a " href="javascript:void(0)" data-id="year">This Year</a>
+										<a class="dropdown-item revenue_report_a" href="javascript:void(0)" data-id="month">This Month</a>
+										<a class="dropdown-item revenue_report_a" href="javascript:void(0)" data-id="week">This Week</a>
+									</div>
+								</span>
+							</div>
 						</div>
 						<div class="col-md-4">
 							<?php if(!empty($device_list)){ ?>
 							<div class="header-btn-block" style="top: 0px !important;">
 								<span class="data-range dropdown">
 									<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
-										<i class="batch-icon batch-icon-calendar"></i>  Select Deivce Type
+										<i class="batch-icon batch-icon-calendar"></i>  Select Device Type
 									</a>
-									<input type="hidden" name="sales_graph_hidden" value="<?= $device_list[0]['id']?>" id="sales_graph_hidden">
-									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button" id="sales_report_id_div">
+									<input type="hidden" name="revenue_graph_hidden" value="<?= $device_list[0]['id']?>" id="revenue_graph_hidden">
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button" id="revenue_report_id_div">
 										<?php 
 											$i=1;
 											foreach($device_list as $device){ 
@@ -292,7 +365,7 @@ $('.carousel .item').each(function(){
 													$active='';
 												}
 										?>
-											<a class="dropdown-item sales_bar_graph_class <?= $active?>" href="javascript:void(0)" id="<?= $device['id']?>_device" onclick="sale_bar_graph(this)" data-id="<?= $device['id']?>"><?= $device['device_name']?></a>
+											<a class="dropdown-item revenue_line_graph_class <?= $active?>" href="javascript:void(0)" id="<?= $device['id']?>_device" onclick="revenue_line_graph(this)" data-id="<?= $device['id']?>" data-name="<?= $device['device_name']?>"><?= $device['device_name']?></a>
 										<?php } ?>
 										
 									</div>
@@ -303,21 +376,7 @@ $('.carousel .item').each(function(){
 								<p><b>No device is there</b></p>
 							<?php }?>
 						</div>
-						<div class="col-md-3">
-							<div class="">
-								<span class="data-range dropdown">
-									<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
-										<i class="batch-icon batch-icon-calendar"></i>
-									</a>
-									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button">
-										<a class="dropdown-item" href="today">Today</a>
-										<a class="dropdown-item" href="week">This Week</a>
-										<a class="dropdown-item" href="month">This Month</a>
-										<a class="dropdown-item active" href="year">This Year</a>
-									</div>
-								</span>
-							</div>
-						</div>
+						
 					</div>
 					<div class="row">
 						<div class="col-md-6">
@@ -326,11 +385,11 @@ $('.carousel .item').each(function(){
 						</div>
 					</div>
 				</div>
-				<div class="card-body " id="sales_graph_div">
+				<div class="card-body" id="revenue_graph_div">
 					<!-- <div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Sales ($)" data-chart-legend-2="Orders" data-chart-height="281">
 						<canvas id="sales-overview"></canvas>
 						</div> -->
-					<div id="columnchart_values" style="width: 1000px; height: 300px;"></div>
+					<div id="linechart_values" style="width: 1000px; height: 300px;"></div>
 				</div>
 				<!-- <div class="card-header">
 					Revenue Graph
@@ -353,6 +412,7 @@ $('.carousel .item').each(function(){
 						<canvas id="sales-overview"></canvas>
 						</div>
 				</div> -->
+			</div>
 		</div>
 	</div>	
 	
@@ -393,6 +453,8 @@ $('.carousel .item').each(function(){
 
 <script type="text/javascript">
 	var id=$('#sales_report_id_div').find('.sales_bar_graph_class.active').data('id');
+	var name=$('#sales_report_id_div').find('.sales_bar_graph_class.active').data('name');
+
 	$.ajax({
           	type: "POST",
           	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getsalebargraph",
@@ -415,7 +477,7 @@ $('.carousel .item').each(function(){
 			      	var options = {
 				        chart: {
 				          title: 'Sales Graph',
-				          subtitle: 'Show States and Count of Device'
+				          subtitle: 'Device name '+ name,
 				        },
 				        width: 1100,
 				        height: 300,
@@ -435,6 +497,48 @@ $('.carousel .item').each(function(){
           		
           	}
         });  			
+	var device_id=$('#revenue_report_id_div').find('.revenue_line_graph_class.active').data('id');
+	var device_name=$('#revenue_report_id_div').find('.revenue_line_graph_class.active').data('name');
+	//var time_id=$('#revenue_report_time').find('.revenue_report_a.active').data('id');
+	var time_id="year";
+	$.ajax({
+          	type: "POST",
+          	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getrevenuegraph",
+          	data: { 'device_id' : device_id,'device_name' : device_name,'time_id' : time_id },
+          	dataType: 'json',
+          	success: function(data1){
+          		
+				google.charts.load("current", {packages:['corechart', 'line']});
+			    google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					var data = new google.visualization.DataTable();
+  
+			      	data.addColumn('string', 'Year');
+			      	data.addColumn('number', 'Values');
+		      	 	$.each(data1, function (index, value) {
+			      	 	data.addRow([index, parseInt(value)]);
+	                    	
+             		});
+			      	
+			      	var options = {
+				        chart: {
+				          title: 'Revenue Graph',
+				          subtitle: 'Device name '+ device_name,
+				        },
+				        width: 1100,
+				        height: 300,
+				        colors: ['blue' ]
+
+
+			      	};
+			      	var chart = new google.charts.Line(document.getElementById('linechart_values'));
+      				chart.draw(data, options);
+      				
+		  		}
+      		 	
+          		
+          	}
+        });
 </script>
 <?php $this->load->view('includes/footer');?>
 </body>
