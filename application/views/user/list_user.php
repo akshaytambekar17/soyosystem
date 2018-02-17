@@ -61,6 +61,7 @@
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <div class="col-md-3">
+
                                                             <a href="<?php echo base_url();?>User_Manufracture/view_devices?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-warning btn-sm waves-effect waves-light"><b>View<br> Devices</b></a>
                                                         </div>
                                                         <div class="col-md-3">
@@ -227,6 +228,6 @@
 
             }
         </script>
-<?php $this->load->view('includes/footer');?>
+
 </body>
 </html>

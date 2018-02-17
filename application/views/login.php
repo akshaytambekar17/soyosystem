@@ -36,6 +36,12 @@
 			</div>
 			<div class="col-md-3">
 					<?php
+					if($this->session->flashdata('login_fail_invaliduser'))
+					{
+						echo "<p class='text-red'>";
+						echo $this->session->flashdata('login_fail_invaliduser');
+						echo "</p>";
+					}
 						echo form_open('Home_Controller/login');
 					?>
 						<div class="form-group">

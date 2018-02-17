@@ -12,7 +12,7 @@
 {
 	padding:5%;
 }
-.edit-profile input[type=text]
+/*.edit-profile input[type=text]
 {
 	border-top:none;
 	border-right:none;
@@ -25,7 +25,7 @@
 	border-right:none;
 	border-left:none;
 	border-radius:0px;
-}
+}*/
 .form_part
 {
 	padding-top:12%;
@@ -73,6 +73,15 @@
 {
 	opacity:0.7;
 }
+.text-red
+{
+	color:red;
+}
+
+.btn-view
+{
+	background-color:#1c678f;
+}
 .productdiv
 {
 	text-align:center;
@@ -81,3 +90,4 @@
 {
 	margin-bottom:50%;
 }
+

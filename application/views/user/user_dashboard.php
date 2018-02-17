@@ -157,10 +157,6 @@
 			});*/
     </script>
 
-
-
-
-<?php $this->load->view('includes/footer');?>
 <?php
 	//header("Refresh:7;url=".base_url()."User_Manufracture");
 ?>
