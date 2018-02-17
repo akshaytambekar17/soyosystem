@@ -11,10 +11,14 @@ class Admin_Manufracture extends CI_Controller
 		$this->load->model('Distributer_model');
 		$this->load->model('User_model');*/
 		$this->load->library('form_validation');
-		$this->load->helper('form');
+		//$this->load->helper('form');
+		
+		//$this->load->library('validation');
 		$this->load->library('session');
 		$this->load->helper('date');
 	 	$this->load->helper(array('form', 'url'));
+	 	$this->form_validation->set_message('required', '%s is required');
+		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
                 
 	}
 
@@ -60,53 +64,64 @@ class Admin_Manufracture extends CI_Controller
 	{
 		if($this->input->post()){
 			//echo "<pre>"; print_r($this->input->post()); die;
+			$this->form_validation->set_rules('fname', 'First Name', 'trim|required|alpha');
+			$this->form_validation->set_rules('lname', 'Last Name', 'trim|required|alpha');
+			$this->form_validation->set_rules('mobile', 'Mobile Number', 'trim|required|numeric');
+			$this->form_validation->set_rules('state', 'State', 'trim|required|alpha');
+			$this->form_validation->set_rules('district', 'District', 'trim|required|alpha');
+			$this->form_validation->set_rules('city', 'City', 'trim|required|alpha');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required');
+			$this->form_validation->set_rules('username', 'Username', 'trim|required');
+			$this->form_validation->set_rules('password', 'Password', 'required');
+			$this->form_validation->set_rules('c_password', 'Confirm Password', 'required|matches[password]');
 
-			if(!empty($_FILES['profile_image']['name'])){
+			if($this->form_validation->run() == TRUE)
+			{
+				if(!empty($_FILES['profile_image']['name'])){
 
-                
-                $config['upload_path'] = './assets/uploads/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $config['file_name'] = $_FILES['profile_image']['name'];
-                 
-                //Load upload library and initialize configuration
-                $this->load->library('upload',$config);
-                $this->upload->initialize($config);
-                $this->upload->do_upload('profile_image');	
-        				        
-                $uploadData = $this->upload->data();
-                $picture = $uploadData['file_name'];
-            	
-	        }else{
-	        	$picture='';
-	        }
-			$data_to_update=array('fname'=>$this->input->post('fname'),
-									'lname'=>$this->input->post('lname'),
-									'username'=>$this->input->post('username'),
-									'password'=>$this->input->post('password'),
-									'email'=>$this->input->post('email'),
-									'state'=>$this->input->post('state'),
-									'dist'=>$this->input->post('district'),
-									'city'=>$this->input->post('city'),
-									'mobile'=>$this->input->post('mobile'),
-									'date'=>date("Y-m-d"),
-									'time'=>date("h:i:sa"),
-									'type'=>2,
-									'status'=>1,
-									'profile_image'=>$picture
-								);
-			//echo "<pre>"; print_r($data_to_update); die;			
-			$result=$this->Admin_model->add_distributer($data_to_update);
-			if($result){
-				$this ->session-> set_flashdata('Message','Distributer Addedd Successfully'); 
-				redirect('Admin_Manufracture/add_distributer_view','refresh');
-			}else{
-				$this ->session-> set_flashdata('Error','Username already exist'); 
+	                
+	                $config['upload_path'] = './assets/uploads/';
+	                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+	                $config['file_name'] = $_FILES['profile_image']['name'];
+	                 
+	                //Load upload library and initialize configuration
+	                $this->load->library('upload',$config);
+	                $this->upload->initialize($config);
+	                $this->upload->do_upload('profile_image');	
+	        				        
+	                $uploadData = $this->upload->data();
+	                $picture = $uploadData['file_name'];
+	            	
+		        }else{
+		        	$picture='';
+		        }
+				$data_to_update=array('fname'=>$this->input->post('fname'),
+										'lname'=>$this->input->post('lname'),
+										'username'=>$this->input->post('username'),
+										'password'=>$this->input->post('password'),
+										'email'=>$this->input->post('email'),
+										'state'=>$this->input->post('state'),
+										'dist'=>$this->input->post('district'),
+										'city'=>$this->input->post('city'),
+										'mobile'=>$this->input->post('mobile'),
+										'date'=>date("Y-m-d"),
+										'time'=>date("h:i:sa"),
+										'type'=>2,
+										'status'=>1,
+										'profile_image'=>$picture
+									);
+				//echo "<pre>"; print_r($data_to_update); die;			
+				$result=$this->Admin_model->add_distributer($data_to_update);
+				if($result){
+					$this ->session-> set_flashdata('Message','Distributer Addedd Successfully'); 
+					redirect('Admin_Manufracture/add_distributer_view','refresh');
+				}else{
+					$this ->session-> set_flashdata('Error','Username already exist'); 
+				}
 			}
-
 		}
 
 		$data['state']=$this->Common_model->get_state();	
-
 		$data['main_content']='admin/add_distributer';
 		$this->load->view('includes/header',$data);
 	}
@@ -116,47 +131,58 @@ class Admin_Manufracture extends CI_Controller
 		$data['user_details']=$this->Distributer_model->get_distributers_by_id($id);
 		if($this->input->post()){
 			//echo "<pre>"; print_r($this->input->post()); die;
+			$this->form_validation->set_rules('fname', 'First Name', 'trim|required|alpha');
+			$this->form_validation->set_rules('lname', 'Last Name', 'trim|required|alpha');
+			$this->form_validation->set_rules('email', 'Email', 'trim|required');
+			$this->form_validation->set_rules('mobile', 'Mobile Number', 'trim|required|numeric');
+			$this->form_validation->set_rules('username', 'Username', 'trim|required');
+			$this->form_validation->set_rules('password', 'Password', 'required');
+			$this->form_validation->set_rules('state', 'State', 'required');
+			$this->form_validation->set_rules('district', 'District', 'required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required|alpha');
 
-			if(!empty($_FILES['profile_image']['name'])){
+			if($this->form_validation->run() == TRUE)
+			{
 
-                
-                $config['upload_path'] = './assets/uploads/';
-                $config['allowed_types'] = 'jpg|jpeg|png|gif';
-                $config['file_name'] = $_FILES['profile_image']['name'];
-                 
-                //Load upload library and initialize configuration
-                $this->load->library('upload',$config);
-                $this->upload->initialize($config);
-                $this->upload->do_upload('profile_image');	
-        				        
-                $uploadData = $this->upload->data();
-                $picture = $uploadData['file_name'];
-            	
-	        }else{
-	        	$picture=$this->input->post('profile_image_hidden');
-	        }
-			$data_to_update=array(  'fname'=>$this->input->post('fname'),
-									'lname'=>$this->input->post('lname'),
-									'username'=>$this->input->post('username'),
-									'password'=>$this->input->post('password'),
-									'email'=>$this->input->post('email'),
-									'state'=>$this->input->post('state'),
-									'dist'=>$this->input->post('district'),
-									'city'=>$this->input->post('city'),
-									'mobile'=>$this->input->post('mobile'),
-									'user_id'=>$this->input->post('user_id'),
-									'profile_image'=>$picture
-								);
-			$result=$this->Admin_model->update_distributer($data_to_update);
-			if($result){
-				$this ->session-> set_flashdata('Message','Distributer Updated Successfully'); 
-				redirect('Admin_Manufracture/edit_distributer_view?id='.$id,'refresh');
-			}else{
-				$this ->session-> set_flashdata('Error','Username already exist'); 
+				if(!empty($_FILES['profile_image']['name'])){
+
+	                
+	                $config['upload_path'] = './assets/uploads/';
+	                $config['allowed_types'] = 'jpg|jpeg|png|gif';
+	                $config['file_name'] = $_FILES['profile_image']['name'];
+	                 
+	                //Load upload library and initialize configuration
+	                $this->load->library('upload',$config);
+	                $this->upload->initialize($config);
+	                $this->upload->do_upload('profile_image');	
+	        				        
+	                $uploadData = $this->upload->data();
+	                $picture = $uploadData['file_name'];
+	            	
+		        }else{
+		        	$picture=$this->input->post('profile_image_hidden');
+		        }
+				$data_to_update=array(  'fname'=>$this->input->post('fname'),
+										'lname'=>$this->input->post('lname'),
+										'username'=>$this->input->post('username'),
+										'password'=>$this->input->post('password'),
+										'email'=>$this->input->post('email'),
+										'state'=>$this->input->post('state'),
+										'dist'=>$this->input->post('district'),
+										'city'=>$this->input->post('city'),
+										'mobile'=>$this->input->post('mobile'),
+										'user_id'=>$this->input->post('user_id'),
+										'profile_image'=>$picture
+									);
+				$result=$this->Admin_model->update_distributer($data_to_update);
+				if($result){
+					$this ->session-> set_flashdata('Message','Distributer Updated Successfully'); 
+					redirect('Admin_Manufracture/edit_distributer_view?id='.$id,'refresh');
+				}else{
+					$this ->session-> set_flashdata('Error','Username already exist'); 
+				}
 			}
-
 		}
-
 		$data['state']=$this->Common_model->get_state();	
 		$data['main_content']='admin/edit_distributer';
 		$this->load->view('includes/header',$data);
@@ -205,6 +231,8 @@ class Admin_Manufracture extends CI_Controller
 			//echo "<pre>"; print_r($this->input->post()); die;
 			$this->form_validation->set_rules('device_name','Device name','required');
 			$this->form_validation->set_rules('category','Drive Manufacture','required');
+			$this->form_validation->set_message('required', '%s is required');
+			$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 				
 			if($this->form_validation->run())
 			{
@@ -224,13 +252,6 @@ class Admin_Manufracture extends CI_Controller
 					$this ->session-> set_flashdata('Error','Something went wrong'); 
 				}
 			}
-			else
-			{
-				$this ->session-> set_flashdata('Error','Something went wrong');
-				$data['device_manufacture']=$this->Common_model->get_device_manufacture();
-				$data['main_content']='admin/device/form_device';
-				$this->load->view('includes/header',$data);
-			}
 
 		}
 
@@ -249,7 +270,9 @@ class Admin_Manufracture extends CI_Controller
 			//echo "<pre>"; print_r($this->input->post()); die;
 			$this->form_validation->set_rules('device_name','Device name','required');
 			$this->form_validation->set_rules('category','Drive Manufacture','required');
-				
+			$this->form_validation->set_message('required', '%s is required');
+			$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
 			if($this->form_validation->run())
 			{
 				$id=$this->input->post('id');
@@ -270,14 +293,6 @@ class Admin_Manufracture extends CI_Controller
 					$this ->session-> set_flashdata('Error','Something went wrong'); 
 				}
 			}
-			else
-			{
-				$this ->session-> set_flashdata('Error','Something went wrong');
-				$data['device_manufacture']=$this->Common_model->get_device_manufacture();
-				$data['main_content']='admin/device/form_device';
-				$this->load->view('includes/header',$data);
-			}
-
 		}
 
 		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
@@ -322,12 +337,6 @@ class Admin_Manufracture extends CI_Controller
 					$this ->session-> set_flashdata('Error','Something went wrong'); 
 				}
 			}
-			else
-			{
-				$this ->session-> set_flashdata('Error','Something went wrong'); 
-				redirect('Admin_Manufracture/add_vfd','refresh');
-			}
-
 		}
 
 		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
@@ -363,11 +372,6 @@ class Admin_Manufracture extends CI_Controller
 					$this ->session-> set_flashdata('Error','Something went wrong'); 
 					$data['vfd_details']=$this->Admin_model->get_vfd_by_id($id);	
 				}
-			}
-			else
-			{
-				$this ->session-> set_flashdata('Error','Something went wrong');
-				redirect('Admin_Manufracture/edit_vfd','refresh');
 			}
 		}
 		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
@@ -694,7 +698,7 @@ class Admin_Manufracture extends CI_Controller
     }
     public function imagesave(){
 		$data = $_POST['data'];
-		$file = md5(uniqid()) . '.jpg';
+		$file = md5(uniqid()) . '.png';
 		 
 		// remove "data:image/png;base64,"
 		$uri =  substr($data,strpos($data,",")+1);
@@ -711,7 +715,8 @@ class Admin_Manufracture extends CI_Controller
 		// force user to download the image
 		if (file_exists($file)) {
 			header('Content-Description: File Transfer');
-			header('Content-Type: image/jpg');
+			header('Content-Type: image/png');
+
 			header('Content-Disposition: attachment; filename='.basename($file));
 			header('Content-Transfer-Encoding: binary');
 			header('Expires: 0');
@@ -727,7 +732,6 @@ class Admin_Manufracture extends CI_Controller
 		else {
 			echo "$file not found";
 		}
-
     }
 }
 ?>

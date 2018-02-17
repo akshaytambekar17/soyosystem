@@ -78,13 +78,19 @@ class Home_Controller extends CI_Controller
 									'user_name'=>$rows->username,
 									'user_type'=>$rows->type);
 					if($rows->type == 1){
+						$this->session->sess_expiration = '300'; // 5 Minutes
+			   			$this->session->sess_expire_on_close = 'true';
 						$this->session->set_userdata('admin',$session_data);
                                                 //echo  "<pre>"; print_r($this->session->userdata('admin')); die;
 						redirect(base_url().'Admin_Manufracture');
 					}else if($rows->type == 2){
+						$this->session->sess_expiration = '60'; // 15 Minutes
+			   			$this->session->sess_expire_on_close = 'true';
 						$this->session->set_userdata('distributer',$session_data);
 						redirect(base_url().'Distributer_Manufracture');
 					}else {
+						$this->session->sess_expiration = '60'; //5 Minutes
+			  			$this->session->sess_expire_on_close = 'true';
 						$this->session->set_userdata('user',$session_data);
 						redirect(base_url().'User_Manufracture');
 					}
@@ -94,12 +100,13 @@ class Home_Controller extends CI_Controller
 			else
 			{
 				$this->session->set_flashdata('login_fail_invaliduser','Please enter valid Username and Password...');
-				redirect(base_url().'Home_Controller');
+				redirect(base_url());
 			}
 		}
 		else
 		{
-			redirect(base_url().'Home_Controller');
+			$this->session->set_flashdata('login_fail_invaliduser','*Username and Password required');
+			redirect(base_url());
 		}
 	}
 

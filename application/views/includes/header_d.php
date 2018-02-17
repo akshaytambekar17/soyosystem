@@ -45,6 +45,10 @@
 <body>
     
     <?php 
+    if(!$this->session->userdata('distributer'))
+    {
+    	redirect(base_url());
+    }
             //if($this->session->userdata('admin')){
                // $session=$this->session->userdata('admin');
            // if($this->session->userdata('distributor')){
@@ -58,7 +62,7 @@
 			<nav id="sidebar" class="px-0 bg-dark bg-gradient sidebar">
 				<ul class="nav nav-pills flex-column">
 					<li class="logo-nav-item">
-						<a class="navbar-brand" href="#">
+						<a class="navbar-brand" href="<?php echo base_url();?>Distributer_Manufracture">
 							<img src="<?php echo base_url();?>assets/img/logo.png" width="145" height="32.3" alt="Soyo Systems">
 						</a>
 

@@ -45,12 +45,16 @@
 <body>
     
     <?php 
+	    if(!$this->session->userdata('user'))
+	    {
+	    	redirect(base_url());
+	    }
            // if($this->session->userdata('admin')){
                // $admin=$this->session->userdata('admin');
             //}else if($this->session->userdata('distributor')){
                // $distributer=$this->session->userdata('distributor');
             //}else{
-                $user_session=$this->session->userdata('user');
+                $session=$this->session->userdata('user');
 
             //}
     ?>
@@ -59,7 +63,7 @@
 			<nav id="sidebar" class="px-0 bg-dark bg-gradient sidebar">
 				<ul class="nav nav-pills flex-column">
 					<li class="logo-nav-item">
-						<a class="navbar-brand" href="#">
+						<a class="navbar-brand" href="<?php echo base_url();?>User_Manufracture">
 							<img src="<?php echo base_url();?>assets/img/logo.png" width="145" height="32.3" alt="Soyo Systems">
 						</a>
 
@@ -73,7 +77,7 @@
 						</a><br>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/profile?id=<?php echo $user_session['user_id'];?>&type=<?php echo $user_session['user_type'];?>">
+						<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/profile?id=<?php echo $session['user_id'];?>&type=<?php echo $session['user_type'];?>">
 							<i class="batch-icon batch-icon-polaroid"></i>
 							Profile
 						</a><br>
@@ -194,10 +198,10 @@
 							</li>
 						</ul>
 						</a>
-						<?php if(!empty($user_session['user_id'])){
+						<?php if(!empty($session['user_id'])){
 							//echo $this->session->userdata('user_id');die;
 								$this->load->model('Home_model');
-								$user_details=$this->Home_model->profile_details($user_session['user_id']);
+								$user_details=$this->Home_model->profile_details($session['user_id']);
 								$image=$user_details[0]->profile_image;
 								if(empty($image)){
 									$image="admin.png";	
@@ -210,9 +214,9 @@
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" id="navbar-dropdown-navbar-profile" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<div class="profile-name">
-										<?php if($user_session){
+										<?php if($session){
 											//$logged_in = $this->session->userdata('user');
-											echo $user_session['user_fname']." ".$user_session['user_lname'];
+											echo $session['user_fname']." ".$session['user_lname'];
 											//echo $logged_in['user_type'];
                                                                                     }
                                                                                 ?>
@@ -222,9 +226,9 @@
 									</div>
 								</a>	
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-navbar-profile">
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile/<?php echo $user_session['user_id'];?>"><b>Profile</b></a></li>
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/change_password/<?php echo $user_session['user_id'];?>"><b>Settings Profile</b></a></li>
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout/<?php echo $user_session['user_type']; ?>"><b>Logout</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile/<?php echo $session['user_id'];?>"><b>Profile</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/change_password/<?php echo $session['user_id'];?>"><b>Settings Profile</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout/<?php echo $session['user_type']; ?>"><b>Logout</b></a></li>
 								</ul>
 
 							</li>

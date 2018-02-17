@@ -68,16 +68,46 @@
 												$attribute=array('method'=>'post');
 												echo form_open_multipart('Admin_Manufracture/edit_distributer_view?id='.$user_details[0]->user_id,$attribute);
 
+												echo "<label>First Name</label>";
+												if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('fname');
+														}
 												echo form_input(['type'=>'text','name'=>'fname','class'=>'form-control form-group','value'=>$user_details[0]->fname]);
 
+												echo "<label>Last Name</label>";
+												if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('lname');
+														}
 												echo form_input(['type'=>'text','name'=>'lname','class'=>'form-control form-group','value'=>$user_details[0]->lname]);
 
+												echo "<label>Email</label>";
+												if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('email');
+														}
 												echo form_input(['type'=>'email','name'=>'email','class'=>'form-control form-group','value'=>$user_details[0]->email]);
 
-												echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$user_details[0]->mobile]);
+												echo "<label>Mobile</label>";
+												if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('mobile');
+														}
+												echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','pattern'=>'[789][0-9]{9}','value'=>$user_details[0]->mobile]);
 											
+												echo "<label>Username</label>";
+												if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('username');
+														}
 												echo form_input(['type'=>'text','name'=>'username','class'=>'form-control','placeholder'=>'Enter username','value'=>$user_details[0]->username]);
 
+												echo "<label>Password</label>";
+												if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('password');
+														}
 												echo form_input(['type'=>'password','name'=>'password','class'=>'form-control','id'=>'exampleInputPassword','placeholder'=>'Password','value'=>$user_details[0]->password]);	
 												
 												/*echo form_input(['type'=>'text','name'=>'state','class'=>'form-control form-group','value'=>$user_details[0]->state]);*/
@@ -85,6 +115,13 @@
 												/*echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control form-group','value'=>$user_details[0]->dist]);*/
 
 											?>	
+												<label>Select State</label>
+												<?php
+												if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('state');
+														}
+												?>
 												<select id="state" name="state" class="form-control select2" placeholder="Select State" data-live-search="true" >
 
 						                             <option disabled selected>Select State</option>
@@ -98,14 +135,28 @@
 					                                   <?php } ?>  
 					                            </select>
 					                            <input id="district_hidden" type='hidden' name="district_hidden" value="<?php echo $user_details[0]->dist ;?>" />
+
+					                            <label>Select District</label>
+					                            <?php
+					                            if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('district');
+														}
+					                            ?>
 					                            <select id="district" name="district" class="form-control select2" placeholder="Select District" data-live-search="true" >
 
 							                         	<option disabled selected>Select District</option>
 							                          
 						                        </select> 
 											<?php
+												echo "<label>City</label>";
+												if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('city');
+														}
 												echo form_input(['type'=>'text','name'=>'city','class'=>'form-control form-group','value'=>$user_details[0]->city]);
 
+												echo "<label>Profile Image</label>";
 												echo form_input(['type'=>'file','name'=>'profile_image','class'=>'form-control form-group']);
 
 												echo form_input(['type'=>'hidden','name'=>'user_id','value'=>$user_details[0]->user_id]);

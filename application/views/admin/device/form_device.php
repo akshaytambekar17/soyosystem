@@ -42,7 +42,7 @@
 												<label for="exampleInputEmail1">Device Name</label>
 												<?php
 													if($this->form_validation->run() == FALSE)
-													{echo "<p class='text-danger'>".form_error('device_name')."</p>";}
+													{echo form_error('device_name');}
 
 													echo form_input(['type'=>'text','name'=>'device_name','class'=>'form-control form-group','placeholder'=>'Device name','value'=>!empty($device_details[0]->device_name)?$device_details[0]->device_name:set_value('device_name')])
 												?>
@@ -51,7 +51,7 @@
 												<label for="exampleInputEmail1">Select Drive Manufacture</label>
 												<?php
 													if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('category')."</p>";}
+												{echo form_error('category');}
 												?>
 												<select id="category" name="category" class="form-control select2" placeholder="Select Category" data-live-search="true" >
 				                            		

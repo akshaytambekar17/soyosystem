@@ -42,7 +42,7 @@
                                     <div class="col-lg-12">
                                          <?php 
                                                 $attribute=array('method'=>'post');
-                                                echo form_open_multipart("",$attribute);
+                                                echo form_open_multipart('',$attribute);
                                                 ?>
                                         <div class="row">
                                             <div class="col-md-6">
@@ -50,43 +50,70 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">First Name</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('fname');
+                                                        }
                                                        echo form_input(['type'=>'text','name'=>'fname','class'=>'form-control form-group','placeholder'=>'First name','value'=>!empty($user_details[0]->fname)?$user_details[0]->fname:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Last Name</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('lname');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'lname','class'=>'form-control form-group','placeholder'=>'Last name','value'=>!empty($user_details[0]->lname)?$user_details[0]->lname:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Mobile</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('mobile');
+                                                        }
                                                          echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','placeholder'=>'Mobile Number','value'=>!empty($user_details[0]->mobile)?$user_details[0]->mobile:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Email</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('email');
+                                                        }
                                                         echo form_input(['type'=>'email','name'=>'email','class'=>'form-control form-group','placeholder'=>'Email','value'=>!empty($user_details[0]->email)?$user_details[0]->email:'']);
                                                     ?>
                                                 </div>
                                                  <div class="form-group">
                                                     <label for="exampleInputEmail1">Aadhaar Number</label>
                                                     <?php
-                                                       echo form_input(['type'=>'text','name'=>'adhar','class'=>'form-control form-group','placeholder'=>'Aadhaar Number','value'=>!empty($user_details[0]->adhar)?$user_details[0]->adhar:'']);
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('adhar');
+                                                        }
+                                                       echo form_input(['type'=>'text','name'=>'adhar','class'=>'form-control form-group','pattern'=>'[0-9]{16}','placeholder'=>'Aadhaar Number','value'=>!empty($user_details[0]->adhar)?$user_details[0]->adhar:'']);
                                                     ?>
                                                 </div>
                                                  <div class="form-group">
                                                     <label for="exampleInputEmail1">Address</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('address');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'address','class'=>'form-control form-group','placeholder'=>'Address','value'=>!empty($user_details[0]->address)?$user_details[0]->address:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">State</label>
                                                     <?php
-                                                        //echo form_input(['type'=>'text','name'=>'state','class'=>'form-control','aria-describedb'=>'emailHelp','placeholder'=>'Enter state']);
+                                                       if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('state');
+                                                        }
                                                     ?>
                                                      <select id="state" name="state" class="form-control select2" placeholder="Select State" data-live-search="true" >
                                                         <option disabled selected>Select State</option>
@@ -102,7 +129,10 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">District</label>
                                                     <?php
-                                                        //echo form_input(['type'=>'text','name'=>'state','class'=>'form-control','aria-describedb'=>'emailHelp','placeholder'=>'Enter state']);
+                                                       if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('dist');
+                                                        }
                                                     ?>
                                                      <input id="district_hidden" type='hidden' name="district_hidden" value="<?php echo !empty($user_details[0]->dist)?$user_details[0]->dist:'' ;?>" />
                                                     <select id="district" name="dist" class="form-control select2" placeholder="Select District" data-live-search="true" >
@@ -112,18 +142,30 @@
                                                  <div class="form-group">
                                                     <label for="exampleInputEmail1">City</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('city');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'city','class'=>'form-control form-group','placeholder'=>'City','value'=>!empty($user_details[0]->city)?$user_details[0]->city:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Username</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('username');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'username','class'=>'form-control form-group','placeholder'=>'Username','value'=>!empty($user_details[0]->username)?$user_details[0]->username:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Password</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('password');
+                                                        }
                                                         echo form_input(['type'=>'password','name'=>'password','class'=>'form-control form-group','placeholder'=>'Password','value'=>!empty($user_details[0]->password)?$user_details[0]->password:'']);
                                                     ?>
                                                 </div>
@@ -133,59 +175,101 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Location</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('location');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'location','class'=>'form-control form-group','placeholder'=>'Location','value'=>!empty($user_site_details[0]->location)?$user_site_details[0]->location:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Owner</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('owner');
+                                                        }
                                                          echo form_input(['type'=>'text','name'=>'owner','class'=>'form-control form-group','placeholder'=>'Owner','value'=>!empty($user_site_details[0]->owner)?$user_site_details[0]->owner:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">Solar Panel</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('solar_panel');
+                                                        }
                                                        echo form_input(['type'=>'text','name'=>'solar_panel','class'=>'form-control form-group','placeholder'=>'Solar Panel','value'=>!empty($user_site_details[0]->solar_panel)?$user_site_details[0]->solar_panel:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">Pump</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('pump');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'pump','class'=>'form-control form-group','placeholder'=>'Pump','value'=>!empty($user_site_details[0]->pump)?$user_site_details[0]->pump:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">Pipe Height</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('pipe_height');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'pipe_height','class'=>'form-control form-group','placeholder'=>'Pipe Height','value'=>!empty($user_site_details[0]->pipe_height)?$user_site_details[0]->pipe_height:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">Pipe Diameter</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('pipe_diameter');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'pipe_diameter','class'=>'form-control form-group','placeholder'=>'Pipe Diameter','value'=>!empty($user_site_details[0]->pipe_diameter)?$user_site_details[0]->pipe_diameter:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">No of Elbows</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('no_lbows');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'no_lbows','class'=>'form-control form-group','placeholder'=>'No of Lbows','value'=>!empty($user_site_details[0]->no_lbows)?$user_site_details[0]->no_lbows:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">Installer</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('installer');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'installer','class'=>'form-control form-group','placeholder'=>'Installer','value'=>!empty($user_site_details[0]->installer)?$user_site_details[0]->installer:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">Warranty</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('warranty');
+                                                        }
                                                         echo form_input(['type'=>'text','name'=>'warranty','class'=>'form-control form-group','placeholder'=>'Warranty','value'=>!empty($user_site_details[0]->warranty)?$user_site_details[0]->warranty:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">Device Type</label>
+                                                    <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('project');
+                                                        }
+                                                    ?>
                                                     <select id="project" name="project" class="form-control select2" placeholder="Select Device Type" data-live-search="true" >
 
                                                     <option disabled selected>Select Device Type</option>
@@ -201,17 +285,31 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">IMEI Number</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('imei_no');
+                                                        }
                                                          echo form_input(['type'=>'text','name'=>'imei_no','class'=>'form-control form-group','placeholder'=>'IMEI number','value'=>!empty($user_site_details[0]->imei_no)?$user_site_details[0]->imei_no:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">Drive Model No</label>
                                                     <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('drive_model_no');
+                                                        }
                                                          echo form_input(['type'=>'text','name'=>'drive_model_no','class'=>'form-control form-group','placeholder'=>'Drive Model No','value'=>!empty($user_site_details[0]->drive_model_no)?$user_site_details[0]->drive_model_no:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputPassword1">Drive Manufacture</label>
+                                                    <?php
+                                                    if($this->form_validation->run() == FALSE)
+                                                        {
+                                                            echo form_error('drive_manufacture');
+                                                        }
+                                                    ?>
                                                     <select id="drive_manufacture" name="drive_manufacture" class="form-control select2" placeholder="Select Drive Manufacture" data-live-search="true" >
 
                                                      <option disabled selected>Select Drive Manufacture</option>

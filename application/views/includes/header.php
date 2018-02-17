@@ -45,6 +45,10 @@
 <body>
     
     <?php 
+    if(!$this->session->userdata('admin'))
+    {
+    	redirect(base_url());
+    }
             if($this->session->userdata('admin')){
                 $session=$this->session->userdata('admin');
             }else if($this->session->userdata('distributor')){
@@ -58,7 +62,7 @@
 			<nav id="sidebar" class="px-0 bg-dark bg-gradient sidebar">
 				<ul class="nav nav-pills flex-column">
 					<li class="logo-nav-item">
-						<a class="navbar-brand" href="<?php echo base_url();?>Home_Controller">
+						<a class="navbar-brand" href="<?php echo base_url();?>Admin_Manufracture">
 							<img src="<?php echo base_url();?>assets/img/logo.png" width="145" height="32.3" alt="Soyo Systems">
 						</a>
 
@@ -453,7 +457,7 @@
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-navbar-profile">
 									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile?id=<?php echo $session['user_id'];?>&type=<?php echo $session['user_type'];?>"><b>Profile</b></a></li>
 									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/change_password/<?php echo $session['user_id'];?>/<?php echo $session['user_id'];?>"><b>Settings Profile</b></a></li>
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout"><b>Logout</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout/<?php echo $session['user_type'];?>"><b>Logout</b></a></li>
 								</ul>
 
 							</li>
