@@ -11,11 +11,11 @@
 				<main class="main-content p-5" role="main">
 					<div class="row">
 						<div class="col-md-12">
-							<h1>Add New Projectct</h1>
+							<h1>Add Project</h1>
 						</div>
 					</div>
-					<div class="row mb-4">
-						<div class="col-md-6 mb-5">
+					<div class="row mb-12">
+						<div class="col-md-12 mb-5">
 							<div class="card">
 								<div class="card-header">
 									Enter Your New Project Details
@@ -30,6 +30,7 @@
 									}
 									?>
 								</div>
+								<div class="col-md-6">
 								<div class="card-body">
 								<?php
 								echo form_open('Distributer_Manufracture/new_project');
@@ -91,89 +92,9 @@
 								</form>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="row mb-4 ">
-								<div class="col-md-12 mb-5">
-									<div class="card edit-field">
-										<div class="card-header">
-											Recently Added Projects
-										</div>
-										<div class="card-table">
-										<?php 
-										echo form_open('Distributer_Manufracture/edit_project');?>
-											<div class="form-group">
-												
-											</div>
-											<button type="submit" class="btn btn-primary btn-gradient btn-block">
-												<i class="batch-icon batch-icon-key"></i>
-												Edit
-											</button>
-										</form>
-										<?php
-										echo form_open('Distributer_Manufracture/edit_project');
-										?>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('pname')."</p>";}
-												?>
-												<label for="exampleInputEmail1">Project Name</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'pname','class'=>'form-control','value'=>'Project Name']);
-												?>
-											</div>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('state')."</p>";}
-												?>
-												<label for="exampleInputPassword1">State</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'state','class'=>'form-control','value'=>'State']);
-												?>
-											</div>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('dist')."</p>";}
-												?>
-												<label for="exampleInputPassword1">District</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control','value'=>'District']);
-												?>
-											</div>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('city')."</p>";}
-												?>
-												<label for="exampleInputPassword1">City</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'city','class'=>'form-control','value'=>'City']);
-												?>
-											</div>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('systype')."</p>";}
-												?>
-												<label for="exampleInputPassword1">System type</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'systype','class'=>'form-control','value'=>'System Type']);
-												?>
-											</div>
-											<button type="submit" class="btn btn-primary btn-gradient btn-block">
-												<i class="batch-icon batch-icon-key"></i>
-												Save Changes
-											</button>
-										</form>
-										</div>
-									</div>
-								</div>
-								
 							</div>
 						</div>
+						
 					</div>
 				</main>
 			</div>

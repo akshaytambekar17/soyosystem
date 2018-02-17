@@ -63,9 +63,35 @@
 											foreach($user_details as $row)
 											{
 											echo form_open_multipart('Admin_Manufracture/update_profile');
+
+											echo "<label>First Name</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('fname');
+														}
 											echo form_input(['type'=>'text','name'=>'fname','class'=>'form-control form-group','value'=>$row->fname]);
+
+											echo "<label>Last Name</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('lname');
+														}
 											echo form_input(['type'=>'text','name'=>'lname','class'=>'form-control form-group','value'=>$row->lname]);
+
+											echo "<label>Email</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('email');
+														}
 											echo form_input(['type'=>'email','name'=>'email','class'=>'form-control form-group','value'=>$row->email]);
+											?>
+
+											<label>Select State</label>
+											<?php
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('state');
+														}
 											?>
 											<select id="state" name="state" class="form-control select2" placeholder="Select State" data-live-search="true" >
 
@@ -80,6 +106,14 @@
 				                                   <?php } ?>  
 				                            </select>
 				                            <input id="district_hidden" type='hidden' name="district_hidden" value="<?php echo $row->dist ;?>" />
+
+				                            <label>Select District</label>
+				                            <?php
+				                            if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('dist');
+														}
+				                            ?>
 				                            <select id="district" name="dist" class="form-control select2" placeholder="Select District" data-live-search="true" >
 
 						                         	<option disabled selected>Select District</option>
@@ -88,8 +122,22 @@
 											<!-- echo form_input(['type'=>'text','name'=>'state','class'=>'form-control form-group','value'=>$row->state]);
 											echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control form-group','value'=>$row->dist]); -->
 											<?php 
+
+											echo "<label>City</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('city');
+														}
 											echo form_input(['type'=>'text','name'=>'city','class'=>'form-control form-group','value'=>$row->city]);
+
+											echo "<label>Mobile</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('mobile');
+														}
 											echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$row->mobile]);
+
+											echo "<label>Profile Image</label>";
 											echo form_input(['type'=>'file','name'=>'profile_image','class'=>'form-control form-group']);
 											echo form_input(['type'=>'hidden','name'=>'uid','value'=>$row->user_id]);
 											echo form_input(['type'=>'hidden','name'=>'profile_image_hidden','value'=>$row->profile_image]);
