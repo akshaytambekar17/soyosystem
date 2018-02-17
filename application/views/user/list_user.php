@@ -60,39 +60,28 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="row">
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
+                                                            <a href="<?php echo base_url();?>Admin_Manufracture/view_devices?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-view btn-sm waves-effect waves-light"><b>View<br> Devices</b></a>
+                                                        </div>
+                                                        <div class="col-md-3">
                                                             <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-info btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
                                                         </div>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-secondary waves-effect waves-light" target="_blank">Open Dashboard</a>
                                                         </div>
-<!--                                                            <div class="col-md-4">
+<!--                                                    <div class="col-md-4">
                                                             <a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Delete User</a>
                                                         </div>-->
                                                         <?php if($user_type==1){ ?>
-                                                            <div class="col-md-4">
-                                                                <!--a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Pump Enable</a-->
-                                                                <!--label>PUMP ON/OFF</label-->
-                                                        <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> >
-                                                            </div>
+                                                        <div class="col-md-3">
+                                                        <!--input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> -->
+                                                        </div>
                                                         <?php } ?>
                                                     </div>
                                                 </div>
                                             </li>
 
 
-                                                <!-- <li class="media">
-                                                        <div class="profile-picture bg-gradient bg-primary mb-4">
-                                                                <img src="assets/img/profile-pic.jpg" width="44" height="44">
-                                                        </div>
-                                                        <div class="media-body">
-                                                                <div class="media-title mt-0 mb-1">
-                                                                        <a href="#"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
-                                                                </div>
-                                                                <em>3 Systems</em> |
-                                                                <em>9 Devices</em>
-                                                        </div>
-                                                </li> -->
                                         <?php
                                         }
                                         ?>
@@ -238,6 +227,6 @@
 
             }
         </script>
-<?php $this->load->view('includes/footer');?>
+
 </body>
 </html>

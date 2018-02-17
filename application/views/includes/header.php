@@ -95,7 +95,7 @@
 						</a>
 						<ul class="nav nav-pills flex-column">
 							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/sales_report">
+								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/sales_report/<?php echo $session['user_id'];?>">
 									<i class="batch-icon batch-icon-star"></i>
 								Sales Report</a><br>
 							</li>
@@ -256,7 +256,7 @@
 					</li> -->
 					<?php //} ?>
 					<li class="nav-item"><br>
-						<a class="nav-link" href="<?php echo base_url();?>Home_Controller/list_notification">
+						<a class="nav-link" href="<?php echo base_url();?>Home_Controller/list_notification/<?php echo $session['user_type'];?>">
 							<i class="batch-icon batch-icon-watch"></i>
 							Notification
 						</a>
@@ -452,7 +452,7 @@
 								</a>	
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-navbar-profile">
 									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile?id=<?php echo $session['user_id'];?>&type=<?php echo $session['user_type'];?>"><b>Profile</b></a></li>
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/change_password/<?php echo $session['user_id'];?>"><b>Settings Profile</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/change_password/<?php echo $session['user_id'];?>/<?php echo $session['user_id'];?>"><b>Settings Profile</b></a></li>
 									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout"><b>Logout</b></a></li>
 								</ul>
 
@@ -508,7 +508,8 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/scripts.js"></script>
 
 	
-        
+ 
+<?php $this->load->view('includes/footer');?>    
 </body>
 
 </html>

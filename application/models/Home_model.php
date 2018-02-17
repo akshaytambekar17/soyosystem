@@ -256,13 +256,23 @@ class Home_model extends CI_Model
 			return false;
 		}
 	}
+	public function edit_product($pid)
+	{
+
+	}
 	public function get_products()
 	{
 		$this->db->select('*');
 		$this->db->from('soyo_product');
 		$this->db->order_by('p_id','desc');
 		$query = $this->db->get();
-		return $query->result_array(); 
+		return $query->result(); 
+	}
+	public function get_product_by_id($pid)
+	{
+		$this->db->where('p_id',$pid);
+		$query = $this->db->get('soyo_product');
+		return $query->result();
 	}
 }
 ?>

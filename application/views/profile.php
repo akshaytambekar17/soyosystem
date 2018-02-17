@@ -40,83 +40,7 @@
 										</div> -->
 									</div>
 									<hr />
-									<!--<h5>
-										<i class="batch-icon batch-icon-users"></i>
-										Friends
-									</h5>
-									 <div class="profile-page-block-outer clearfix">
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-2.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-3.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-4.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-5.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-secondary">
-												<img src="assets/img/profile-pic-6.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-2.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-3.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-secondary">
-												<img src="assets/img/profile-pic-4.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-5.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-secondary">
-												<img src="assets/img/profile-pic-6.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-secondary">
-												<img src="assets/img/profile-pic-2.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-3.jpg" width="44" height="44">
-											</div>
-										</div>
-										<a class="float-right mt-2" href="#">More</a>
-									</div>
-									<hr />
-									<h5>
-										<i class="batch-icon batch-icon-image"></i>
-										Album
-									</h5>
-									<a href="#">
-										<img src="assets/img/album-image.jpg" class="img-fluid img-thumbnail" />
-									</a>
-									<a class="float-right mt-2" href="#">More</a>
-								-->
+									
 								</div> 
 								<div class="profile-page-center">
 									<h1 class="card-user-profile-name">
@@ -169,6 +93,7 @@
 											echo form_input(['type'=>'file','name'=>'profile_image','class'=>'form-control form-group']);
 											echo form_input(['type'=>'hidden','name'=>'uid','value'=>$row->user_id]);
 											echo form_input(['type'=>'hidden','name'=>'profile_image_hidden','value'=>$row->profile_image]);
+											echo form_input(['type'=>'hidden','name'=>'utype','value'=>$row->type]);
 											echo form_submit(['name'=>'submit','class'=>'btn btn-primary','value'=>'Save Changes']);
 											}
 											?>
@@ -212,7 +137,7 @@
 
 	}
 </script>
-<?php $this->load->view('includes/footer');?>
+
 </body>
 
 </html>

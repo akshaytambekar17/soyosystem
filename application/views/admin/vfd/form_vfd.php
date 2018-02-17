@@ -38,9 +38,16 @@
 												$attribute=array('method'=>'post');
 												echo form_open_multipart('',$attribute);
 
+												if($this->form_validation->run() == FALSE)
+													{echo "<p class='text-danger'>".form_error('vfd_name')."</p>";}
+
 												echo form_input(['type'=>'text','name'=>'vfd_name','class'=>'form-control form-group','placeholder'=>'VFD name','value'=>!empty($vfd_details[0]->vfd_name)?$vfd_details[0]->vfd_name:set_value('vfd_name')]);
 		
 											?>	
+											<?php
+											if($this->form_validation->run() == FALSE)
+													{echo "<p class='text-danger'>".form_error('drive_manufacture')."</p>";}
+											?>
 											<select id="state" name="drive_manufacture" class="form-control select2" placeholder="Select Drive Manufacture" data-live-search="true" >
 
 						                             <option disabled selected>Select Drive Manufacture</option>
@@ -87,7 +94,7 @@
 	});
 	
 </script>
-<?php $this->load->view('includes/footer');?>
+
 </body>
 
 </html>

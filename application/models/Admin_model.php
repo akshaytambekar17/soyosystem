@@ -233,7 +233,14 @@ class Admin_model extends CI_Model
 	  	$update=true;
         return $update;
     }
-    
+    public function get_devices_by_user($id)
+    {
+        $this->db->select('*');
+        $this->db->from('soyo_user_site_information');
+        $this->db->where('user_id',$id);
+        $query = $this->db->get();
+        return $query->result(); 
+    }
 
 }
 ?>

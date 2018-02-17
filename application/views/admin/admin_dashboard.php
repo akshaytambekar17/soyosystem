@@ -1,6 +1,10 @@
+
 <html>
 <head>
+	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>	
+	
 <script>
+
 $('#myCarousel').carousel({
   interval: 40000
 });
@@ -23,6 +27,66 @@ $('.carousel .item').each(function(){
   }
 });
 </script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js//html2canvas.js"></script>
+<script type="text/javascript">
+    
+	function screenshot(){
+		html2canvas([document.getElementById('sales_graph_div')], {   
+        	onrendered: function(canvas)  
+        	{
+	            var img = canvas.toDataURL();
+	            $.post("<?php echo base_url();?>Admin_Manufracture/imagesave", {data: img}, function (file) {
+	            window.location.href =  "<?php echo base_url();?>Admin_Manufracture/download?path="+ file});   
+	        }
+    	});
+	}
+	function sale_bar_graph(ths){	
+  		var id=$(ths).data('id');
+		$.ajax({
+          	type: "POST",
+          	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getsalebargraph",
+          	data: { 'id' : id },
+          	dataType: 'json',
+          	success: function(data1){
+          		
+          		google.charts.load("current", {packages:['bar']});
+			    google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					var data = new google.visualization.DataTable();
+  
+			      	data.addColumn('string', 'States');
+			      	data.addColumn('number', 'Values');
+		      	 	$.each(data1, function (index, value) {
+			      	 	data.addRow([index, parseInt(value)]);
+	                    	
+             		});
+			      	
+			      	var options = {
+				        chart: {
+				          title: 'Sales Graph',
+				          subtitle: 'Show States and Count of Device'
+				        },
+				        width: 1100,
+				        height: 300,
+				        colors: ['red' ]
+
+				        /*axes: {
+		         		 	x: {
+					            0: {side: 'top'}
+				          	}
+				        }*/
+			      	};
+			      	var chart = new google.charts.Bar(document.getElementById('columnchart_values'));
+      				chart.draw(data, options);
+      				
+		  		}
+      		 	
+          		
+          	}
+        });  		
+  }
+  </script>
 <style type="text/css">
 	.device-panel img
 	{
@@ -148,6 +212,57 @@ $('.carousel .item').each(function(){
 	</div> -->
 	<div class="row dashboard">
 		<div class="col-md-12 col-lg-12">
+			<div class="card card-md" style="height: 500px;">
+				<div class="card-header sales_graph_div">
+					<div class="row">
+						<div class="col-md-6">
+							Sales Bar graph 
+						</div>
+						<div class="col-md-6">
+
+							<div class="header-btn-block" style="top: 0px !important;">
+								<span class="data-range dropdown">
+									<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+										<i class="batch-icon batch-icon-calendar"></i>  Select Deivce Type
+									</a>
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button">
+										<?php 
+											$i=1;
+											foreach($device_list as $device){ 
+												if($i==1){
+													$active='active';
+													$i++;
+												}else{
+													$active='';
+												}
+										?>
+											<a class="dropdown-item sales_bar_graph_class <?= $active?>" href="javascript:void(0)" id="<?= $device['id']?>_device" onclick="sale_bar_graph(this)" data-id="<?= $device['id']?>"><?= $device['device_name']?></a>
+										<?php } ?>
+										
+									</div>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<input type='button' id='but_screenshot' value='Export to Image' class="btn btn-success" onclick='screenshot();'>
+							
+						</div>
+					</div>
+				</div>
+				<div class="card-body " id="sales_graph_div">
+					<!-- <div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Sales ($)" data-chart-legend-2="Orders" data-chart-height="281">
+						<canvas id="sales-overview"></canvas>
+						</div> -->
+					<div id="columnchart_values" style="width: 1000px; height: 300px;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row dashboard">
+		<div class="col-md-12 col-lg-12">
 			<div class="card card-md">
 				<div class="card-header">
 					Revenue Graph
@@ -172,7 +287,7 @@ $('.carousel .item').each(function(){
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>	
 	<div class="row dashboard">		
 		<div class="col-md-12 col-lg-12">
 			<div class="card card-md">
@@ -201,11 +316,10 @@ $('.carousel .item').each(function(){
 		</div>
 	</div>
 	<div class="row dashboard">		
-		<div class="col-md-12 col-lg-12">
-			<div class="card card-md">
-				<div class="card-header">
-					Our Products
-					<div class="header-btn-block">
+		<div class="card col-lg-12">
+			<div class="card-header">
+			All Products
+				<div class="header-btn-block">
 						<span class="data-range dropdown">
 							<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-traffic-sources-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 								<i class="batch-icon batch-icon-add "></i>
@@ -215,18 +329,27 @@ $('.carousel .item').each(function(){
 							</div>
 						</span>
 					</div>
-				</div>
-				<div class="card-body device-panel">
-					<img class="logo-default" src="<?php echo base_url()?>assets/img/solar-water.jpg" alt="logo" class="col-md-4" />
-					<img class="logo-default" src="<?php echo base_url()?>assets/img/solar-off-grid-power-plant.jpg" alt="logo" class="col-md-4" />
-					<img class="logo-default" src="<?php echo base_url()?>assets/img/led-lights.jpg" alt="logo" class="col-md-4" />				
+			</div>
+			<div class="card-body product_div">
+				<div class="col-lg-12">
+					<div class="row">
+						<!--div class="col-md-4"></div-->
+							<?php
+							foreach($product as $row)
+							{
+								echo "<div class='col-md-4'>";
+								echo "<img src='".base_url()."assets/uploads/".$row->product_img."' height='200px' width='200px'>";
+								echo "<div class='container'><a href='".base_url()."Home_Controller/add_product'><h4 class=''>".$row->product_name."</h4></a></div>";
+								echo "</div>";
+							}
+							?>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<?php $this->load->view('includes/footer');?>
 
 </body>
 

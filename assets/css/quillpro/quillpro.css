@@ -1706,7 +1706,7 @@ table.table-inverse {
   font-weight: 300; }
 
 .card {
-  height: 100%;
+  height: relative;
   box-shadow: 0 9px 23px rgba(0, 0, 0, 0.09), 0 5px 5px rgba(0, 0, 0, 0.06) !important;
   -webkit-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
   -moz-transition: box-shadow 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !important;

@@ -58,7 +58,7 @@
 									<hr />
 									<div class="comment-block edit-profile">
 										<div class="form-group">
-											<h3>Edit Personal Details</h3>
+											<h3>Edit Personal Detailskk</h3>
 											<?php
 											
 												foreach($user_details as $row){
@@ -150,6 +150,6 @@
 
 	}
 </script>
-<?php $this->load->view('includes/footer');?>
+
 </body>
 </html>
