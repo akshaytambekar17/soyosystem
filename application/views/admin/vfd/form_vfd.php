@@ -1,6 +1,11 @@
 <html>
 <head>
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>		
+	<style type="text/css">
+		.error{
+			color: red;
+		}
+	</style>
 </head>
 
 <body>
@@ -32,6 +37,7 @@
 									<div class="comment-block edit-profile">
 										<div class="form-group">
 											<h3><?= !empty($vfd_details)?'Update':'Add' ?> VFD</h3>
+											<?php echo validation_errors('<div class="error">', '</div>'); ?>
 											<?php
 											
 												

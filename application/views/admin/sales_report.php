@@ -77,6 +77,7 @@
 														<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Exports</button>
 														<div class="dropdown-menu">
 															<a class="dropdown-item" href="javascript:void(0)" id="csv_export">CSV File</a>
+															<a class="dropdown-item" href="javascript:void(0)" id="pdf_export">PDF File</a>
 															<!-- <a class="dropdown-item" href="javascript:void(0)">PDF File</a> -->
 														</div>
 													</div>
@@ -86,6 +87,7 @@
 										</div>
 										</form>
 										<input type="hidden" name="user_id" value="<?= !empty($user_id)?$user_id:''?>" id="user_id">
+										<input type="hidden" name="distributer_id" value="<?= !empty($distributer_id)?$distributer_id:''?>" id="distributer_id">
 										<br>
 										<br>
 										<br>
@@ -176,13 +178,31 @@
 		$("#csv_export").click(function(){
             
             var user_id=$("#user_id").val();
-
-            if(user_id==''){
+            var distributer_id=$("#distributer").val();
+            
+            if(user_id=='' &&  (distributer_id=='' || distributer_id==null)){
                 alert("User is not selected all data will export");
                 window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_export'; 
+            }else if (user_id=='' &&  (distributer_id!='' || distributer_id!=null)){
+            	alert("Distributor is only selected all user related to distributer will export");
+               window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_export?distributer_id='+distributer_id;  
+            }else{
+               window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_export?user_id='+user_id; 
+            }
+        });
+        $("#pdf_export").click(function(){
+            
+            var user_id=$("#user_id").val();
+            var distributer_id=$("#distributer_id").val();
+            if(user_id=='' &&  (distributer_id=='' || distributer_id==null)){
+                alert("User is not selected all data will export");
+                window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_pdf_export'; 
+            }else if (user_id=='' &&  (distributer_id!='' || distributer_id!=null)){
+            	alert("Distributor is only selected all user related to distributer will export");
+                window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_pdf_export?distributer_id='+distributer_id;  
             }else{
                 
-                window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_export?user_id='+user_id; 
+                window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_pdf_export?user_id='+user_id; 
             }
         });
 

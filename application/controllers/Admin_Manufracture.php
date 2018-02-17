@@ -40,6 +40,7 @@ class Admin_Manufracture extends CI_Controller
 		}
 		$data['user_details']=$this->Home_model->profile_details($uid);
 		$data['state']=$this->Common_model->get_state();	
+		$data['type']=$get['type'];
 		$data['main_content']='profile';
 		/*if($get['type'] == 1){
         	$data['main_content']='profile';
@@ -161,6 +162,14 @@ class Admin_Manufracture extends CI_Controller
 		$data['main_content']='admin/edit_distributer';
 		$this->load->view('includes/header',$data);
 	}
+	public function delete_distributer(){
+		if($this->input->get('id')){
+			$id=$this->input->get('id');
+			$result=$this->Admin_model->delete_distributer($id);	
+			$this ->session-> set_flashdata('Message','Distributer Deleted Successfully'); 
+			redirect('Distributer_Manufracture/all_distributer_view','refresh');
+		}
+	}
 	public function edit_user_view()
 	{
 		$data['main_content']='admin/edit_user';
@@ -169,7 +178,7 @@ class Admin_Manufracture extends CI_Controller
 	public function update_profile()
 	{
 		$uid=$this->input->post('uid');
-		$utype=$this->input->post('utype');
+		$utype=$this->input->post('type');
 
 		$update_result=$this->Home_model->update();
 		if($update_result){
@@ -177,17 +186,7 @@ class Admin_Manufracture extends CI_Controller
 		}else{
 			$this->session->set_flashdata('update_success','Information Not Updated');
 		}
-		if($session['user_id'] == $uid){
-			redirect("Admin_Manufracture/profile/".$session['user_id']);
-		}
-		else{
-			if($utype == 2){
-				redirect('Admin_Manufracture/edit_distributer_view');
-			}else{
-				redirect('Admin_Manufracture/edit_user_view');
-			}
-			
-		}
+		redirect("Admin_Manufracture/profile?id=".$uid."&type=".$utype);
 		
 	}
 	public function device_list(){
@@ -263,6 +262,7 @@ class Admin_Manufracture extends CI_Controller
 			redirect('Admin_Manufracture/device_list','refresh');
 		}
 	}
+	
 	public function vfd_list(){
 		$data['vfd_list']=$this->Admin_model->get_vfd_list();
 		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
@@ -272,22 +272,24 @@ class Admin_Manufracture extends CI_Controller
 	public function add_vfd()
 	{
 		if($this->input->post()){
-			//echo "<pre>"; print_r($this->input->post()); die;
+				//echo "<pre>"; print_r($this->input->post()); die;
+			$this->form_validation->set_rules('vfd_name', 'VFD Name', 'required');
+			$this->form_validation->set_rules('drive_manufacture', 'Select Drive Manufacture', 'required');
+			if($this->form_validation->run() == TRUE){
+				$data_to_update=array(	'vfd_name'=>$this->input->post('vfd_name'),
+										'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
+										'created_at'=>date('Y-m-d h:i:sa')									
+									);
 
-			$data_to_update=array(	'vfd_name'=>$this->input->post('vfd_name'),
-									'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
-									'created_at'=>date('Y-m-d h:i:sa')									
-								);
-
-			//echo "<pre>"; print_r($data_to_update); die;			
-			$result=$this->Admin_model->add_vfd($data_to_update);
-			if($result){
-				$this ->session-> set_flashdata('Message','VFD Added Successfully'); 
-				redirect('Admin_Manufracture/add_vfd','refresh');
-			}else{
-				$this ->session-> set_flashdata('Error','Something went wrong'); 
+				//echo "<pre>"; print_r($data_to_update); die;			
+				$result=$this->Admin_model->add_vfd($data_to_update);
+				if($result){
+					$this ->session-> set_flashdata('Message','VFD Added Successfully'); 
+					redirect('Admin_Manufracture/add_vfd','refresh');
+				}else{
+					$this ->session-> set_flashdata('Error','Something went wrong'); 
+				}
 			}
-
 		}
 
 		$data['device_manufacture']=$this->Common_model->get_device_manufacture();	
@@ -341,6 +343,7 @@ class Admin_Manufracture extends CI_Controller
 			if($this->form_validation->run() == TRUE){
 				$data['user_details']=$this->User_model->get_all_user_with_user_site_information_by_user($post['user']);		
 				$data['user_id']=$post['user'];
+				$data['distributer_id']=$post['distributer'];
 			}else{
 				$data['user_details']=$this->User_model->get_all_user_with_user_site_information();
 			}
@@ -476,16 +479,20 @@ class Admin_Manufracture extends CI_Controller
      	echo json_encode($html);
     }
     public function sale_reports_export() {
-    	if($_GET['user_id']){
+    	if(!empty($_GET['user_id']) && empty($_GET['distributer_id'])){
             $user_details = $this->User_model->get_all_user_with_user_site_information_by_user($_GET['user_id']);
+        }else if(empty($_GET['user_id']) && !empty($_GET['distributer_id'])){
+        	$user_details = $this->User_model->get_all_user_with_user_site_information_by_distributer($_GET['distributer_id']);
         }else{
             $user_details = $this->User_model->get_all_user_with_user_site_information();
         }
-        //echo "<pre>"; print_r($device_details[0]); die;
+        
         if (!empty($user_details)) {
-            if($_GET['user_id']){
+            if(!empty($_GET['user_id']) && empty($_GET['distributer_id'])){
                 $name=$user_details[0]->fname."_". $user_details[0]->lname;
-            }else{
+            }else if(empty($_GET['user_id']) && !empty($_GET['distributer_id'])){
+	        	$name= "By_Distributor_";
+	        }else{
                 $name="All_Users_";
             }
             $filename = $name."_reports_" . rand() . ".csv";
@@ -519,7 +526,7 @@ class Admin_Manufracture extends CI_Controller
 				$footer[3]=$device_type[0]->device_name;
 				$footer[4]=$value->imei_no;
                 $footer[5]=$value->installation_date;
-                fputcsv($out, array_values($footer), ',', '"');
+            	fputcsv($out, array_values($footer), ',', '"');
                 $footer=array();
                 $i++;
             }
@@ -527,7 +534,30 @@ class Admin_Manufracture extends CI_Controller
             exit;
         }
     }
-<<<<<<< HEAD
+    public function sale_reports_pdf_export(){
+    	if(!empty($_GET['user_id']) && empty($_GET['distributer_id'])){
+            $data['user_details'] = $this->User_model->get_all_user_with_user_site_information_by_user($_GET['user_id']);
+        }else if(empty($_GET['user_id']) && !empty($_GET['distributer_id'])){
+        	$data['user_details'] = $this->User_model->get_all_user_with_user_site_information_by_distributer($_GET['distributer_id']);
+        }else{
+            $data['user_details'] = $this->User_model->get_all_user_with_user_site_information();
+        }
+		$this->load->library('M_pdf'); 
+		
+		$html=$this->load->view('admin/pdf',$data); 
+		
+		$pdfFilePath ="sales_report_".time().".pdf";		
+		
+		$stylesheet = '<style>'.file_get_contents('assets/css/bootstrap.min.css').'</style>';
+		
+		ob_clean();
+		$this->m_pdf->pdf->WriteHTML($stylesheet,1,true);
+		$this->m_pdf->pdf->WriteHTML($html,true);
+		//offer it to user via browser download! (The PDF won't be saved on your server HDD)
+		$this->m_pdf->pdf->Output($pdfFilePath, "D");
+
+		exit;
+    }
     public function view_devices()
     {
     	$get=$this->input->get();
@@ -535,7 +565,7 @@ class Admin_Manufracture extends CI_Controller
     	//echo $get['id'];
 		$data['main_content']='admin/view_devices';
 		$this->load->view('includes/header',$data);
-=======
+	}
     public function getsalebargraph(){
     	$post=$this->input->post();
     	$user_details=$this->User_model->get_user_list_by_devicetype($post['id']);
@@ -557,7 +587,7 @@ class Admin_Manufracture extends CI_Controller
     }
     public function imagesave(){
 		$data = $_POST['data'];
-		$file = md5(uniqid()) . '.jpg';
+		$file = md5(uniqid()) . '.png';
 		 
 		// remove "data:image/png;base64,"
 		$uri =  substr($data,strpos($data,",")+1);
@@ -574,7 +604,7 @@ class Admin_Manufracture extends CI_Controller
 		// force user to download the image
 		if (file_exists($file)) {
 			header('Content-Description: File Transfer');
-			header('Content-Type: image/jpg');
+			header('Content-Type: image/png');
 			header('Content-Disposition: attachment; filename='.basename($file));
 			header('Content-Transfer-Encoding: binary');
 			header('Expires: 0');
@@ -590,7 +620,17 @@ class Admin_Manufracture extends CI_Controller
 		else {
 			echo "$file not found";
 		}
->>>>>>> 49cfb528ff1fc1da9c4c580dd32c1b40294d88cc
+
+    }
+    public function get_device_parameters_by_id(){
+    	$post=$this->input->post();
+    	$paramters_details=$this->Admin_model->get_device_parameters_by_id($post['id']);
+    	$result_data=array();
+    	foreach($paramters_details as $value){
+    		$result_data[$value->unique_id]=$value->name;
+    		
+    	}
+    	echo json_encode($result_data);
     }
 }
 ?>

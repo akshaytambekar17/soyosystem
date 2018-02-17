@@ -252,38 +252,62 @@ class User_Manufracture extends CI_Controller
             $this->load->view('includes/header_u',$data);
         }
     }
-        public function export() {
-
-        $device_ime = $_GET['device'];
-        $device_type = $_GET['device_type'];
-        $machine_data = json_decode($_GET['machine_data']);
-        $data_details=array('device_ime'=>$device_ime,
-                            );
-        if($device_type=='single'){
-            $device_details = $this->User_model->get_soyo_device_param_single($data_details);
+    public function view_devices()
+    {
+        $get=$this->input->get();
+        
+        $data['device_param']=$this->User_model->get_soyo_device_param();
+        $data['user_device_site_information']=$this->User_model->get_all_user_with_user_site_information_by_user($get['id']);
+        $data['device_details']=$this->Admin_model->get_device_list();
+        $data['main_content'] = 'user/view_device';
+        $data['user_type']=$get['user_type'];
+        if($get['user_type']==1){
+            $this->load->view('includes/header',$data);
+        }else if($get['user_type']==2){
+            $this->load->view('includes/header_d',$data);
         }else{
-            $device_details = $this->User_model->get_soyo_device_param_multiple();
+            $this->load->view('includes/header_u',$data);
         }
-        //echo "<pre>"; print_r($device_details[0]); die;
+    }
+    public function export() {
+
+        $get=$this->input->get();
+
+        $device = $_GET['device'];
+        $imei_no=$_GET['imei_no'];
+        $device_type = $_GET['device_type'];
+        if(!empty($_GET['device_parameter'])){
+            $device_parameter = json_decode($_GET['device_parameter']);
+        }else{
+            $device_parameter='';
+        }
+        $device_details = $this->User_model->get_soyo_device_request($imei_no);
+        $device_parameter_all=$this->Admin_model->get_device_parameters_by_id($device);
+        
         if (!empty($device_details)) {
-            if(empty($device_ime)){
-                $device_ime="All_device_";
-            }else{
-                $device_ime=$device_details[0]['dev_imei'];
-            }
-            $filename = $device_ime."_reports_" . rand() . ".csv";
+
+            $name="All_device_paramerter_";
+            $filename = $name."_reports_" . rand() . ".csv";
             ob_clean();
             header('Content-Type: text/csv; charset=utf-8');
             header("Content-Disposition: attachment; filename=\"$filename\"");
 
             $out = fopen("php://output", 'w');
+
             $flag = false;
             if (!$flag) {
                 $i = 1;
-                $header=array(0=>'device ime');
-                foreach($machine_data as $datas){
-                    $header[$i] = $datas;
-                    $i++;
+                $header=array(0=>'Device IMEI');
+                if(!empty($device_parameter)){
+                    foreach($device_parameter as $datas){
+                        $header[$i] = $datas;
+                        $i++;
+                    }
+                }else{
+                    foreach($device_parameter_all as $datas){
+                        $header[$i] = $datas->unique_id;
+                        $i++;
+                    }
                 }
                 fputcsv($out, array_values($header), ',', '"');
                 $flag = true;
@@ -291,25 +315,37 @@ class User_Manufracture extends CI_Controller
             $i=1;
             $footer=array();
             $flag=false;
-            
-            foreach ($device_details as $device_detail) {
+            if(!empty($device_parameter)){
+                foreach ($device_details as $key=>$value) {
+                        
+                    $footer[0]=$value['imei'];
                 
-                foreach ($device_detail as $key => $value) {
-                    if($key=='dev_imei'){
-                        $footer[0]=$value;
-                    }
-                    foreach($machine_data as $mach_value){
-                        if($mach_value==$key){
-                            $footer[$i]=$value;
+                    foreach($device_parameter as $dev_value){
+                        
+                        if($dev_value ==$value['parameter']){
+                            $footer[$i]=$value['value'];
                             $i++;
                         }
                     }
+                }
+                fputcsv($out, array_values($footer), ',', '"');
+                $footer=array();
 
+            }else{
+                
+                foreach ($device_details as $key => $value) {
+                    $footer[0]=$value['imei'];
+
+                    foreach($device_parameter_all as $dev_value){
+                        if($dev_value->unique_id==$value['parameter']){
+                            $footer[$i]=$value['value'];
+                            $i++;
+                        }
+                    }
                 }
                 fputcsv($out, array_values($footer), ',', '"');
                 $footer=array();
             }
-            die;
             fclose($out);
             exit;
         }

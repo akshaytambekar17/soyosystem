@@ -30,7 +30,7 @@ $('.carousel .item').each(function(){
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js//html2canvas.js"></script>
 <script type="text/javascript">
-    
+
 	function screenshot(){
 		html2canvas([document.getElementById('sales_graph_div')], {   
         	onrendered: function(canvas)  
@@ -85,6 +85,7 @@ $('.carousel .item').each(function(){
           		
           	}
         });  		
+        
   }
   </script>
 <style type="text/css">
@@ -219,13 +220,14 @@ $('.carousel .item').each(function(){
 							Sales Bar graph 
 						</div>
 						<div class="col-md-6">
-
+							<?php if(!empty($device_list)){ ?>
 							<div class="header-btn-block" style="top: 0px !important;">
 								<span class="data-range dropdown">
 									<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 										<i class="batch-icon batch-icon-calendar"></i>  Select Deivce Type
 									</a>
-									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button">
+									<input type="hidden" name="sales_graph_hidden" value="<?= $device_list[0]['id']?>" id="sales_graph_hidden">
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button" id="sales_report_id_div">
 										<?php 
 											$i=1;
 											foreach($device_list as $device){ 
@@ -242,6 +244,9 @@ $('.carousel .item').each(function(){
 									</div>
 								</span>
 							</div>
+							<?php } else{ ?>
+								<p><b>No device is there</b></p>
+							<?php }?>
 						</div>
 					</div>
 					<div class="row">
@@ -263,8 +268,71 @@ $('.carousel .item').each(function(){
 
 	<div class="row dashboard">
 		<div class="col-md-12 col-lg-12">
-			<div class="card card-md">
-				<div class="card-header">
+			<div class="card card-md" style="height: 500px;">
+				<div class="row" style="padding: 10px">
+						<div class="col-md-5">
+							<h2>Revenue Graph</h2> 
+						</div>
+						<div class="col-md-4">
+							<?php if(!empty($device_list)){ ?>
+							<div class="header-btn-block" style="top: 0px !important;">
+								<span class="data-range dropdown">
+									<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+										<i class="batch-icon batch-icon-calendar"></i>  Select Deivce Type
+									</a>
+									<input type="hidden" name="sales_graph_hidden" value="<?= $device_list[0]['id']?>" id="sales_graph_hidden">
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button" id="sales_report_id_div">
+										<?php 
+											$i=1;
+											foreach($device_list as $device){ 
+												if($i==1){
+													$active='active';
+													$i++;
+												}else{
+													$active='';
+												}
+										?>
+											<a class="dropdown-item sales_bar_graph_class <?= $active?>" href="javascript:void(0)" id="<?= $device['id']?>_device" onclick="sale_bar_graph(this)" data-id="<?= $device['id']?>"><?= $device['device_name']?></a>
+										<?php } ?>
+										
+									</div>
+								</span>
+								
+							</div>
+							<?php } else{ ?>
+								<p><b>No device is there</b></p>
+							<?php }?>
+						</div>
+						<div class="col-md-3">
+							<div class="">
+								<span class="data-range dropdown">
+									<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+										<i class="batch-icon batch-icon-calendar"></i>
+									</a>
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button">
+										<a class="dropdown-item" href="today">Today</a>
+										<a class="dropdown-item" href="week">This Week</a>
+										<a class="dropdown-item" href="month">This Month</a>
+										<a class="dropdown-item active" href="year">This Year</a>
+									</div>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<input type='button' id='but_screenshot' value='Export to Image' class="btn btn-success" onclick='screenshot();'>
+							
+						</div>
+					</div>
+				</div>
+				<div class="card-body " id="sales_graph_div">
+					<!-- <div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Sales ($)" data-chart-legend-2="Orders" data-chart-height="281">
+						<canvas id="sales-overview"></canvas>
+						</div> -->
+					<div id="columnchart_values" style="width: 1000px; height: 300px;"></div>
+				</div>
+				<!-- <div class="card-header">
 					Revenue Graph
 					<div class="header-btn-block">
 						<span class="data-range dropdown">
@@ -284,37 +352,10 @@ $('.carousel .item').each(function(){
 					<div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Sales ($)" data-chart-legend-2="Orders" data-chart-height="281">
 						<canvas id="sales-overview"></canvas>
 						</div>
-				</div>
-			</div>
+				</div> -->
 		</div>
 	</div>	
-	<div class="row dashboard">		
-		<div class="col-md-12 col-lg-12">
-			<div class="card card-md">
-				<div class="card-header">
-					Sales Graph
-					<div class="header-btn-block">
-						<span class="data-range dropdown">
-							<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-traffic-sources-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
-								<i class="batch-icon batch-icon-calendar"></i>
-							</a>
-							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-traffic-sources-header-button">
-								<a class="dropdown-item" href="today">Today</a>
-								<a class="dropdown-item active" href="week">This Week</a>
-								<a class="dropdown-item" href="month">This Month</a>
-								<a class="dropdown-item" href="year">This Year</a>
-							</div>
-						</span>
-					</div>
-				</div>
-				<div class="card-body">
-					<div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Sales ($)" data-chart-legend-2="Orders">
-						<canvas id="demo-stacked-chart"></canvas>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<div class="row dashboard">		
 		<div class="card col-lg-12">
 			<div class="card-header">
@@ -350,8 +391,52 @@ $('.carousel .item').each(function(){
 	</div>
 </div>
 
-<?php $this->load->view('includes/footer');?>
+<script type="text/javascript">
+	var id=$('#sales_report_id_div').find('.sales_bar_graph_class.active').data('id');
+	$.ajax({
+          	type: "POST",
+          	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getsalebargraph",
+          	data: { 'id' : id },
+          	dataType: 'json',
+          	success: function(data1){
+          		
+          		google.charts.load("current", {packages:['bar']});
+			    google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					var data = new google.visualization.DataTable();
+  
+			      	data.addColumn('string', 'States');
+			      	data.addColumn('number', 'Values');
+		      	 	$.each(data1, function (index, value) {
+			      	 	data.addRow([index, parseInt(value)]);
+	                    	
+             		});
+			      	
+			      	var options = {
+				        chart: {
+				          title: 'Sales Graph',
+				          subtitle: 'Show States and Count of Device'
+				        },
+				        width: 1100,
+				        height: 300,
+				        colors: ['red' ]
 
+				        /*axes: {
+		         		 	x: {
+					            0: {side: 'top'}
+				          	}
+				        }*/
+			      	};
+			      	var chart = new google.charts.Bar(document.getElementById('columnchart_values'));
+      				chart.draw(data, options);
+      				
+		  		}
+      		 	
+          		
+          	}
+        });  			
+</script>
+<?php $this->load->view('includes/footer');?>
 </body>
 
 </html>

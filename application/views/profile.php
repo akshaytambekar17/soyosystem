@@ -168,6 +168,7 @@
 											echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$row->mobile]);
 											echo form_input(['type'=>'file','name'=>'profile_image','class'=>'form-control form-group']);
 											echo form_input(['type'=>'hidden','name'=>'uid','value'=>$row->user_id]);
+											echo form_input(['type'=>'hidden','name'=>'type','value'=>$type]);
 											echo form_input(['type'=>'hidden','name'=>'profile_image_hidden','value'=>$row->profile_image]);
 											echo form_submit(['name'=>'submit','class'=>'btn btn-primary','value'=>'Save Changes']);
 											}
