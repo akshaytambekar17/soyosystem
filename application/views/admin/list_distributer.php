@@ -50,7 +50,7 @@
 															<a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>" class="btn btn-secondary btn-sm waves-effect waves-light" target="_blank">Open Dashboard</a>
 														</div>
 														<div class="col-md-4">
-															<a href="#" class="btn btn-danger btn-sm waves-effect waves-light" target="_blank">Delete Distributer</a>
+															<a href="<?php echo base_url();?>Admin_Manufracture/delete_distributer?id=<?php echo $row->user_id?>" class="btn btn-danger btn-sm waves-effect waves-light">Delete Distributer</a>
 														</div>
 													</div>
 												</div>

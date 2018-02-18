@@ -12,7 +12,7 @@
 {
 	padding:5%;
 }
-.edit-profile input[type=text]
+/*.edit-profile input[type=text]
 {
 	border-top:none;
 	border-right:none;
@@ -25,7 +25,7 @@
 	border-right:none;
 	border-left:none;
 	border-radius:0px;
-}
+}*/
 .form_part
 {
 	padding-top:12%;
@@ -41,7 +41,7 @@
 {
 	padding:5%;
 }
-.edit-field input[type=text]
+/*.edit-field input[type=text]
 {
 	border-top:none;
 	border-right:none;
@@ -54,4 +54,34 @@
 	border-right:none;
 	border-left:none;
 	border-radius:0px;
+}*/
+.product_div
+{
+	text-align:center;
+}
+.product_div h4
+{
+	padding:15% 0%;
+	text-align:center;
+	color:#5A5A5A;
+}
+.product_div h4:hover
+{
+	color:#18BBD5;
+}
+.product_div img:hover
+{
+	opacity:0.7;
+}
+.btn-view
+{
+	background-color:#1c678f;
+}
+.productdiv
+{
+	text-align:center;
+}
+.imgdiv div
+{
+	margin-bottom:50%;
 }

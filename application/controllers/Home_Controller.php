@@ -78,13 +78,19 @@ class Home_Controller extends CI_Controller
 									'user_name'=>$rows->username,
 									'user_type'=>$rows->type);
 					if($rows->type == 1){
+						$this->session->sess_expiration = '300'; // 5 Minutes
+			   			$this->session->sess_expire_on_close = 'true';
 						$this->session->set_userdata('admin',$session_data);
                                                 //echo  "<pre>"; print_r($this->session->userdata('admin')); die;
 						redirect(base_url().'Admin_Manufracture');
 					}else if($rows->type == 2){
+						$this->session->sess_expiration = '60'; // 15 Minutes
+			   			$this->session->sess_expire_on_close = 'true';
 						$this->session->set_userdata('distributer',$session_data);
 						redirect(base_url().'Distributer_Manufracture');
 					}else {
+						$this->session->sess_expiration = '60'; //5 Minutes
+			  			$this->session->sess_expire_on_close = 'true';
 						$this->session->set_userdata('user',$session_data);
 						redirect(base_url().'User_Manufracture');
 					}
@@ -94,12 +100,13 @@ class Home_Controller extends CI_Controller
 			else
 			{
 				$this->session->set_flashdata('login_fail_invaliduser','Please enter valid Username and Password...');
-				redirect(base_url().'Home_Controller');
+				redirect(base_url());
 			}
 		}
 		else
 		{
-			redirect(base_url().'Home_Controller');
+			$this->session->set_flashdata('login_fail_invaliduser','*Username and Password required');
+			redirect(base_url());
 		}
 	}
 
@@ -169,8 +176,17 @@ class Home_Controller extends CI_Controller
 		}
 		$data['notifications']=$query;
 		$data['main_content']='admin/list_notifications';
-		$this->load->view('includes/header',$data);
-		
+		if($this->uri->segment(3) == 1)
+		{
+			$this->load->view('includes/header',$data);
+		}
+		else if($this->uri->segment(3) == 2)
+		{
+			$this->load->view('includes/header_d',$data);
+		}
+		else{
+			$this->load->view('includes/header_u',$data);
+		}		
 	}
 	public function get_notify()
 	{
@@ -208,26 +224,33 @@ class Home_Controller extends CI_Controller
         						'product_img'=>$picture,
         						'added_by'=>$this->input->post('addedby'));
             $query=$this->Home_model->add_product($product_data);
-            //if($query){
-				//$data['note']=$query;
-				$data['main_content']='admin/add_product';
-				$this->load->view('includes/header',$data);
-			//}
-			//else
-			//{
+            if($query){
 
-			//}
+                $this ->session-> set_flashdata('Message','Product Added Successfully');
+			}
+			else
+			{
+                $this ->session-> set_flashdata('Error','Product Not Added');
+			}
+			//$data['note']=$query;
+			//$data['main_content']='admin/add_product';
+			//$this->load->view('includes/header',$data);
 		}
-		$query=$this->Home_model->get_products();
-		if($query){
-			$data['product']=$query;
+		if(isset($_GET['pid']))
+		{
+			$data['product_info']=$this->Home_model->get_product_by_id($_GET['pid']);
+		}
+		$pdata=$this->Home_model->get_products();
+		if($pdata){
+			$data['product']=$pdata;
 			$data['main_content']='admin/add_product';
 			$this->load->view('includes/header',$data);
 		}
 	}
-	public function get_products()
+	public function edit_product()
 	{
-		//$this-
+		$pid=$_GET['pid'];
+		$this->Home_model->edit_product($pid);
 	}
 }
 ?>

@@ -40,83 +40,7 @@
 										</div> -->
 									</div>
 									<hr />
-									<!--<h5>
-										<i class="batch-icon batch-icon-users"></i>
-										Friends
-									</h5>
-									 <div class="profile-page-block-outer clearfix">
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-2.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-3.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-4.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-5.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-secondary">
-												<img src="assets/img/profile-pic-6.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-2.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-3.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-secondary">
-												<img src="assets/img/profile-pic-4.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-5.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-secondary">
-												<img src="assets/img/profile-pic-6.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-secondary">
-												<img src="assets/img/profile-pic-2.jpg" width="44" height="44">
-											</div>
-										</div>
-										<div class="profile-page-block">
-											<div class="profile-picture bg-gradient bg-primary">
-												<img src="assets/img/profile-pic-3.jpg" width="44" height="44">
-											</div>
-										</div>
-										<a class="float-right mt-2" href="#">More</a>
-									</div>
-									<hr />
-									<h5>
-										<i class="batch-icon batch-icon-image"></i>
-										Album
-									</h5>
-									<a href="#">
-										<img src="assets/img/album-image.jpg" class="img-fluid img-thumbnail" />
-									</a>
-									<a class="float-right mt-2" href="#">More</a>
-								-->
+									
 								</div> 
 								<div class="profile-page-center">
 									<h1 class="card-user-profile-name">
@@ -139,9 +63,35 @@
 											foreach($user_details as $row)
 											{
 											echo form_open_multipart('Admin_Manufracture/update_profile');
+
+											echo "<label>First Name</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('fname');
+														}
 											echo form_input(['type'=>'text','name'=>'fname','class'=>'form-control form-group','value'=>$row->fname]);
+
+											echo "<label>Last Name</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('lname');
+														}
 											echo form_input(['type'=>'text','name'=>'lname','class'=>'form-control form-group','value'=>$row->lname]);
+
+											echo "<label>Email</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('email');
+														}
 											echo form_input(['type'=>'email','name'=>'email','class'=>'form-control form-group','value'=>$row->email]);
+											?>
+
+											<label>Select State</label>
+											<?php
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('state');
+														}
 											?>
 											<select id="state" name="state" class="form-control select2" placeholder="Select State" data-live-search="true" >
 
@@ -156,6 +106,14 @@
 				                                   <?php } ?>  
 				                            </select>
 				                            <input id="district_hidden" type='hidden' name="district_hidden" value="<?php echo $row->dist ;?>" />
+
+				                            <label>Select District</label>
+				                            <?php
+				                            if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('dist');
+														}
+				                            ?>
 				                            <select id="district" name="dist" class="form-control select2" placeholder="Select District" data-live-search="true" >
 
 						                         	<option disabled selected>Select District</option>
@@ -164,11 +122,26 @@
 											<!-- echo form_input(['type'=>'text','name'=>'state','class'=>'form-control form-group','value'=>$row->state]);
 											echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control form-group','value'=>$row->dist]); -->
 											<?php 
+
+											echo "<label>City</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('city');
+														}
 											echo form_input(['type'=>'text','name'=>'city','class'=>'form-control form-group','value'=>$row->city]);
+
+											echo "<label>Mobile</label>";
+											if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('mobile');
+														}
 											echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$row->mobile]);
+
+											echo "<label>Profile Image</label>";
 											echo form_input(['type'=>'file','name'=>'profile_image','class'=>'form-control form-group']);
 											echo form_input(['type'=>'hidden','name'=>'uid','value'=>$row->user_id]);
 											echo form_input(['type'=>'hidden','name'=>'profile_image_hidden','value'=>$row->profile_image]);
+											echo form_input(['type'=>'hidden','name'=>'utype','value'=>$row->type]);
 											echo form_submit(['name'=>'submit','class'=>'btn btn-primary','value'=>'Save Changes']);
 											}
 											?>
@@ -212,7 +185,7 @@
 
 	}
 </script>
-<?php $this->load->view('includes/footer');?>
+
 </body>
 
 </html>

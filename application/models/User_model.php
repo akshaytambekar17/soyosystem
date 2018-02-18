@@ -41,9 +41,27 @@ class User_model extends CI_Model
         $query=$this->db->get();
         return $query->result();
     }
+    public function get_all_user_with_user_site_information_by_distributer($id)
+    {
+
+        $this->db->select('*');
+        $this->db->from('soyo_users su');
+        $this->db->join('soyo_user_site_information susi','susi.user_id=su.user_id');
+        $this->db->where('su.type','3');
+        $this->db->where('su.added_by',$id);
+        $query=$this->db->get();
+        return $query->result();
+    }
     public function get_soyo_device_param(){
         $this->db->select("*");
         $this->db->from("soyo_device_param");
+        $result= $this->db->get();
+        return $result->result_array();
+    }
+    public function get_soyo_device_request($imei_no){
+        $this->db->select("*");
+        $this->db->from("soyo_device_request");
+        $this->db->where('imei',$imei_no);
         $result= $this->db->get();
         return $result->result_array();
     }
@@ -68,6 +86,15 @@ class User_model extends CI_Model
     public function get_user_site_by_id($id)
     {
         $query = $this->db->where('user_id',$id)->get('soyo_user_site_information');
+        return $query->result();
+    }
+    public function get_user_list_by_devicetype($id)
+    {
+        $this->db->select('*');
+        $this->db->from('soyo_users su');
+        $this->db->join('soyo_user_site_information susi','susi.user_id=su.user_id');
+        $this->db->where('susi.project',$id);
+        $query=$this->db->get();
         return $query->result();
     }
     function update_user($data)

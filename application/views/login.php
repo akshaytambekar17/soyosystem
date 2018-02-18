@@ -36,6 +36,12 @@
 			</div>
 			<div class="col-md-3">
 					<?php
+					if($this->session->flashdata('login_fail_invaliduser'))
+					{
+						echo "<p class='text-red'>";
+						echo $this->session->flashdata('login_fail_invaliduser');
+						echo "</p>";
+					}
 						echo form_open('Home_Controller/login');
 					?>
 						<div class="form-group">
@@ -71,7 +77,7 @@
 						</button>
 						<hr>
 						<p class="text-center">
-							Don't Have An Password? <a href="<?php echo base_url();?>Home_Controller/registration">Forget Password?</a>
+							Don't Have An Password? <a href="<?php echo base_url();?>">Forget Password?</a>
 						</p>
 						<!--p class="text-center">
 							Don't Have An Account? <a href="<?php echo base_url();?>Home_Controller/registration">Sign Up here</a>|<a href="<?php echo base_url();?>Home_Controller/registration">Forget Password</a>

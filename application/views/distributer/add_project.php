@@ -11,11 +11,11 @@
 				<main class="main-content p-5" role="main">
 					<div class="row">
 						<div class="col-md-12">
-							<h1>Add New Projectct</h1>
+							<h1>Add Project</h1>
 						</div>
 					</div>
-					<div class="row mb-4">
-						<div class="col-md-6 mb-5">
+					<div class="row mb-12">
+						<div class="col-md-12 mb-5">
 							<div class="card">
 								<div class="card-header">
 									Enter Your New Project Details
@@ -30,23 +30,11 @@
 									}
 									?>
 								</div>
+								<div class="col-md-6">
 								<div class="card-body">
 								<?php
 								echo form_open('Distributer_Manufracture/new_project');
 								?>
-									<div class="form-group">
-										<label for="exampleInputPassword1">Select Distributer</label>
-										<?php
-										$attributes=array('class'=>'form-control');
-										$options = array(0 => "Select Distributer");
-										$selected= array('Select Distributer');
-							            foreach ($prdata as $row)
-							            {
-							              $options[$row['user_id']] = $row['fname']." ".$row['lname']." (".$row['city'].")";
-							            }
-							             echo form_dropdown('distributer', $options,$selected,$attributes);
-										?>
-									</div>
 									<div class="form-group">
 										<?php
 										if($this->form_validation->run() == FALSE)
@@ -62,10 +50,20 @@
 										if($this->form_validation->run() == FALSE)
 										{echo "<p class='text-danger'>".form_error('state')."</p>";}
 										?>
-										<label for="exampleInputPassword1">State</label>
-										<?php
-											echo form_input(['type'=>'text','name'=>'state','class'=>'form-control','placeholder'=>'State']);
-										?>
+										<label for="exampleInputEmail1">State</label>
+											<?php
+												//echo form_input(['type'=>'text','name'=>'state','class'=>'form-control','aria-describedb'=>'emailHelp','placeholder'=>'Enter state']);
+											?>
+											 <select id="state" name="state" class="form-control select2" placeholder="Select State" data-live-search="true" >
+
+					                             <option disabled selected>Select State</option>
+					                                <?php foreach ($state as $value) { ?>
+					                                   <option value="<?php echo $value['id'];?>" <?php echo  set_select('category',$value['id'] ); ?>
+					                                   	>
+				                                   			<?php echo $value['name']; ?>      
+					                                   </option>
+				                                   <?php } ?>  
+				                            </select>
 									</div>
 									<div class="form-group">
 										<?php
@@ -87,16 +85,6 @@
 											echo form_input(['type'=>'text','name'=>'city','class'=>'form-control','placeholder'=>'City']);
 										?>
 									</div>
-									<div class="form-group">
-										<?php
-										if($this->form_validation->run() == FALSE)
-										{echo "<p class='text-danger'>".form_error('systype')."</p>";}
-										?>
-										<label for="exampleInputPassword1">System type</label>
-										<?php
-											echo form_input(['type'=>'text','name'=>'systype','class'=>'form-control','placeholder'=>'System Type']);
-										?>
-									</div>
 									<button type="submit" class="btn btn-primary btn-gradient btn-block">
 										<i class="batch-icon batch-icon-key"></i>
 										ADD PROJECT
@@ -104,102 +92,38 @@
 								</form>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-6">
-							<div class="row mb-4 ">
-								<div class="col-md-12 mb-5">
-									<div class="card edit-field">
-										<div class="card-header">
-											Recently Added Projects
-										</div>
-										<div class="card-table">
-										<?php 
-										echo form_open('Distributer_Manufracture/edit_project');?>
-											<div class="form-group">
-												
-											</div>
-											<button type="submit" class="btn btn-primary btn-gradient btn-block">
-												<i class="batch-icon batch-icon-key"></i>
-												Edit
-											</button>
-										</form>
-										<?php
-										echo form_open('Distributer_Manufracture/edit_project');
-										?>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('pname')."</p>";}
-												?>
-												<label for="exampleInputEmail1">Project Name</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'pname','class'=>'form-control','value'=>'Project Name']);
-												?>
-											</div>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('state')."</p>";}
-												?>
-												<label for="exampleInputPassword1">State</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'state','class'=>'form-control','value'=>'State']);
-												?>
-											</div>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('dist')."</p>";}
-												?>
-												<label for="exampleInputPassword1">District</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control','value'=>'District']);
-												?>
-											</div>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('city')."</p>";}
-												?>
-												<label for="exampleInputPassword1">City</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'city','class'=>'form-control','value'=>'City']);
-												?>
-											</div>
-											<div class="form-group">
-												<?php
-												if($this->form_validation->run() == FALSE)
-												{echo "<p class='text-danger'>".form_error('systype')."</p>";}
-												?>
-												<label for="exampleInputPassword1">System type</label>
-												<?php
-													echo form_input(['type'=>'text','name'=>'systype','class'=>'form-control','value'=>'System Type']);
-												?>
-											</div>
-											<button type="submit" class="btn btn-primary btn-gradient btn-block">
-												<i class="batch-icon batch-icon-key"></i>
-												Save Changes
-											</button>
-										</form>
-										</div>
-									</div>
-								</div>
-								
 							</div>
 						</div>
-					</div>
-					<div class="row mb-4">
-						<div class="col-md-12">
-							<footer>
-								Powered by - <a href="http://base5builder.com/?click_source=quillpro_footer_link" target="_blank" style="font-weight:300;color:#ffffff;background:#1d1d1d;padding:0 3px;">Base<span style="color:#ffa733;font-weight:bold">5</span>Builder</a>
-							</footer>
-						</div>
+						
 					</div>
 				</main>
 			</div>
 		</div>
 	</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+	    $("#state").change(function(){
+	    	var state = $("#state").val();
+            $.ajax({
+                      type: "POST",
+                      url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getdistrictlist",
+                      data: { 'state' : state },
+                      dataType: 'html',
+                      success: function(data){
+                        var obj = $.parseJSON(data);
+                        console.log(obj);
+                        jQuery("#district").html('<option disabled selected> Select District</option>');
+                        jQuery("#district").append(obj);
 
-	<?php $this->load->view('includes/footer');?>
+                      }
+            });
+        });
+	      $(".alert").delay(5000).slideUp(200, function() {
+	          $(this).alert('close');
+	      });
+	});
+	</script>
+
 </body>
 </html>

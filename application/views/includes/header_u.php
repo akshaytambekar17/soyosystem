@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -8,6 +9,7 @@
 	<!--My Style.css-->
 	<link href="<?php echo base_url();?>assets/css/style.css" rel="stylesheet" type="text/css">
 	<link href="<?php echo base_url();?>assets/css/slider.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo base_url();?>assets/css/kumagauge.css" rel="stylesheet" type="text/css">
 
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&amp;subset=latin-ext" rel="stylesheet">
@@ -38,28 +40,31 @@
 	<!-- QuillPro Styles -->
 	<link rel="stylesheet" href="<?php echo base_url();?>assets/css/quillpro/quillpro.css">
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-	
+
 </head>
 
 <body>
-    
+
     <?php 
+	    if(!$this->session->userdata('user'))
+	    {
+	    	redirect(base_url());
+	    }
            // if($this->session->userdata('admin')){
                // $admin=$this->session->userdata('admin');
             //}else if($this->session->userdata('distributor')){
                // $distributer=$this->session->userdata('distributor');
             //}else{
-                $user_session=$this->session->userdata('user');
+                $session=$this->session->userdata('user');
 
             //}
     ?>
-<div class="container-fluid">
+	<div class="container-fluid">
 		<div class="row">
-			<nav id="sidebar" class="px-0 bg-dark bg-gradient sidebar">
+			<nav id="sidebar" class="px-0 bg-dark bg-gradient sidebar sidebar-hidden">
 				<ul class="nav nav-pills flex-column">
 					<li class="logo-nav-item">
-						<a class="navbar-brand" href="#">
+						<a class="navbar-brand" href="<?php echo base_url();?>User_Manufracture">
 							<img src="<?php echo base_url();?>assets/img/logo.png" width="145" height="32.3" alt="Soyo Systems">
 						</a>
 
@@ -73,7 +78,7 @@
 						</a><br>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/profile?id=<?php echo $user_session['user_id'];?>&type=<?php echo $user_session['user_type'];?>">
+						<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/profile?id=<?php echo $session['user_id'];?>&type=<?php echo $session['user_type'];?>">
 							<i class="batch-icon batch-icon-polaroid"></i>
 							Profile
 						</a><br>
@@ -194,10 +199,10 @@
 							</li>
 						</ul>
 						</a>
-						<?php if(!empty($user_session['user_id'])){
+						<?php if(!empty($session['user_id'])){
 							//echo $this->session->userdata('user_id');die;
 								$this->load->model('Home_model');
-								$user_details=$this->Home_model->profile_details($user_session['user_id']);
+								$user_details=$this->Home_model->profile_details($session['user_id']);
 								$image=$user_details[0]->profile_image;
 								if(empty($image)){
 									$image="admin.png";	
@@ -210,9 +215,9 @@
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" id="navbar-dropdown-navbar-profile" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 									<div class="profile-name">
-										<?php if($user_session){
+										<?php if($session){
 											//$logged_in = $this->session->userdata('user');
-											echo $user_session['user_fname']." ".$user_session['user_lname'];
+											echo $session['user_fname']." ".$session['user_lname'];
 											//echo $logged_in['user_type'];
                                                                                     }
                                                                                 ?>
@@ -222,9 +227,9 @@
 									</div>
 								</a>	
 								<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-navbar-profile">
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile/<?php echo $user_session['user_id'];?>"><b>Profile</b></a></li>
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/change_password/<?php echo $user_session['user_id'];?>"><b>Settings Profile</b></a></li>
-									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout/<?php echo $user_session['user_type']; ?>"><b>Logout</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/profile/profile?id=<?php echo $session['user_id'];?>&type=<?php echo $session['user_type'];?>"><b>Profile</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Admin_Manufracture/change_password/<?php echo $session['user_id'];?>"><b>Settings Profile</b></a></li>
+									<li><a class="dropdown-item" href="<?php echo base_url();?>Home_Controller/logout/<?php echo $session['user_type']; ?>"><b>Logout</b></a></li>
 								</ul>
 
 							</li>
@@ -238,7 +243,7 @@
 		</div>
 	</div>
 
-<!-- SCRIPTS - REQUIRED START -->
+	<!-- SCRIPTS - REQUIRED START -->
 	<!-- Placed at the end of the document so the pages load faster -->
 	<!-- Bootstrap core JavaScript -->
 	<!-- JQuery -->
@@ -277,9 +282,10 @@
 
 	<!-- QuillPro Scripts -->
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/scripts.js"></script>
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
 	
-        
+<?php $this->load->view('includes/footer');?>        
 </body>
 
 </html>

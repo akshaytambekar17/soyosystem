@@ -59,35 +59,40 @@
 												<div class="form-group">
 													<label for="exampleInputEmail1">First Name</label>
 													<?php
+													if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('fname');
+														}
 														echo form_input(['type'=>'text','name'=>'fname','class'=>'form-control','aria-describedb'=>'emailHelp','placeholder'=>'Enter first name','value'=>set_value('fname')]);
 													?>
 												</div>
 												<div class="form-group">
 													<label for="exampleInputEmail1">Last Name</label>
 													<?php
+													if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('lname');
+														}
 														echo form_input(['type'=>'text','name'=>'lname','class'=>'form-control','aria-describedb'=>'emailHelp','placeholder'=>'Enter last name','value'=>set_value('lname')]);
 													?>
 												</div>
 												<div class="form-group">
 													<label for="exampleInputEmail1">Mobile</label>
 													<?php
-														echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control','placeholder'=>'Enter Mobile','value'=>set_value('mobile')]);
+													if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('mobile');
+														}
+														echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control','placeholder'=>'Enter Mobile','pattern'=>'[789][0-9]{9}','value'=>set_value('mobile')]);
 													?>
 												</div>
-												<!-- <div class="form-group">
-													<label for="exampleInputEmail1">Select Category</label>
-													<?php
-														$options=array('distributer'=>'Distributer',
-																		'user'=>'User');
-														$attributes=array('class'=>'form-control');
-														$selected= array('user');
-														echo form_dropdown('category',$options,$selected,$attributes);
-													?>
-												</div> -->
 												<div class="form-group">
 													<label for="exampleInputEmail1">State</label>
 													<?php
-														//echo form_input(['type'=>'text','name'=>'state','class'=>'form-control','aria-describedb'=>'emailHelp','placeholder'=>'Enter state']);
+														if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('state');
+														}
 													?>
 													 <select id="state" name="state" class="form-control select2" placeholder="Select State" data-live-search="true" >
 
@@ -103,7 +108,10 @@
 												<div class="form-group">
 													<label for="exampleInputEmail1">District</label>
 													<?php
-														//echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control','aria-describedb'=>'emailHelp','placeholder'=>'Enter district']);
+														if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('district');
+														}
 													?>
 													<select id="district" name="district" class="form-control select2" placeholder="Select District" data-live-search="true" >
 
@@ -114,6 +122,10 @@
 												<div class="form-group">
 													<label for="exampleInputEmail1">City</label>
 													<?php
+													if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('city');
+														}
 														echo form_input(['type'=>'text','name'=>'city','class'=>'form-control','aria-describedb'=>'emailHelp','placeholder'=>'Enter city','value'=>set_value('city')]);
 													?>
 												</div>
@@ -122,24 +134,40 @@
 												<div class="form-group">
 													<label for="exampleInputEmail1">Email address</label>
 													<?php
+													if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('email');
+														}
 														echo form_input(['type'=>'email','name'=>'email','class'=>'form-control','id'=>'exampleInputEmail1','aria-describedb'=>'emailHelp','placeholder'=>'Enter email','value'=>set_value('email')]);
 													?>
 												</div>
 												<div class="form-group">
 													<label for="exampleInputEmail1">Username</label>
 													<?php
+													if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('username');
+														}
 														echo form_input(['type'=>'text','name'=>'username','class'=>'form-control','placeholder'=>'Enter username','value'=>set_value('username')]);
 													?>
 												</div>
 												<div class="form-group">
 													<label for="exampleInputPassword1">Password</label>
 													<?php
+													if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('password');
+														}
 														echo form_input(['type'=>'password','name'=>'password','class'=>'form-control','id'=>'exampleInputPassword','placeholder'=>'Password','value'=>set_value('password')]);
 													?>
 												</div>
 												<div class="form-group">
 													<label for="exampleInputPassword1">Confirm Password</label>
 													<?php
+													if($this->form_validation->run() == FALSE)
+														{
+															echo form_error('c_password');
+														}
 														echo form_input(['type'=>'password','name'=>'c_password','class'=>'form-control','id'=>'exampleInputPassword','placeholder'=>'Confirm Password','value'=>set_value('c_password')]);
 													?>
 												</div>
@@ -191,6 +219,6 @@
 		});
 		</script>
 		
-	<?php $this->load->view('includes/footer'); ?>
+
 </body>
 </html>

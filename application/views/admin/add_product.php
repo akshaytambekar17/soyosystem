@@ -53,21 +53,27 @@
 					            </div>
 					        <?php }?> 
 							<div class="card">
-								<div class="card-header text-center">
-									Add Product
-									<?php
+								<div class="card-header text-left">
+									<?php 
+										if(isset($_GET['pid']))
+										{
+											echo "Edit Product";
+									}
+									else
+									{
+										echo "Add Product";
 									
+									}
 									$attribute=array('method'=>'post');
 									echo form_open_multipart('',$attribute);
 									?>
 									
 								</div>
-								<div class="card">
-									<div class="col-lg-12" style="margin: 64px 0px;">
+								<div class="card-body">
+									<div class="col-lg-12">
 										<div class="row">
-											<div class="col-md-4"></div>
+											<!--div class="col-md-4"></div-->
 											<div class="col-md-4">
-												<?php echo validation_errors('<div class="error">', '</div>'); ?>
 												<div class="form-group">
 													<label for="exampleInputEmail1">Product Name</label>
 													<?php
@@ -87,15 +93,34 @@
 												</button>
 												
 											</div>
-											<div class="col-md-4"></div>	
+											<div class="col-md-2"></div>
+												
 										</form>
+										</div>
+									</div>
+								</div>
+								<div class="card-header">
+									All Products
+								</div>
+								<div class="card-body product_div">
+									<div class="col-lg-12">
+										<div class="row">
+											<!--div class="col-md-4"></div-->
+												<?php
+												foreach($product as $row)
+												{
+													echo "<div class='col-md-4'>";
+													echo "<img src='".base_url()."assets/uploads/".$row->product_img."' height='200px' width='200px'>";
+													echo "<div class='container'><a href='".base_url()."Home_Controller/add_product'><h4 class=''>".$row->product_name."</h4></a></div>";
+													echo "</div>";
+												}
+												?>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
 				</main>
 			</div>
 		</div>
@@ -103,7 +128,6 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 				
-		    	
 	      	$(".alert").delay(5000).slideUp(200, function() {
 	          $(this).alert('close');
 	      	});
@@ -111,6 +135,6 @@
 		});
 		</script>
 		
-	<?php $this->load->view('includes/footer'); ?>
+
 </body>
 </html>
