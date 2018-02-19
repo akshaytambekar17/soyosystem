@@ -102,6 +102,24 @@
 						} ?>
 					</li>
 					<li class="nav-item"><br>
+							<a class="nav-link nav-parent" href="#">
+								<i class="batch-icon batch-icon-user-alt-3"></i>
+								Project
+							</a>
+							<ul class="nav nav-pills flex-column">
+								<li class="nav-item">
+									<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/add_project_view">
+										<i class="batch-icon batch-icon-user-alt-add"></i>
+									Add Project</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/list_project_view">
+										<i class="batch-icon batch-icon-menu"></i>
+									Project List</a>
+								</li>
+							</ul>
+						</li>
+					<li class="nav-item"><br>
 						<a class="nav-link nav-parent" href="#">
 							<i class="batch-icon batch-icon-user-alt-3"></i>
 							Users
@@ -125,24 +143,7 @@
 							</li>
 						</ul>
 					</li>
-					<li class="nav-item"><br>
-							<a class="nav-link nav-parent" href="#">
-								<i class="batch-icon batch-icon-user-alt-3"></i>
-								Project
-							</a>
-							<ul class="nav nav-pills flex-column">
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/add_project_view">
-										<i class="batch-icon batch-icon-user-alt-add"></i>
-									Add Project</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/list_project_view">
-										<i class="batch-icon batch-icon-menu"></i>
-									Project List</a>
-								</li>
-							</ul>
-						</li>
+					
 					<?php //if($session['user_type'] == 2)
 					//{ ?>
 						<!--li class="nav-item"><br>

@@ -33,7 +33,7 @@ class Webservice_Controller extends CI_Controller
 		$get=$this->input->get();
         $user_data=$this->Webservice_model->get_user_by_imei($get['imei']);
         if($user_data){
-			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?result=0&username=".$user_data[0]['username']."&password=".$user_data[0]['password'];
+			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?result=0&username=".$user_data[0]['username']."&password=".$user_data[0]['password']."&vfd_type=".$user_data[0]['vfd_type'];
 		}else{
 			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?status=2";
 		}

@@ -34,8 +34,8 @@ class User_Manufracture extends CI_Controller
         $get=$this->input->get();
         if($this->input->post()){
 
-            /*$this->form_validation->set_rules('fname','First Name','trim|required|alpha');
-            $this->form_validation->set_rules('lname','Last Name','trim|required|alpha');
+            $this->form_validation->set_rules('fname','First Name','trim|required');
+            $this->form_validation->set_rules('lname','Last Name','trim|required');
             $this->form_validation->set_rules('email','Email','trim|required');
             $this->form_validation->set_rules('mobile','Mobile Number','trim|required|numeric');
             $this->form_validation->set_rules('adhar','Aadhaar','trim|required');
@@ -46,7 +46,7 @@ class User_Manufracture extends CI_Controller
             $this->form_validation->set_rules('username','Username','trim|required');
             $this->form_validation->set_rules('password','Password','required');
 
-            $this->form_validation->set_rules('location','Location','trim|required|alpha');
+            /*$this->form_validation->set_rules('location','Location','trim|required|alpha');
             $this->form_validation->set_rules('owner','Owner','trim|required|alpha');
             $this->form_validation->set_rules('solar_panel','Solar Panel','trim|required');
             $this->form_validation->set_rules('pump','Pump','trim|required');
@@ -59,10 +59,11 @@ class User_Manufracture extends CI_Controller
             $this->form_validation->set_rules('imei_no','IMEI No','required|numeric');
             $this->form_validation->set_rules('drive_model_no','Drive Model No','trim|required');
             $this->form_validation->set_rules('drive_manufacture','Drive Manufacture','required');
-            
+            */
 
-            if($this->form_validation->run() == TRUE)
-            {*/
+            if($this->form_validation->run() == TRUE){
+                
+            }
                 if(!empty($_FILES['profile_image']['name'])){
 
                     
@@ -119,24 +120,24 @@ class User_Manufracture extends CI_Controller
                                     'added_by'=>$this->session->userdata('distributer')['user_id']
                                     );
                 $insert_id=$this->User_model->add_user($data_user);
-                $data_user_site=array(  
-                                        'user_id'=>$insert_id,
-                                        'location'=>$this->input->post('location'),
-                                        'owner'=>$this->input->post('owner'),
-                                        'solar_panel'=>$this->input->post('solar_panel'),
-                                        'pump'=>$this->input->post('pump'),
-                                        'pipe_height'=>$this->input->post('pipe_height'),
-                                        'pipe_diameter'=>$this->input->post('pipe_diameter'),
-                                        'no_lbows'=>$this->input->post('no_lbows'),
-                                        'installer'=>$this->input->post('installer'),
-                                        'installation_date'=>date('Y-m-d h:i:sa'),
-                                        'warranty'=>$this->input->post('warranty'),
-                                        'project'=>$this->input->post('project'),
-                                        'imei_no'=>$this->input->post('imei_no'),
-                                        'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
-                                        'drive_model_no'=>$this->input->post('drive_model_no'),
-                                    );
-                $result=$this->User_model->add_user_site($data_user_site);
+//                $data_user_site=array(  
+//                                        'user_id'=>$insert_id,
+//                                        'location'=>$this->input->post('location'),
+//                                        'owner'=>$this->input->post('owner'),
+//                                        'solar_panel'=>$this->input->post('solar_panel'),
+//                                        'pump'=>$this->input->post('pump'),
+//                                        'pipe_height'=>$this->input->post('pipe_height'),
+//                                        'pipe_diameter'=>$this->input->post('pipe_diameter'),
+//                                        'no_lbows'=>$this->input->post('no_lbows'),
+//                                        'installer'=>$this->input->post('installer'),
+//                                        'installation_date'=>date('Y-m-d h:i:sa'),
+//                                        'warranty'=>$this->input->post('warranty'),
+//                                        'project'=>$this->input->post('project'),
+//                                        'imei_no'=>$this->input->post('imei_no'),
+//                                        'drive_manufacture_id'=>$this->input->post('drive_manufacture'),
+//                                        'drive_model_no'=>$this->input->post('drive_model_no'),
+//                                    );
+//                $result=$this->User_model->add_user_site($data_user_site);
                 if($result){
                     $d_id=$this->session->userdata('distributer');
                     $note_data=array('send_from'=>$d_id['user_id'],
@@ -154,7 +155,7 @@ class User_Manufracture extends CI_Controller
                     redirect('User_Manufracture/add_user?user_type=2','refresh');
                 }else{
                     $this ->session-> set_flashdata('Error','Username already exist');
-                    redirect('User_Manufracture/add_user?user_type=2','refresh'); 
+                    $get['user_type']=2;
                 }
             //}
         }

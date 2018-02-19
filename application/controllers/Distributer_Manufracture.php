@@ -30,46 +30,92 @@ class Distributer_Manufracture extends CI_Controller
 	}
 	public function add_project_view()
 	{
-		if($this->input->post())
-		{
-			$this->form_validation->set_rules('pname','Project Name','required|alpha');
-			//$this->form_validation->set_rules('distributer','Distributer Name','required');
-			$this->form_validation->set_rules('state','State','required|alpha');
-			$this->form_validation->set_rules('dist','District','trim|required');
-			$this->form_validation->set_rules('city','City','required|alpha');
-			$this->form_validation->set_rules('systype','System Type','required');
-				
-			if($this->form_validation->run())
-			{
-				$insert=$this->Distributer_model->register_project();
-				if($insert == 'TRUE')
-				{
-					$this->session->set_flashdata('Message','Project added successfully..');
-					//redirect(base_url().'/'.$regvalue);
-					redirect('Distributer_Manufracture/add_project_view','refresh');
-				}
-				else
-				{
-					$this->session->set_flashdata('Error','Project not added.');
-					redirect('Distributer_Manufracture/add_project_view','refresh');
-				}
-			}
-		}
-		$data['prdata']=$this->Distributer_model->all_distributer();
-		$data['main_content'] = 'distributer/add_project';
-        $this->load->view('includes/header_d',$data);
+            if($this->input->post()){
+                    $post=$this->input->post();
+                    //echo "<pre>"; print_r($post); die;
+                    $this->form_validation->set_rules('name','Project Name','required');
+                    $this->form_validation->set_rules('state_id','State','required');
+                    $this->form_validation->set_rules('district_id','District','required');
+                    $this->form_validation->set_rules('city','City','required');
+                    $this->form_validation->set_rules('description','Description','required');
+                    if($this->form_validation->run()==TRUE){
+                        $data=array( 'id'=>$post['id'],
+                                    'name'=>$post['name'],    
+                                    'state_id'=>$post['state_id'],    
+                                    'district_id'=>$post['district_id'],    
+                                    'description'=>$post['description'],    
+                                    'city'=>$post['city'],    
+                                    'created_at'=>$post['created_at'],
+                                    'distributer_id'=>$this->session->userdata('distributer')['user_id'],
+                                );
+                        $insert=$this->Distributer_model->add_project($data);
+                        if($insert){
+                            $this->session->set_flashdata('Message','Project added successfully.');
+                            redirect('Distributer_Manufracture/add_project_view','refresh');
+                        }else{
+                            $this->session->set_flashdata('Error','Project not added.');
+                            redirect('Distributer_Manufracture/add_project_view','refresh');
+                        }
+                    }
+            }
+            $data['state']=$this->Common_model->get_state();	
+            $data['prdata']=$this->Distributer_model->all_distributer();
+            $data['main_content'] = 'distributer/form_project';
+            $this->load->view('includes/header_d',$data);
 	}
 	public function edit_project_view()
 	{
-		$data['prdata']=$this->Distributer_model->get_all_projects();
-		$data['main_content'] = 'distributer/edit_project';
-        $this->load->view('includes/header',$data);
+            $get=$this->input->get();
+            if($this->input->post()){
+                    $post=$this->input->post();
+                    //echo "<pre>"; print_r($post); die;
+                    $this->form_validation->set_rules('name','Project Name','required');
+                    $this->form_validation->set_rules('state_id','State','required');
+                    $this->form_validation->set_rules('district_id','District','required');
+                    $this->form_validation->set_rules('city','City','required');
+                    $this->form_validation->set_rules('description','Description','required');
+                    if($this->form_validation->run()==TRUE){
+                        $data=array( 'id'=>$post['id'],
+                                    'name'=>$post['name'],    
+                                    'state_id'=>$post['state_id'],    
+                                    'district_id'=>$post['district_id'],    
+                                    'description'=>$post['description'],    
+                                    'city'=>$post['city'],    
+                                );
+                        $update=$this->Distributer_model->edit_project($data);
+                        if($update){
+                            $this->session->set_flashdata('Message','Project Edit successfully.');
+                            redirect('Distributer_Manufracture/list_project_view','refresh');
+                        }else{
+                            $this->session->set_flashdata('Error','Project not edited.');
+                            redirect('Distributer_Manufracture/add_project_view','refresh');
+                        }
+                    }
+                    $get['id']=$post['id'];
+            }
+            $data['state']=$this->Common_model->get_state();	
+            $data['project_details']=$this->Distributer_model->get_project_by_id($get['id']);
+            $data['main_content'] = 'distributer/form_project';
+            $this->load->view('includes/header',$data);
 	}
 	public function list_project_view()
 	{
-		//$data['prdata']=$this->Distributer_model->all_distributer();
-		$data['main_content'] = 'distributer/list_project';
-        $this->load->view('includes/header_d',$data);
+            $data['projects']=$this->Distributer_model->get_all_projects();
+            //echo "<pre>"; print_r($data['projects']); die;
+            $data['main_content'] = 'distributer/list_project';
+            $this->load->view('includes/header_d',$data);
+	}
+        public function delete_project()
+	{
+            if(!empty($_GET['id'])){
+                $delete=$this->Distributer_model->delete_project($_GET['id']);
+                if($delete){
+                    $this->session->set_flashdata('Message','Project Deleted successfully.');
+                }else{
+                    $this->session->set_flashdata('Error','Project not deleted.');
+                }
+            }
+            redirect('Distributer_Manufracture/list_project_view','refresh');
 	}
 }
 ?>
