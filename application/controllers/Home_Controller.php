@@ -236,10 +236,6 @@ class Home_Controller extends CI_Controller
 			//$data['main_content']='admin/add_product';
 			//$this->load->view('includes/header',$data);
 		}
-		if(isset($_GET['pid']))
-		{
-			$data['product_info']=$this->Home_model->get_product_by_id($_GET['pid']);
-		}
 		$pdata=$this->Home_model->get_products();
 		if($pdata){
 			$data['product']=$pdata;

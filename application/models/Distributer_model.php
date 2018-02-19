@@ -89,5 +89,15 @@ class Distributer_model extends CI_Model
 
         return $query->result_array();
 	}
+	public function get_all_projects_by_dist_id($id)
+	{
+		$query=$this->db->where('distributer_id',$id)->get('soyo_projects');
+		if($query)
+		{
+			return $query->result();
+		}
+		else
+			return false;
+	}
 }
 ?>

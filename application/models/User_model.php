@@ -188,5 +188,23 @@ class User_model extends CI_Model
             return false;
         }
     }
+    public function get_all_user_by_project($id)
+    {
+        $this->db->where('type','3');
+        $this->db->where('project_id',$id);
+        $query =$this->db->get('soyo_users');
+        return $query->result();
+    }
+    public function get_all_user_with_user_site_information_by_project($id)
+    {
+
+        $this->db->select('*');
+        $this->db->from('soyo_users su');
+        $this->db->join('soyo_user_site_information susi','susi.user_id=su.user_id');
+        $this->db->where('su.type','3');
+        $this->db->where('su.project_id',$id);
+        $query=$this->db->get();
+        return $query->result();
+    }
 }   
 ?>

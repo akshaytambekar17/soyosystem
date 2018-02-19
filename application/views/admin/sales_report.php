@@ -119,7 +119,7 @@
 														</td>
 														<td>
 															<?php
-																$device_type=$this->Admin_model->get_device_by_id($row->project);
+																$device_type=$this->Admin_model->get_device_by_id($row->device_type);
 																echo $device_type[0]->device_name;
 															?>
 														</td>

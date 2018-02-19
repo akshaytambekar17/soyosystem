@@ -13,11 +13,31 @@
 	<div class="card">
 		<div class="card-body">
 	
-			<i class="batch-icon batch-icon-nope"></i>
-			 <a href="#">Fault</a>&nbsp;|&nbsp;
-	
-			Pump ON/OFF
-			<input checked data-toggle="toggle" data-size="small" data-style="ios" type="checkbox">
+			
+			 <a href="#"><i class="batch-icon batch-icon-nope"></i>
+			 Fault</a>&nbsp;|&nbsp;
+			<span class="data-range dropdown">
+				<a href="#" class="dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+					<i class="batch-icon batch-icon-calendar"></i>
+					Pump ON/OFF
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button">
+					<?php
+					foreach($device as $row)
+					{
+					?>
+					<p class="dropdown-item"><?php echo $row->imei_no;?>
+						<span><input checked data-toggle="toggle" data-size="small" data-style="ios" type="checkbox">
+						</span>
+					</p>
+					<?php
+					}
+					?>
+				</div>
+			</span>
+			<span>
+				<img src="<?php echo base_url();?>assets/img/network.png" width="50" height="20" alt="Soyo Systems" class="pull-right">
+			</span>
 
 		</div>
 	</div>

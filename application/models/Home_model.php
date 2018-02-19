@@ -268,11 +268,5 @@ class Home_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result(); 
 	}
-	public function get_product_by_id($pid)
-	{
-		$this->db->where('p_id',$pid);
-		$query = $this->db->get('soyo_product');
-		return $query->result();
-	}
 }
 ?>

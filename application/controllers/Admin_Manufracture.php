@@ -419,10 +419,17 @@ class Admin_Manufracture extends CI_Controller
 		if($this->input->post()){
 			$post=$this->input->post();
 			$this->form_validation->set_rules('distributer', 'Select Distributer', 'required');
-			$this->form_validation->set_rules('user', 'Select User', 'required');
+			//$this->form_validation->set_rules('user', 'Select User', 'required');
 			if($this->form_validation->run() == TRUE){
+				if(!empty($post['user']))
+                {
 				$data['user_details']=$this->User_model->get_all_user_with_user_site_information_by_user($post['user']);		
 				$data['user_id']=$post['user'];
+				}
+				else
+				{
+					$data['user_details']=$this->User_model->get_all_user_with_user_site_information_by_distributer($post['distributer']);					
+				}
 				$data['distributer_id']=$post['distributer'];
 			}else{
 				$data['user_details']=$this->User_model->get_all_user_with_user_site_information();
@@ -434,18 +441,7 @@ class Admin_Manufracture extends CI_Controller
 		$data['device_parameters_data']=$this->Admin_model->get_device_parameters_data();
 		$data['distributer']=$this->Distributer_model->get_all_distributer();
 		$data['main_content']='admin/sales_report';
-		if($this->uri->segment(3) == 1)
-		{
-			$this->load->view('includes/header',$data);
-		}
-		else if($this->uri->segment(3) == 2)
-		{
-			$this->load->view('includes/header_d',$data);
-		}
-		else
-		{
-			$this->load->view('includes/header_u',$data);
-		}
+		$this->load->view('includes/header',$data);
 	}
 	public function change_password(){
 		if($this->uri->segment(3) == 1)
@@ -801,6 +797,15 @@ class Admin_Manufracture extends CI_Controller
     		
     	}
     	echo json_encode($result_data);
+    }
+    public function delete_product()
+    {
+    	if($this->input->get('pid')){
+			$pid=$this->input->get('pid');
+			$result=$this->Admin_model->delete_product($pid);	
+			$this ->session-> set_flashdata('Message','Product Deleted Successfully'); 
+			redirect('Home_Controller/add_product','refresh');
+		}
     }
 }
 ?>
