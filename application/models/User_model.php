@@ -13,7 +13,14 @@ class User_model extends CI_Model
 		$user_session=$this->session->userdata('user');
 		$get_imei=$this->db->where('username',$user_session['user_name'])->get('soyo_user_system');
 		$get_config=$this->db->where('dev_imei',$get_imei->row('sys_imei'))->get('soyo_device_param');
-		return $get_config->result();
+        if($get_imei->num_rows() > 0)
+        {
+            return $get_config->result();
+        }
+		else
+        {
+            return false;
+        }
 	}
 	public function get_all_user()
 	{

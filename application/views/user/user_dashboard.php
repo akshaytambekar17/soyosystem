@@ -31,12 +31,13 @@
 					<span class="data-range dropdown">
 						<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 							<i class="batch-icon batch-icon-calendar"></i>
+							Export
 						</a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button">
 							<a class="dropdown-item" href="today">Today</a>
-							<a class="dropdown-item" href="week">This Week</a>
+							<a class="dropdown-item active" href="week">This Week</a>
 							<a class="dropdown-item" href="month">This Month</a>
-							<a class="dropdown-item active" href="year">This Year</a>
+							<a class="dropdown-item" href="year">This Year</a>
 						</div>
 					</span>
 				</div>
@@ -48,64 +49,61 @@
 			</div>
 		</div>
 		<br>
-			<?php foreach($dev_val as $row)
-			{?>
-			<div class="row">
-				<div class="col-md-6 col-lg-6 col-xl-6 mb-5">
-					<div class="card card-tile card-xs bg-primary bg-gradient text-center">
-						<div class="card-body p-4">
-							<div class="tile-left">
-								<i class="batch-icon batch-icon-list batch-icon-xxl"></i>
-							</div>
-							<div class="tile-right">
-								<div class="tile-number"><?php echo $row->acv3;?></div>
-								<div class="tile-description">AC Voltage 3</div>
-							</div>
+		<div class="row">
+			<div class="col-md-6 col-lg-6 col-xl-6 mb-5">
+				<div class="card card-tile card-xs bg-primary bg-gradient text-center">
+					<div class="card-body p-4">
+						<div class="tile-left">
+							<i class="batch-icon batch-icon-list batch-icon-xxl"></i>
 						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-6 col-xl-6 mb-5">
-					<div class="card card-tile card-xs bg-secondary bg-gradient text-center">
-						<div class="card-body p-4">
-							<div class="tile-left">
-								<i class="batch-icon batch-icon-tag-alt-2 batch-icon-xxl"></i>
-							</div>
-							<div class="tile-right">
-								<div class="tile-number"><?php echo $row->enrg;?></div>
-								<div class="tile-description">Device Energy</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-6 col-xl-6 mb-5">
-					<div class="card card-tile card-xs bg-primary bg-gradient text-center">
-						<div class="card-body p-4">
-							<!-- Accepts .invisible: Makes the items. Use this only when you want to have an animation called on it later -->
-							<div class="tile-left">
-								<i class="batch-icon batch-icon-user-alt batch-icon-xxl"></i>
-							</div>
-							<div class="tile-right">
-								<div class="tile-number"><?php echo $row->lph; ?></div>
-								<div class="tile-description">Litter Per Hr. [LPH]</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6 col-lg-6 col-xl-6 mb-5">
-					<div class="card card-tile card-xs bg-secondary bg-gradient text-center">
-						<div class="card-body p-4">
-							<div class="tile-left">
-								<i class="batch-icon batch-icon-bulb-alt batch-icon-xxl"></i>
-							</div>
-							<div class="tile-right">
-								<div class="tile-number"><?php echo $row->itp;?></div>
-								<div class="tile-description">Input Terminal Power</div>
-							</div>
+						<div class="tile-right">
+							<div class="tile-number"><?= !empty($dev_val[0]->acv3)?$dev_val[0]->acv3:'0'?></div>
+							<div class="tile-description">AC Voltage 3</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<?php } ?>
+			<div class="col-md-6 col-lg-6 col-xl-6 mb-5">
+				<div class="card card-tile card-xs bg-secondary bg-gradient text-center">
+					<div class="card-body p-4">
+						<div class="tile-left">
+							<i class="batch-icon batch-icon-tag-alt-2 batch-icon-xxl"></i>
+						</div>
+						<div class="tile-right">
+							<div class="tile-number"><?= !empty($dev_val[0]->enrg)?$dev_val[0]->enrg:'0'?></div>
+							<div class="tile-description">Device Energy</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-6 col-xl-6 mb-5">
+				<div class="card card-tile card-xs bg-primary bg-gradient text-center">
+					<div class="card-body p-4">
+						<!-- Accepts .invisible: Makes the items. Use this only when you want to have an animation called on it later -->
+						<div class="tile-left">
+							<i class="batch-icon batch-icon-user-alt batch-icon-xxl"></i>
+						</div>
+						<div class="tile-right">
+							<div class="tile-number"><?= !empty($dev_val[0]->lph)?$dev_val[0]->lph:'0'?></div>
+							<div class="tile-description">Litter Per Hr. [LPH]</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6 col-lg-6 col-xl-6 mb-5">
+				<div class="card card-tile card-xs bg-secondary bg-gradient text-center">
+					<div class="card-body p-4">
+						<div class="tile-left">
+							<i class="batch-icon batch-icon-bulb-alt batch-icon-xxl"></i>
+						</div>
+						<div class="tile-right">
+							<div class="tile-number"><?= !empty($dev_val[0]->itp)?$dev_val[0]->itp:'0'?></div>
+							<div class="tile-description">Input Terminal Power</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="col-md-4 col-lg-4 col-xl-4 mb-5">
 		<div class="card">
