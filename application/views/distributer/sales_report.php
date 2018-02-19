@@ -53,14 +53,16 @@
 										<?php echo validation_errors('<div class="error">', '</div>'); ?>
 										<div class="row">
 											<div class="col-md-3">
-												<select id="distributer" name="distributer" class="form-control select2"  data-live-search="true" >
+												<select id="project" name="project" class="form-control select2"  data-live-search="true" >
 
-	                                                <option disabled selected>Select Distributor</option>
-                                                        <?php foreach ($distributer as $value) { ?>
-                                                           <option value="<?php echo $value->user_id;?>">
-                                                                <?php echo $value->fname." ".$value->lname; ?>      
-                                                           </option>
-	                                                   <?php } ?>  
+	                                                <option disabled selected>Select Project</option>
+                                                        <?php 
+                                                        	foreach ($projects as $value) { ?>
+	                                                           <option value="<?php echo $value->id;?>">
+	                                                                <?php echo $value->name; ?>      
+	                                                           </option>
+		                                                   <?php } 
+                                                      ?>   
 	                                            </select>
 											</div>
 											<div class="col-md-3">
@@ -142,29 +144,25 @@
 							</div>
 						</div>
 					</div>
-					<div class="row mb-4">
-						<div class="col-md-12">
-							<footer>
-								Powered by - <a href="http://base5builder.com/?click_source=quillpro_footer_link" target="_blank" style="font-weight:300;color:#ffffff;background:#1d1d1d;padding:0 3px;">Base<span style="color:#ffa733;font-weight:bold">5</span>Builder</a>
-							</footer>
-						</div>
-					</div>
 				</main>
 			</div>
 		</div>
 	</div>
+
 	<script type="text/javascript">
 	$(document).ready(function(){
 		
 		$(".alert").delay(5000).slideUp(200, function() {
           	$(this).alert('close');
       	});
-		$("#distributer").change(function(){
-			var distributer = $(this).val();
+
+      	if($)
+		$("#project").change(function(){
+			var project = $(this).val();
 			$.ajax({
               	type: "POST",
-              	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/get_user_by_distributer",
-              	data: { 'distributer' : distributer},
+              	url: "<?php echo base_url(); ?>" + "/Distributer_Manufracture/get_user_by_project",
+              	data: { 'project' : project},
               	dataType: 'html',
               	success: function(data){
 	                var obj = $.parseJSON(data);
@@ -178,31 +176,31 @@
 		$("#csv_export").click(function(){
             
             var user_id=$("#user_id").val();
-            var distributer_id=$("#distributer").val();
+            var project_id=$("#project").val();
             
-            if(user_id=='' &&  (distributer_id=='' || distributer_id==null)){
+            if(user_id=='' &&  (project_id=='' || project_id==null)){
                 alert("User is not selected all data will export");
-                window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_export'; 
-            }else if (user_id=='' &&  (distributer_id!='' || distributer_id!=null)){
-            	alert("Distributor is only selected all user related to distributer will export");
-               window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_export?distributer_id='+distributer_id;  
+                window.location= '<?php echo base_url(); ?>Distributer_Manufracture/sale_reports_export'; 
+            }else if (user_id=='' &&  (project_id!='' || project_id!=null)){
+            	alert("Project is only selected all user related to project will export");
+               window.location= '<?php echo base_url(); ?>Distributer_Manufracture/sale_reports_export?project_id='+project_id;  
             }else{
-               window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_export?user_id='+user_id; 
+               window.location= '<?php echo base_url(); ?>Distributer_Manufracture/sale_reports_export?user_id='+user_id; 
             }
         });
         $("#pdf_export").click(function(){
             
             var user_id=$("#user_id").val();
-            var distributer_id=$("#distributer_id").val();
-            if(user_id=='' &&  (distributer_id=='' || distributer_id==null)){
+            var project_id=$("#project_id").val();
+            if(user_id=='' &&  (project_id=='' || project_id==null)){
                 alert("User is not selected all data will export");
-                window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_pdf_export'; 
-            }else if (user_id=='' &&  (distributer_id!='' || distributer_id!=null)){
-            	alert("Distributor is only selected all user related to distributer will export");
-                window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_pdf_export?distributer_id='+distributer_id;  
+                window.location= '<?php echo base_url(); ?>Distributer_Manufracture/sale_reports_pdf_export'; 
+            }else if (user_id=='' &&  (project_id!='' || project_id!=null)){
+            	alert("Project is only selected all user related to project will export");
+                window.location= '<?php echo base_url(); ?>Distributer_Manufracture/sale_reports_pdf_export?project_id='+project_id;  
             }else{
                 
-                window.location= '<?php echo base_url(); ?>Admin_Manufracture/sale_reports_pdf_export?user_id='+user_id; 
+                window.location= '<?php echo base_url(); ?>Distributer_Manufracture/sale_reports_pdf_export?user_id='+user_id; 
             }
         });
 

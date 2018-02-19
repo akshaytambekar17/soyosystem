@@ -93,7 +93,7 @@
 						</a>
 						<ul class="nav nav-pills flex-column">
 							<li class="nav-item">
-								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/sales_report/<?php echo $session['user_type'];?>">
+								<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/sales_report/?id=<?php echo $session['user_id'];?>&type=<?php echo $session['user_type'];?>">
 									<i class="batch-icon batch-icon-star"></i>
 								Sales Report</a><br>
 							</li>
@@ -278,7 +278,7 @@
 											foreach($notifications as $notification){ 
 									?>
 										<li class="media">
-											<a href="<?php echo base_url();?>Home_Controller/list_notification">
+											<a href="<?php echo base_url();?>Home_Controller/list_notification/<?php echo $session['user_type']?>">
 												<i class="batch-icon batch-icon-bell batch-icon-xl d-flex mr-3"></i>
 												<div class="media-body">
 													<h6 class="mt-0 mb-1 notification-heading"><?= $notification['message']?></h6>
@@ -288,7 +288,7 @@
 										</li>
 									<?php }	}else{ ?>
 										<li class="media">
-											<a href="<?php echo base_url();?>Home_Controller/list_notification">
+											<a href="<?php echo base_url();?>Home_Controller/list_notification/<?php echo $session['user_type']?>">
 												<div class="media-body">
 													<h6 class="mt-0 mb-1 notification-heading">No notifications</h6>
 												</div>

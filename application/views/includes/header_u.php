@@ -115,7 +115,7 @@
 					<div class="navbar-collapse" id="navbar-header-content">
 						<ul class="navbar-nav navbar-language-translation mr-auto">
 							<li class="nav-item logo-nav-item">
-									<a class="navbar-brand" href="<?php echo base_url();?>Admin_Manufracture">
+									<a class="navbar-brand" href="<?php echo base_url();?>User_Manufracture">
 										<img src="<?php echo base_url();?>assets/img/logo.png" width="145" height="32.3" alt="Soyo Systems">
 									</a>
 							</li>
@@ -143,7 +143,7 @@
 											foreach($notifications as $notification){ 
 									?>
 										<li class="media">
-											<a href="<?php echo base_url();?>Home_Controller/list_notification">
+											<a href="<?php echo base_url();?>Home_Controller/list_notification/<?php echo $session['user_type']?>">
 												<i class="batch-icon batch-icon-bell batch-icon-xl d-flex mr-3"></i>
 												<div class="media-body">
 													<h6 class="mt-0 mb-1 notification-heading"><?= $notification['message']?></h6>
@@ -153,7 +153,7 @@
 										</li>
 									<?php }	}else{ ?>
 										<li class="media">
-											<a href="<?php echo base_url();?>Home_Controller/list_notification">
+											<a href="<?php echo base_url();?>Home_Controller/list_notification/<?php echo $session['user_type']?>">
 												<div class="media-body">
 													<h6 class="mt-0 mb-1 notification-heading">No notifications</h6>
 												</div>

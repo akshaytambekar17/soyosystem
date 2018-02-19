@@ -20,8 +20,10 @@ class User_Manufracture extends CI_Controller
 
 	public function index()
 	{
+        $session=$this->session->userdata('user');
 		$data['dev_val']=$this->User_model->get_dev_val();
         $data['product']=$this->Home_model->get_products();
+        $data['device']=$this->Admin_model->get_devices_by_user($session['user_id']);
   		$data['main_content'] = 'user/user_dashboard';
         $this->load->view('includes/header_u',$data);
 	}

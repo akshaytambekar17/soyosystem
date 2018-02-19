@@ -11,7 +11,7 @@
 				<div class="row mb-4">
 					<div class="col-md-12">
 						<div class="card">
-							<img class="card-img" src="	<?php echo base_url();?>assets/img/featured.png" alt="Feature Image">
+							<img class="card-img" src="	<?php echo base_url();?>assets/img/bg2.png" alt="Feature Image">
 							<div class="card-user-profile">
 								<div class="profile-page-left">
 									<div class="row">

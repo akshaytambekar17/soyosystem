@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Host: 10.123.0.165:3306
--- Generation Time: Feb 18, 2018 at 08:07 AM
--- Server version: 5.7.20
--- PHP Version: 7.0.27-0+deb9u1
+-- Host: localhost
+-- Generation Time: Feb 19, 2018 at 03:46 PM
+-- Server version: 5.7.21-0ubuntu0.16.04.1
+-- PHP Version: 7.2.1-1+ubuntu16.04.1+deb.sury.org+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -21,8 +19,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `soyosystem`
 --
-CREATE DATABASE IF NOT EXISTS `soyosystem` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `soyosystem`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project_data`
+--
+
+CREATE TABLE `project_data` (
+  `project_id` int(100) NOT NULL,
+  `project_name` varchar(500) NOT NULL,
+  `project_state` varchar(200) NOT NULL,
+  `project_dist` varchar(200) NOT NULL,
+  `project_city` varchar(200) NOT NULL,
+  `sys_type` varchar(500) NOT NULL,
+  `d_id` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `project_data`
+--
+
+INSERT INTO `project_data` (`project_id`, `project_name`, `project_state`, `project_dist`, `project_city`, `sys_type`, `d_id`) VALUES
+(1, 'Pump', 'Maharashtra', 'Pune', 'Pune', 'solar', '0'),
+(2, 'AC', 'Maharashtra', 'Jalgoan', 'Jalgaon', 'Conditioner', '0'),
+(3, '2', 'fdgdf', 'gfdgvf', 'gfg', 'gfg', 'gdfg'),
+(4, 'dfgvfg', 'fgf', 'fgf', 'fg', 'gfgf', '4');
 
 -- --------------------------------------------------------
 
@@ -30,7 +52,6 @@ USE `soyosystem`;
 -- Table structure for table `soyo_device`
 --
 
-DROP TABLE IF EXISTS `soyo_device`;
 CREATE TABLE `soyo_device` (
   `id` bigint(11) NOT NULL,
   `device_name` varchar(255) NOT NULL,
@@ -39,19 +60,14 @@ CREATE TABLE `soyo_device` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `soyo_device`
---
-
-TRUNCATE TABLE `soyo_device`;
---
 -- Dumping data for table `soyo_device`
 --
 
 INSERT INTO `soyo_device` (`id`, `device_name`, `drive_manufacture_id`, `created_at`) VALUES
-(15, 'Solar Light', 0, '2018-02-16 05:19:53am'),
-(17, 'AC', 0, '2018-02-16 06:16:33am'),
-(18, 'LED', 0, '2018-02-16 06:20:07am'),
-(19, 'SOLAR_PUMP', 0, '2018-02-16 03:26:45am');
+(3, '862118028689567', 3, ''),
+(4, '866762020580492', 6, '2018-02-10 10:28:16am'),
+(6, '813697485216932', 3, '2018-02-10 04:10:13pm'),
+(7, 'Test device123', 0, '2018-02-12 11:27:18pm');
 
 -- --------------------------------------------------------
 
@@ -59,7 +75,6 @@ INSERT INTO `soyo_device` (`id`, `device_name`, `drive_manufacture_id`, `created
 -- Table structure for table `soyo_device_param`
 --
 
-DROP TABLE IF EXISTS `soyo_device_param`;
 CREATE TABLE `soyo_device_param` (
   `dvc_id` int(100) NOT NULL,
   `dev_imei` decimal(50,0) NOT NULL,
@@ -90,11 +105,6 @@ CREATE TABLE `soyo_device_param` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `soyo_device_param`
---
-
-TRUNCATE TABLE `soyo_device_param`;
---
 -- Dumping data for table `soyo_device_param`
 --
 
@@ -113,7 +123,6 @@ INSERT INTO `soyo_device_param` (`dvc_id`, `dev_imei`, `itv`, `itc`, `itp`, `acv
 -- Table structure for table `soyo_device_paramters`
 --
 
-DROP TABLE IF EXISTS `soyo_device_paramters`;
 CREATE TABLE `soyo_device_paramters` (
   `id` bigint(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -122,11 +131,6 @@ CREATE TABLE `soyo_device_paramters` (
   `unique_id` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `soyo_device_paramters`
---
-
-TRUNCATE TABLE `soyo_device_paramters`;
 --
 -- Dumping data for table `soyo_device_paramters`
 --
@@ -148,26 +152,8 @@ INSERT INTO `soyo_device_paramters` (`id`, `name`, `device_id`, `category`, `uni
 (34, 'Low Voltage', 6, '', 'F1'),
 (35, 'System ON', 6, '', 'F2'),
 (36, 'lnput Current B', 6, '', 'P1'),
-(37, 'acce', 7, '', 'F1'),
-(38, 'voltage', 8, '', 'P1'),
-(39, 'current', 9, '', 'P1'),
-(40, 'vol', 13, '', 'P1'),
-(41, 'Output Voltage', 14, '', 'P1'),
-(42, 'Output Current', 14, '', 'P2'),
-(43, 'Output Energy', 14, '', 'P3'),
-(44, 'LPH', 14, '', 'P4'),
-(45, 'PV Voltage', 14, '', 'P5'),
-(46, 'PV Current', 14, '', 'P6'),
-(47, 'Temp', 14, '', 'F1'),
-(48, 'OV', 14, '', 'F2'),
-(49, 'SC', 14, '', 'F3'),
-(50, 'acv1', 15, '', 'P1'),
-(51, 'itc1', 15, '', 'P2'),
-(52, 'act', 18, '', 'P1'),
-(53, 'itc', 0, '', 'P1'),
-(62, 'fvfv', 20, '', 'F2'),
-(63, 'cvcv', 20, '', 'P1'),
-(64, 'dcfdc', 20, '', 'F3');
+(38, 'acce', 7, '', 'F1'),
+(39, 'acce2', 7, '', 'F2');
 
 -- --------------------------------------------------------
 
@@ -175,7 +161,6 @@ INSERT INTO `soyo_device_paramters` (`id`, `name`, `device_id`, `category`, `uni
 -- Table structure for table `soyo_device_request`
 --
 
-DROP TABLE IF EXISTS `soyo_device_request`;
 CREATE TABLE `soyo_device_request` (
   `id` bigint(11) NOT NULL,
   `parameter` varchar(100) NOT NULL,
@@ -186,20 +171,15 @@ CREATE TABLE `soyo_device_request` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `soyo_device_request`
---
-
-TRUNCATE TABLE `soyo_device_request`;
---
 -- Dumping data for table `soyo_device_request`
 --
 
 INSERT INTO `soyo_device_request` (`id`, `parameter`, `value`, `imei`, `vfd_id`, `product_type`) VALUES
-(1, 'F1', 100, '862118028689567', 3, 1),
-(2, 'F2', 2345.91, '862118028689567', 3, 1),
+(1, 'F1', 100, '866762020580492', 3, 1),
+(2, 'F2', 2345.91, '866762020580492', 3, 1),
 (3, 'F3', 1098.09, '862118028689567', 3, 1),
-(4, 'P1', 0.9, '0987654321s', 3, 1),
-(5, 'P2', 8.9, '0987654321s', 3, 1),
+(4, 'P1', 0.9, '866762020580492', 3, 1),
+(5, 'P2', 8.9, '862118028689567', 3, 1),
 (6, 'P3', 3, '862118028689567', 3, 1),
 (7, 'F4', 1, '862118028689567', 3, 1),
 (8, 'F1', 100, '862118028689567', 3, 1),
@@ -230,18 +210,12 @@ INSERT INTO `soyo_device_request` (`id`, `parameter`, `value`, `imei`, `vfd_id`,
 -- Table structure for table `soyo_district`
 --
 
-DROP TABLE IF EXISTS `soyo_district`;
 CREATE TABLE `soyo_district` (
   `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL,
   `state_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `soyo_district`
---
-
-TRUNCATE TABLE `soyo_district`;
 --
 -- Dumping data for table `soyo_district`
 --
@@ -290,28 +264,23 @@ INSERT INTO `soyo_district` (`id`, `name`, `state_id`) VALUES
 -- Table structure for table `soyo_drive_manufacture`
 --
 
-DROP TABLE IF EXISTS `soyo_drive_manufacture`;
 CREATE TABLE `soyo_drive_manufacture` (
   `id` int(11) NOT NULL,
   `name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `soyo_drive_manufacture`
---
-
-TRUNCATE TABLE `soyo_drive_manufacture`;
---
 -- Dumping data for table `soyo_drive_manufacture`
 --
 
 INSERT INTO `soyo_drive_manufacture` (`id`, `name`) VALUES
-(1, 'ABB'),
-(2, 'INVT'),
-(3, 'Fuji'),
-(4, 'Delta'),
-(5, 'Medi'),
-(6, 'Siemens');
+(1, 'Nord Drive Systems Pvt. Ltd.'),
+(2, 'Srijan Control Drives'),
+(3, 'Chemco Group of Companies'),
+(4, 'Powercare Corporation'),
+(5, 'Gennext Control, India'),
+(6, 'Hyco Drive Company'),
+(7, 'Drive Technologies');
 
 -- --------------------------------------------------------
 
@@ -319,7 +288,6 @@ INSERT INTO `soyo_drive_manufacture` (`id`, `name`) VALUES
 -- Table structure for table `soyo_notification`
 --
 
-DROP TABLE IF EXISTS `soyo_notification`;
 CREATE TABLE `soyo_notification` (
   `id` int(100) NOT NULL,
   `message` varchar(500) NOT NULL,
@@ -333,11 +301,6 @@ CREATE TABLE `soyo_notification` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `soyo_notification`
---
-
-TRUNCATE TABLE `soyo_notification`;
---
 -- Dumping data for table `soyo_notification`
 --
 
@@ -347,13 +310,7 @@ INSERT INTO `soyo_notification` (`id`, `message`, `send_to`, `send_from`, `type`
 (3, 'Admin added new distributer Nikhil Vharamble', 1, 1, 0, 0, 17, 1, '2018-02-11 06:03:55pm'),
 (4, 'akshay tambekar added new user akshay User tambekar user', 1, 14, 0, 0, 20, 1, '2018-02-15 10:54:19am'),
 (5, 'akshay tambekar added new user test2 user surname user', 1, 14, 0, 0, 22, 1, '2018-02-15 10:57:52am'),
-(6, 'Admin added new distributer nilesh Dalvi', 1, 1, 0, 0, 23, 1, '2018-02-15 11:18:43am'),
-(7, 'Admin added new distributer asd RTY', 1, 1, 0, 0, 24, 1, '2018-02-15 11:54:12am'),
-(8, 'Admin added new distributer supriya khapare', 1, 1, 0, 0, 25, 1, '2018-02-15 12:51:32pm'),
-(9, 'Admin added new distributer Ravina Patil', 1, 1, 0, 0, 26, 1, '2018-02-16 06:08:13am'),
-(10, 'karishma kawate added new user Pritesh Patil', 1, 2, 0, 0, 27, 1, '2018-02-16 10:55:38am'),
-(11, 'Admin added new distributer mayuri gfbg', 1, 1, 0, 0, 28, 1, '2018-02-17 06:22:13am'),
-(12, 'Admin added new distributer Adhyaya Landge', 1, 1, 0, 0, 29, 1, '2018-02-17 09:24:31am');
+(6, 'Nikhil Vharamble added new user test2 user surname user', 1, 17, 0, 0, 27, 0, '2018-02-19 03:17:57pm');
 
 -- --------------------------------------------------------
 
@@ -361,7 +318,6 @@ INSERT INTO `soyo_notification` (`id`, `message`, `send_to`, `send_from`, `type`
 -- Table structure for table `soyo_product`
 --
 
-DROP TABLE IF EXISTS `soyo_product`;
 CREATE TABLE `soyo_product` (
   `p_id` int(10) NOT NULL,
   `product_name` varchar(500) COLLATE utf8_unicode_ci NOT NULL,
@@ -369,11 +325,6 @@ CREATE TABLE `soyo_product` (
   `added_by` int(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Truncate table before insert `soyo_product`
---
-
-TRUNCATE TABLE `soyo_product`;
 --
 -- Dumping data for table `soyo_product`
 --
@@ -389,21 +340,39 @@ INSERT INTO `soyo_product` (`p_id`, `product_name`, `product_img`, `added_by`) V
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `soyo_projects`
+--
+
+CREATE TABLE `soyo_projects` (
+  `id` bigint(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `state_id` int(11) NOT NULL,
+  `district_id` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `distributer_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `soyo_projects`
+--
+
+INSERT INTO `soyo_projects` (`id`, `name`, `state_id`, `district_id`, `description`, `city`, `created_at`, `distributer_id`) VALUES
+(1, 'Test project1', 15, 15, 'Test project description2', 'Kolhapur', '2018-02-19 12:23:17', 17);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `soyo_state`
 --
 
-DROP TABLE IF EXISTS `soyo_state`;
 CREATE TABLE `soyo_state` (
   `id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
   `country_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `soyo_state`
---
-
-TRUNCATE TABLE `soyo_state`;
 --
 -- Dumping data for table `soyo_state`
 --
@@ -452,7 +421,6 @@ INSERT INTO `soyo_state` (`id`, `name`, `country_id`) VALUES
 -- Table structure for table `soyo_users`
 --
 
-DROP TABLE IF EXISTS `soyo_users`;
 CREATE TABLE `soyo_users` (
   `user_id` int(100) NOT NULL,
   `fname` varchar(100) NOT NULL,
@@ -464,7 +432,7 @@ CREATE TABLE `soyo_users` (
   `email` varchar(200) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `adhar` int(16) NOT NULL,
+  `adhar` bigint(16) NOT NULL,
   `date` date NOT NULL,
   `time` varchar(50) NOT NULL DEFAULT '00:00:00',
   `type` int(3) NOT NULL,
@@ -473,33 +441,27 @@ CREATE TABLE `soyo_users` (
   `added_by` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
   `site_image` varchar(255) NOT NULL,
-  `created_at` varchar(255) NOT NULL
+  `created_at` varchar(255) NOT NULL,
+  `project_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `soyo_users`
---
-
-TRUNCATE TABLE `soyo_users`;
 --
 -- Dumping data for table `soyo_users`
 --
 
-INSERT INTO `soyo_users` (`user_id`, `fname`, `lname`, `state`, `dist`, `city`, `mobile`, `email`, `username`, `password`, `adhar`, `date`, `time`, `type`, `status`, `profile_image`, `added_by`, `address`, `site_image`, `created_at`) VALUES
-(1, 'Admin', 'Soyo1', '15', '', 'Kolhapurr', 987654321, 'info@gmail.com', 'admin', 'admin@123', 0, '2018-01-25', '01:00:', 1, 0, 'Screenshot_from_2018-02-16_19-24-06.png', 0, '', '', ''),
-(3, 'John', 'Carl', '15', '25', 'Bhusawal', 9156886093, 'john@gamil.com', 'johnnn', 'test123', 0, '2018-01-26', '12:37 ', 3, 0, 'Screenshot_from_2018-02-16_19-24-021.png', 0, 'pune', 'Screenshot_from_2018-02-16_19-23-531.png', ''),
-(5, 'vishal', 'Kawate', '15', '', 'Bhusawal', 7986543215, 'vish@gmail.com', 'vish', 'vish', 0, '2018-01-26', '12:44 ', 3, 1, '', 0, '', '', ''),
-(6, 'Yash', 'Khadke', '', '', 'Jalgaon', 8765432187, 'yash@gmail.com', 'yash', 'yash', 0, '2018-01-26', '12:54 ', 2, 0, 'Screenshot_from_2018-02-16_19-22-29.png', 0, '', '', ''),
-(10, 'Saniya', 'Sharma', 'Maharashtra', 'Pune', 'Pune', 9458699068, 'saniya@gmail.com', 'saniya', 'saniya', 0, '2018-02-02', '07:01 ', 3, 1, '', 0, '', '', ''),
-(14, 'akshay', 'tambekar', '15', '25', 'Pune', 12345678901, 'akitambekar17@gmail.com', 'tambekar', 'akshay', 0, '2018-02-09', '10:57:', 2, 1, 'admin4.png', 0, '', '', ''),
-(17, 'Nikhil', 'Vharamble', '15', '25', 'Pune', 12345678901, 'niks@gmail.com', 'niks', '12345', 0, '2018-02-11', '06:03:55pm', 2, 1, 'ERP_slider2.jpg', 0, '', '', ''),
-(19, 'Jolly', 'Trend', '15', '25', 'Pune', 7789456213, 'jolly@gmail.com', 'testuser1', '12345', 78, '2018-02-11', '06:03:55pm', 3, 0, 'images1.jpeg', 2, 'pune', 'images2.jpeg', '2018-02-13 12:45:55pm'),
-(20, 'akshay', 'tambekar', '15', '25', 'pune', 12345678901, 'akitambekar17@gmail.com', 'akshayuser', '123456', 0, '2018-02-15', '10:54:19am', 3, 1, 'admin5.png', 14, 'pune', 'Image_Slider2.jpg', '2018-02-15 10:54:19am'),
-(22, 'test2 user', 'surname user', '15', '25', 'pune', 1234567890, 'test2@gmail.com', 'test2 user', '12345', 0, '2018-02-15', '10:57:52am', 3, 0, 'ERP_slider4.jpg', 14, 'pune', 'Team_Velociracers___website_photo8.jpg', '2018-02-15 10:57:52am'),
-(23, 'nilesh', 'Dalvi', '15', '25', 'pune', 9527850831, 'nileshdalavi1315@gmail.com', 'nil', 'nilesh@123', 0, '2018-02-15', '11:18:43am', 2, 1, '', 0, '', '', ''),
-(24, 'asd', 'RTY', '15', '1', 'PP', 12434658766, 'gauravpowar@gmail.com', 'asd', 'asd', 0, '2018-02-15', '11:54:12am', 2, 1, '', 0, '', '', ''),
-(27, 'Pritesh', 'Patil', '15', '25', 'Pune', 9458699068, 'pritesh@gmail.com', 'pritesh', 'pritesh', 2147483647, '2018-02-16', '10:55:38am', 3, 0, 'profile.jpg', 2, 'Pune', 'Screenshot from 2017-12-28 13-43-07.png', '2018-02-16 10:55:38am'),
-(29, 'Adhyaya', 'Landge', '15', '25', 'pune', 9028863386, 'adhyaya.landge@gmail.com', 'aadi', 'adhyaya', 0, '2018-02-17', '09:24:31am', 2, 1, '', 0, '', '', '');
+INSERT INTO `soyo_users` (`user_id`, `fname`, `lname`, `state`, `dist`, `city`, `mobile`, `email`, `username`, `password`, `adhar`, `date`, `time`, `type`, `status`, `profile_image`, `added_by`, `address`, `site_image`, `created_at`, `project_id`) VALUES
+(1, 'Admin', 'Soyo', '15', '25', 'Kolhapur', 9876543213, 'info@gmail.com', 'admin', 'admin@123', 0, '2018-01-25', '01:00:', 1, 0, 'admin2.png', 0, '', '', '', 0),
+(2, 'karishma', 'kawate', '15', '25', 'Kolhapur', 9156886093, 'karishma6.kawat@gmail.com', 'kk', 'kk', 0, '2018-01-25', '07:32 ', 2, 0, 'debate_web_team.jpg', 0, '', '', '', 0),
+(3, 'test', 'test', '15', '25', 'Bhusawal', 9156886093, 'test@gamil.com', 'test', 'test123', 0, '2018-01-26', '12:37 ', 3, 1, '400266_237783952963915_21745964_n.jpg', 0, 'pune', 'Image_Slider1.jpg', '', 0),
+(5, 'vishal', 'Kawate', '15', '25', 'Bhusawal', 7986543215, 'vish@gmail.com', 'vish', 'vish', 0, '2018-01-26', '12:44 ', 3, 1, '', 0, '', '', '', 0),
+(6, 'Yash', 'Khadke', 'Maharashtra', 'Jalgoan', 'Jalgaon', 8765432187, 'yash@gmail.com', 'yash', 'yash', 0, '2018-01-26', '12:54 ', 2, 0, '', 0, '', '', '', 0),
+(8, 'ved', 'gfdgdf', 'fgvdfv', 'cvcvfd', 'fvd', 8765432187, 'hema1007@gmail.com', 'asas', 'asas', 0, '2018-02-02', '05:29 ', 2, 0, '', 0, '', '', '', 0),
+(10, 'Saniya', 'Sharma', 'Maharashtra', 'Pune', 'Pune', 9458699068, 'saniya@gmail.com', 'saniya', 'saniya', 0, '2018-02-02', '07:01 ', 3, 1, '', 0, '', '', '', 0),
+(17, 'Nikhil', 'Vharamble', '15', '25', 'Pune', 12345678901, 'niks@gmail.com', 'niks', '12345', 0, '2018-02-11', '06:03:55pm', 2, 1, 'ERP_slider2.jpg', 0, '', '', '', 0),
+(19, 'test1', 'test1', '15', '25', 'Pune', 7789456213, 'test@gmail.com', 'testuser1', '12345', 78, '2018-02-11', '06:03:55pm', 3, 1, 'images1.jpeg', 2, 'pune', 'images2.jpeg', '2018-02-13 12:45:55pm', 0),
+(20, 'akshay User', 'tambekar user', '15', '25', 'pune', 12345678901, 'akitambekar17@gmail.com', 'akshayuser', '123456', 0, '2018-02-15', '10:54:19am', 3, 1, 'admin5.png', 14, 'pune', 'Image_Slider2.jpg', '2018-02-15 10:54:19am', 0),
+(22, 'test2 user', 'surname user', '15', '25', 'pune', 12345678901, 'test2@gmail.com', 'test2 user', '12345', 0, '2018-02-15', '10:57:52am', 3, 0, 'ERP_slider4.jpg', 14, 'pune', 'Team_Velociracers___website_photo8.jpg', '2018-02-15 10:57:52am', 0),
+(27, 'test2 user', 'surname user', '15', '3', 'amrabati', 12345678901, 'test2@gmail.com', 'test2user', 'test', 1234567890123456, '2018-02-19', '03:17:57pm', 3, 0, 'coepfinal1.jpg', 17, 'amrvati', '', '2018-02-19 03:17:57pm', 1);
 
 -- --------------------------------------------------------
 
@@ -507,7 +469,6 @@ INSERT INTO `soyo_users` (`user_id`, `fname`, `lname`, `state`, `dist`, `city`, 
 -- Table structure for table `soyo_user_site_information`
 --
 
-DROP TABLE IF EXISTS `soyo_user_site_information`;
 CREATE TABLE `soyo_user_site_information` (
   `id` bigint(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -520,27 +481,21 @@ CREATE TABLE `soyo_user_site_information` (
   `installation_date` datetime NOT NULL,
   `warranty` varchar(255) NOT NULL,
   `imei_no` varchar(255) NOT NULL,
-  `project` int(11) NOT NULL,
-  `drive_manufacture_id` int(11) NOT NULL,
-  `drive_model_no` varchar(255) NOT NULL,
+  `device_type` int(11) NOT NULL,
+  `vfd_type` int(11) NOT NULL,
   `pipe_height` varchar(255) NOT NULL,
-  `pipe_diameter` varchar(255) NOT NULL
+  `pipe_diameter` varchar(255) NOT NULL,
+  `site_image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `soyo_user_site_information`
---
-
-TRUNCATE TABLE `soyo_user_site_information`;
 --
 -- Dumping data for table `soyo_user_site_information`
 --
 
-INSERT INTO `soyo_user_site_information` (`id`, `user_id`, `location`, `owner`, `solar_panel`, `pump`, `no_lbows`, `installer`, `installation_date`, `warranty`, `imei_no`, `project`, `drive_manufacture_id`, `drive_model_no`, `pipe_height`, `pipe_diameter`) VALUES
-(1, 5, 'pune', 'dist', 'a1', 'solar', '43', 'distributerdsd', '2018-02-13 12:45:55', '2', '123456789', 15, 3, 'grd1234', '21', '43'),
-(2, 20, 'pune', 'owener', 'solar panel', 'pump', '5', 'Akshay', '2018-02-15 10:54:19', '2', '0987654321s', 15, 2, '232', '15', '24'),
-(3, 22, 'pune', 'owener', 'solar panel', 'pump', '5', 'Akshay', '2018-02-15 10:57:52', '2', '0987654321s', 17, 2, '232', '15', '24'),
-(4, 27, 'mumbai', 'pritesh', 'solar panel', 'Solar pump', '43', 'Karishma', '2018-02-16 10:55:38', '1', '8976543218776', 19, 1, 'Pump2345', '34', '19');
+INSERT INTO `soyo_user_site_information` (`id`, `user_id`, `location`, `owner`, `solar_panel`, `pump`, `no_lbows`, `installer`, `installation_date`, `warranty`, `imei_no`, `device_type`, `vfd_type`, `pipe_height`, `pipe_diameter`, `site_image`) VALUES
+(1, 19, 'pune', 'dist', 'a1', 'solar', '43', 'distributerdsd', '2018-02-13 12:45:55', '2sd', '123456789', 6, 3, '21', '43', ''),
+(2, 20, 'pune', 'owener', 'solar panel', 'pump', '5', 'Akshay', '2018-02-15 10:54:19', '2', '866762020580492', 6, 2, '15', '24', ''),
+(3, 22, 'pune', 'owener', 'solar panel', 'pump', '5', 'Akshay', '2018-02-15 10:57:52', '2', '0987654321s', 3, 2, '15', '24', '');
 
 -- --------------------------------------------------------
 
@@ -548,7 +503,6 @@ INSERT INTO `soyo_user_site_information` (`id`, `user_id`, `location`, `owner`, 
 -- Table structure for table `soyo_user_system`
 --
 
-DROP TABLE IF EXISTS `soyo_user_system`;
 CREATE TABLE `soyo_user_system` (
   `sys_id` int(10) NOT NULL,
   `sys_imei` decimal(50,0) NOT NULL,
@@ -556,11 +510,6 @@ CREATE TABLE `soyo_user_system` (
   `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Truncate table before insert `soyo_user_system`
---
-
-TRUNCATE TABLE `soyo_user_system`;
 --
 -- Dumping data for table `soyo_user_system`
 --
@@ -580,7 +529,6 @@ INSERT INTO `soyo_user_system` (`sys_id`, `sys_imei`, `username`, `password`) VA
 -- Table structure for table `soyo_vfd`
 --
 
-DROP TABLE IF EXISTS `soyo_vfd`;
 CREATE TABLE `soyo_vfd` (
   `id` bigint(11) NOT NULL,
   `vfd_name` varchar(255) NOT NULL,
@@ -589,23 +537,22 @@ CREATE TABLE `soyo_vfd` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Truncate table before insert `soyo_vfd`
---
-
-TRUNCATE TABLE `soyo_vfd`;
---
 -- Dumping data for table `soyo_vfd`
 --
 
 INSERT INTO `soyo_vfd` (`id`, `vfd_name`, `drive_manufacture_id`, `created_at`) VALUES
-(1, 'VFD 11', 3, '2018-02-12 11:06:32pm'),
-(4, 'frenic', 3, '2018-02-15 12:28:28pm'),
-(8, 'LED Light', 6, '2018-02-16 06:19:19am'),
-(9, 'testing VFD', 3, '2018-02-17 06:29:47am');
+(1, 'VFD 1', 2, '2018-02-12 11:06:32pm'),
+(2, 'Testing vfd', 2, '2018-02-16 10:55:20pm');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `project_data`
+--
+ALTER TABLE `project_data`
+  ADD PRIMARY KEY (`project_id`);
 
 --
 -- Indexes for table `soyo_device`
@@ -657,6 +604,12 @@ ALTER TABLE `soyo_product`
   ADD PRIMARY KEY (`p_id`);
 
 --
+-- Indexes for table `soyo_projects`
+--
+ALTER TABLE `soyo_projects`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `soyo_state`
 --
 ALTER TABLE `soyo_state`
@@ -692,84 +645,80 @@ ALTER TABLE `soyo_vfd`
 --
 
 --
+-- AUTO_INCREMENT for table `project_data`
+--
+ALTER TABLE `project_data`
+  MODIFY `project_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `soyo_device`
 --
 ALTER TABLE `soyo_device`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `soyo_device_param`
 --
 ALTER TABLE `soyo_device_param`
   MODIFY `dvc_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT for table `soyo_device_paramters`
 --
 ALTER TABLE `soyo_device_paramters`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
-
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT for table `soyo_device_request`
 --
 ALTER TABLE `soyo_device_request`
   MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
 --
 -- AUTO_INCREMENT for table `soyo_district`
 --
 ALTER TABLE `soyo_district`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-
 --
 -- AUTO_INCREMENT for table `soyo_drive_manufacture`
 --
 ALTER TABLE `soyo_drive_manufacture`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT for table `soyo_notification`
 --
 ALTER TABLE `soyo_notification`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `soyo_product`
 --
 ALTER TABLE `soyo_product`
-  MODIFY `p_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
+  MODIFY `p_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `soyo_projects`
+--
+ALTER TABLE `soyo_projects`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `soyo_state`
 --
 ALTER TABLE `soyo_state`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
-
 --
 -- AUTO_INCREMENT for table `soyo_users`
 --
 ALTER TABLE `soyo_users`
-  MODIFY `user_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
-
+  MODIFY `user_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `soyo_user_site_information`
 --
 ALTER TABLE `soyo_user_site_information`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `soyo_user_system`
 --
 ALTER TABLE `soyo_user_system`
   MODIFY `sys_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT for table `soyo_vfd`
 --
 ALTER TABLE `soyo_vfd`
-  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-COMMIT;
-
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
