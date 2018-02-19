@@ -34,9 +34,10 @@ class Webservice_model extends CI_Model
             $query = $this->db->get();
             $result=$query->result_array(); 
             if($result){
-                $this->db->select("*");
-                $this->db->from("soyo_users");
-                $this->db->where("user_id",$result[0]['user_id']);
+                $this->db->select('*');
+                $this->db->from('soyo_users su');
+                $this->db->join('soyo_user_site_information susi','susi.user_id=su.user_id');
+                $this->db->where("su.user_id",$result[0]['user_id']);
                 $query = $this->db->get();
                 return $query->result_array(); 
             }else{

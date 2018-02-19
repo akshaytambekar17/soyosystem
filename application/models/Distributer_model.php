@@ -14,26 +14,35 @@ class Distributer_model extends CI_Model
                     $session=$this->session->userdata('user');
                 }
 	}
-	public function register_project()
-	{
-		$project_data=array(
-		'd_id' => $this->input->post('distributer'),
-		'project_name' => $this->input->post('pname'),
-		'project_state' => $this->input->post('state'),
-		'project_dist' => $this->input->post('dist'),
-		'project_city' => $this->input->post('city'),
-		'sys_type' => $this->input->post('systype')
-		);
-		
-		$insert=$this->db->insert('project_data',$project_data);
-		if($insert)
-		{					
-			return TRUE;
-		}
-		else
-		{
-			return FALSE;
-		}
+	public function add_project($post)
+	{  
+            //echo "<pre>"; print_r($post); die;
+            $insert=$this->db->insert('soyo_projects',$post);
+            if($insert){					
+                    return TRUE;
+            }else{
+                    return FALSE;
+            }
+	}
+	public function edit_project($post)
+	{  
+            $this->db->where('id',$post['id']);
+            $update=$this->db->update('soyo_projects',$post);
+            if($update){					
+                return TRUE;
+            }else{
+                return FALSE;
+            }
+	}
+	public function delete_project($id)
+	{  
+            $this->db->where('id',$id);
+            if($this->db->delete('soyo_projects')){
+                $result=true;
+            }else{
+                $result=false;
+            }
+            return $result;
 	}
 	public function profile_details()
 	{
@@ -53,17 +62,16 @@ class Distributer_model extends CI_Model
 			return FALSE;
 		}
 	}
-	public function get_project($pid)
+	public function get_project_by_id($pid)
 	{
-		$project_details=$this->db->where('project_id',$pid)->get('project_data');
+		$project_details=$this->db->where('id',$pid)->get('soyo_projects');
 		return $project_details->result();
 	}
 	public function get_all_projects()
 	{
-		$query = $this->db->get('project_data');
-
-        return $query->result_array();
-	}
+            $query = $this->db->get('soyo_projects');
+            return $query->result();
+        }
 	public function get_all_distributer()
 	{
 		$query = $this->db->where('type','2')->get('soyo_users');

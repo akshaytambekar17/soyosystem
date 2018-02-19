@@ -16,7 +16,7 @@
 					</div>
 					<div class="row mb-5">
 						<div class="col-md-12">
-							<?php if($message = $this ->session->flashdata('Message')){?>
+                                                <?php if($message = $this ->session->flashdata('Message')){?>
 					            <div class="col-md-12 ">
 					                <div class="alert alert-dismissible alert-success">
 					                    <button type="button" class="close" data-dismiss="alert">&times;</button>
