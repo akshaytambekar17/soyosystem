@@ -188,7 +188,6 @@
 	</div>
 </div>
 
-	
 
 		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
@@ -229,6 +228,7 @@
 				});		
 			}, 1000);
 		</script>
+
 <?php
 	//header("Refresh:7;url=".base_url()."User_Manufracture");
 ?>

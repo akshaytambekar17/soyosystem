@@ -65,6 +65,7 @@
 	text-align:center;
 	color:#5A5A5A;
 }
+
 .product_div h4:hover
 {
 	color:#18BBD5;
@@ -73,6 +74,11 @@
 {
 	opacity:0.7;
 }
+.text-red
+{
+	color:red;
+}
+
 .btn-view
 {
 	background-color:#1c678f;
@@ -84,4 +90,4 @@
 .imgdiv div
 {
 	margin-bottom:50%;
-}
+

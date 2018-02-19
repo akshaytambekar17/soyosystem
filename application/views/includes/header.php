@@ -49,6 +49,7 @@
     {
     	redirect(base_url());
     }
+
    // if($this->session->userdata('admin')){
         $session=$this->session->userdata('admin');
     //}//else if($this->session->userdata('distributor')){

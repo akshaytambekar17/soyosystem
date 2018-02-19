@@ -2,10 +2,17 @@
 -- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
+<<<<<<< HEAD
 -- Host: 10.123.0.165:3306
 -- Generation Time: Feb 16, 2018 at 06:28 AM
 -- Server version: 5.7.20
 -- PHP Version: 7.0.27-0+deb9u1
+=======
+-- Host: localhost
+-- Generation Time: Feb 16, 2018 at 03:18 PM
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 5.6.23
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -48,10 +55,17 @@ TRUNCATE TABLE `soyo_device`;
 --
 
 INSERT INTO `soyo_device` (`id`, `device_name`, `drive_manufacture_id`, `created_at`) VALUES
+<<<<<<< HEAD
 (14, 'SOLAR_PUMP', 0, '2018-02-16 03:26:45am'),
 (15, 'Solar Light', 0, '2018-02-16 05:19:53am'),
 (17, 'AC', 0, '2018-02-16 06:16:33am'),
 (18, '', 0, '2018-02-16 06:20:07am');
+=======
+(15, 'Solar Light', 0, '2018-02-16 05:19:53am'),
+(17, 'AC', 0, '2018-02-16 06:16:33am'),
+(18, 'LED', 0, '2018-02-16 06:20:07am'),
+(19, 'SOLAR_PUMP', 0, '2018-02-16 03:26:45am');
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 
 -- --------------------------------------------------------
 
@@ -162,7 +176,12 @@ INSERT INTO `soyo_device_paramters` (`id`, `name`, `device_id`, `category`, `uni
 (48, 'OV', 14, '', 'F2'),
 (49, 'SC', 14, '', 'F3'),
 (50, 'acv1', 15, '', 'P1'),
+<<<<<<< HEAD
 (51, 'itc1', 15, '', 'P2');
+=======
+(51, 'itc1', 15, '', 'P2'),
+(52, 'act', 18, '', 'P1');
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 
 -- --------------------------------------------------------
 
@@ -345,7 +364,12 @@ INSERT INTO `soyo_notification` (`id`, `message`, `send_to`, `send_from`, `type`
 (6, 'Admin added new distributer nilesh Dalvi', 1, 1, 0, 0, 23, 1, '2018-02-15 11:18:43am'),
 (7, 'Admin added new distributer asd RTY', 1, 1, 0, 0, 24, 1, '2018-02-15 11:54:12am'),
 (8, 'Admin added new distributer supriya khapare', 1, 1, 0, 0, 25, 1, '2018-02-15 12:51:32pm'),
+<<<<<<< HEAD
 (9, 'Admin added new distributer Ravina Patil', 1, 1, 0, 0, 26, 1, '2018-02-16 06:08:13am');
+=======
+(9, 'Admin added new distributer Ravina Patil', 1, 1, 0, 0, 26, 1, '2018-02-16 06:08:13am'),
+(10, 'karishma kawate added new user Pritesh Patil', 1, 2, 0, 0, 27, 1, '2018-02-16 10:55:38am');
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 
 -- --------------------------------------------------------
 
@@ -479,23 +503,39 @@ TRUNCATE TABLE `soyo_users`;
 
 INSERT INTO `soyo_users` (`user_id`, `fname`, `lname`, `state`, `dist`, `city`, `mobile`, `email`, `username`, `password`, `adhar`, `date`, `time`, `type`, `status`, `profile_image`, `added_by`, `address`, `site_image`, `created_at`) VALUES
 (1, 'Admin', 'Soyo', '15', '25', 'Kolhapur', 9876543213, 'info@gmail.com', 'admin', 'admin@123', 0, '2018-01-25', '01:00:', 1, 0, 'admin7.png', 0, '', '', ''),
+<<<<<<< HEAD
 (2, 'karishma', 'kawate', '15', '25', 'Kolhapur', 9156886093, 'karishma6.kawat@gmail.com', 'kk', 'kk', 0, '2018-01-25', '07:32 ', 2, 0, 'debate_web_team.jpg', 0, '', '', ''),
 (3, 'John', 'Carl', '15', '25', 'Bhusawal', 9156886093, 'john@gamil.com', 'test', 'test123', 0, '2018-01-26', '12:37 ', 3, 0, 'member-31.png', 0, 'pune', 'city.jpg', ''),
 (4, 'Reshma', 'Narkhede', 'Maharashtra', 'Jalgoan', 'Jalgaon', 9458699068, 'reshma@gmail.com', 'reshma', 'reshma', 0, '2018-01-26', '12:41 ', 2, 0, '', 0, '', '', ''),
 (5, 'vishal', 'Kawate', '15', '25', 'Bhusawal', 7986543215, 'vish@gmail.com', 'vish', 'vish', 0, '2018-01-26', '12:44 ', 3, 1, '', 0, '', '', ''),
+=======
+(2, 'karishma', 'kawate', '15', '25', 'Kolhapur', 9156886095, 'karishma6.kawat@gmail.com', 'kk', 'kk', 0, '2018-01-25', '07:32 ', 2, 0, 'profile.jpg', 0, '', '', ''),
+(3, 'John', 'Carl', '15', '25', 'Bhusawal', 9156886093, 'john@gamil.com', 'john', 'test123', 0, '2018-01-26', '12:37 ', 3, 0, 'member-31.png', 0, 'pune', 'city.jpg', ''),
+(4, 'Reshma', 'Narkhede', 'Maharashtra', 'Jalgoan', 'Jalgaon', 9458699068, 'reshma@gmail.com', 'reshma', 'reshma', 0, '2018-01-26', '12:41 ', 2, 0, '', 0, '', '', ''),
+(5, 'vishal', 'Kawate', '15', '', 'Bhusawal', 7986543215, 'vish@gmail.com', 'vish', 'vish', 0, '2018-01-26', '12:44 ', 3, 1, '', 0, '', '', ''),
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 (6, 'Yash', 'Khadke', 'Maharashtra', 'Jalgoan', 'Jalgaon', 8765432187, 'yash@gmail.com', 'yash', 'yash', 0, '2018-01-26', '12:54 ', 2, 0, '', 0, '', '', ''),
 (7, 'gfg', 'fgf', 'Maharashtra', 'fghhg', 'hb', 8765432187, 'karishma6.kawat@gmail.com', 'jkjk', 'jkjk', 0, '2018-02-02', '05:26 ', 2, 0, '', 0, '', '', ''),
 (8, 'ved', 'gfdgdf', 'fgvdfv', 'cvcvfd', 'fvd', 8765432187, 'hema1007@gmail.com', 'asas', 'asas', 0, '2018-02-02', '05:29 ', 2, 0, '', 0, '', '', ''),
 (10, 'Saniya', 'Sharma', 'Maharashtra', 'Pune', 'Pune', 9458699068, 'saniya@gmail.com', 'saniya', 'saniya', 0, '2018-02-02', '07:01 ', 3, 1, '', 0, '', '', ''),
 (14, 'akshay', 'tambekar', '15', '25', 'Pune', 12345678901, 'akitambekar17@gmail.com', 'tambekar', 'akshay', 0, '2018-02-09', '10:57:', 2, 1, 'admin4.png', 0, '', '', ''),
 (17, 'Nikhil', 'Vharamble', '15', '25', 'Pune', 12345678901, 'niks@gmail.com', 'niks', '12345', 0, '2018-02-11', '06:03:55pm', 2, 1, 'ERP_slider2.jpg', 0, '', '', ''),
+<<<<<<< HEAD
 (19, 'test1', 'test1', '15', '25', 'Pune', 7789456213, 'test@gmail.com', 'testuser1', '12345', 78, '2018-02-11', '06:03:55pm', 3, 0, 'images1.jpeg', 2, 'pune', 'images2.jpeg', '2018-02-13 12:45:55pm'),
+=======
+(19, 'Jolly', 'Trend', '15', '25', 'Pune', 7789456213, 'jolly@gmail.com', 'testuser1', '12345', 78, '2018-02-11', '06:03:55pm', 3, 0, 'images1.jpeg', 2, 'pune', 'images2.jpeg', '2018-02-13 12:45:55pm'),
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 (20, 'akshay', 'tambekar', '15', '25', 'pune', 12345678901, 'akitambekar17@gmail.com', 'akshayuser', '123456', 0, '2018-02-15', '10:54:19am', 3, 0, 'admin5.png', 14, 'pune', 'Image_Slider2.jpg', '2018-02-15 10:54:19am'),
 (22, 'test2 user', 'surname user', '15', '25', 'pune', 12345678901, 'test2@gmail.com', 'test2 user', '12345', 0, '2018-02-15', '10:57:52am', 3, 0, 'ERP_slider4.jpg', 14, 'pune', 'Team_Velociracers___website_photo8.jpg', '2018-02-15 10:57:52am'),
 (23, 'nilesh', 'Dalvi', '15', '25', 'pune', 9527850831, 'nileshdalavi1315@gmail.com', 'nil', 'nilesh@123', 0, '2018-02-15', '11:18:43am', 2, 1, '', 0, '', '', ''),
 (24, 'asd', 'RTY', '15', '1', 'PP', 12434658766, 'gauravpowar@gmail.com', 'asd', 'asd', 0, '2018-02-15', '11:54:12am', 2, 1, '', 0, '', '', ''),
 (25, 'supriya', 'khapare', '15', '25', 'pune', 12434658766, 'acd@gmail.com', 'supriya', '12345', 0, '2018-02-15', '12:51:32pm', 2, 1, '', 0, '', '', ''),
+<<<<<<< HEAD
 (26, 'Ravina', 'Patil', '15', '19', 'Nagpur', 7896543210, 'ravinapatil@gmail.com', 'ravina', 'ravina', 0, '2018-02-16', '06:08:13am', 2, 1, 'member-2.png', 0, '', '', '');
+=======
+(26, 'Ravina', 'Patil', '15', '19', 'Nagpur', 7896543210, 'ravinapatil@gmail.com', 'ravina', 'ravina', 0, '2018-02-16', '06:08:13am', 2, 1, 'member-2.png', 0, '', '', ''),
+(27, 'Pritesh', 'Patil', '15', '25', 'Pune', 9458699068, 'pritesh@gmail.com', 'pritesh', 'pritesh', 2147483647, '2018-02-16', '10:55:38am', 3, 0, 'profile.jpg', 2, 'Pune', 'Screenshot from 2017-12-28 13-43-07.png', '2018-02-16 10:55:38am');
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 
 -- --------------------------------------------------------
 
@@ -533,9 +573,16 @@ TRUNCATE TABLE `soyo_user_site_information`;
 --
 
 INSERT INTO `soyo_user_site_information` (`id`, `user_id`, `location`, `owner`, `solar_panel`, `pump`, `no_lbows`, `installer`, `installation_date`, `warranty`, `imei_no`, `project`, `drive_manufacture_id`, `drive_model_no`, `pipe_height`, `pipe_diameter`) VALUES
+<<<<<<< HEAD
 (1, 5, 'pune', 'dist', 'a1', 'solar', '43', 'distributerdsd', '2018-02-13 12:45:55', '2sd', '123456789', 6, 3, 'grd1234', '21', '43'),
 (2, 20, 'pune', 'owener', 'solar panel', 'pump', '5', 'Akshay', '2018-02-15 10:54:19', '2', '0987654321s', 0, 2, '232', '15', '24'),
 (3, 22, 'pune', 'owener', 'solar panel', 'pump', '5', 'Akshay', '2018-02-15 10:57:52', '2', '0987654321s', 3, 2, '232', '15', '24');
+=======
+(1, 5, 'pune', 'dist', 'a1', 'solar', '43', 'distributerdsd', '2018-02-13 12:45:55', '2', '123456789', 0, 3, 'grd1234', '21', '43'),
+(2, 20, 'pune', 'owener', 'solar panel', 'pump', '5', 'Akshay', '2018-02-15 10:54:19', '2', '0987654321s', 0, 2, '232', '15', '24'),
+(3, 22, 'pune', 'owener', 'solar panel', 'pump', '5', 'Akshay', '2018-02-15 10:57:52', '2', '0987654321s', 3, 2, '232', '15', '24'),
+(4, 27, 'mumbai', 'pritesh', 'solar panel', 'Solar pump', '43', 'Karishma', '2018-02-16 10:55:38', '1', '8976543218776', 19, 1, 'Pump2345', '34', '19');
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 
 -- --------------------------------------------------------
 
@@ -690,8 +737,12 @@ ALTER TABLE `soyo_vfd`
 -- AUTO_INCREMENT for table `soyo_device`
 --
 ALTER TABLE `soyo_device`
+<<<<<<< HEAD
   MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
+=======
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 --
 -- AUTO_INCREMENT for table `soyo_device_param`
 --
@@ -723,48 +774,92 @@ ALTER TABLE `soyo_drive_manufacture`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `soyo_device_paramters`
+--
+ALTER TABLE `soyo_device_paramters`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+--
+-- AUTO_INCREMENT for table `soyo_device_request`
+--
+ALTER TABLE `soyo_device_request`
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+--
+-- AUTO_INCREMENT for table `soyo_district`
+--
+ALTER TABLE `soyo_district`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+--
+-- AUTO_INCREMENT for table `soyo_drive_manufacture`
+--
+ALTER TABLE `soyo_drive_manufacture`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
 -- AUTO_INCREMENT for table `soyo_notification`
 --
 ALTER TABLE `soyo_notification`
+<<<<<<< HEAD
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
+=======
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 --
 -- AUTO_INCREMENT for table `soyo_product`
 --
 ALTER TABLE `soyo_product`
   MODIFY `p_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 --
 -- AUTO_INCREMENT for table `soyo_state`
 --
 ALTER TABLE `soyo_state`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 --
 -- AUTO_INCREMENT for table `soyo_users`
 --
 ALTER TABLE `soyo_users`
+<<<<<<< HEAD
   MODIFY `user_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
+=======
+  MODIFY `user_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 --
 -- AUTO_INCREMENT for table `soyo_user_site_information`
 --
 ALTER TABLE `soyo_user_site_information`
+<<<<<<< HEAD
   MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
+=======
+  MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 --
 -- AUTO_INCREMENT for table `soyo_user_system`
 --
 ALTER TABLE `soyo_user_system`
   MODIFY `sys_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 --
 -- AUTO_INCREMENT for table `soyo_vfd`
 --
 ALTER TABLE `soyo_vfd`
   MODIFY `id` bigint(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+<<<<<<< HEAD
 COMMIT;
 
+=======
+>>>>>>> 9969be939f232e37d5d668209c1bdfd45e3b26cf
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

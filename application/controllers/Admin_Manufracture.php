@@ -205,6 +205,7 @@ class Admin_Manufracture extends CI_Controller
 	{
 		$uid=$this->input->post('uid');
 		$utype=$this->input->post('utype');
+
 		/*$update_result=$this->Home_model->update();
 		if($update_result){
 			$this->session->set_flashdata('update_success','Information Updated Successfully');
