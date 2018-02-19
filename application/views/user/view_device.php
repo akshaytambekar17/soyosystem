@@ -31,8 +31,8 @@
                         <div class="col-md-12 alert-box">
                             <div class="card">
                                 <div class="">
-                                    <div class=p"rofile-page-center">
-                                            <h1 class="card-user-profile-name">&nbsp;View Device</h1>
+                                    <div class="profile-page-center">
+                                            <h1 class="card-user-profile-name">&nbsp;List Site Information</h1>
                                         <hr />
                                         <?php if(!empty($user_device_site_information)){ ?>
                                         <ul class="list-unstyled mt-5">
@@ -42,16 +42,25 @@
                                             <li class="media">
                                                 <div class="col-md-12">
                                                     <div class="row">
-                                                        <div class="col-md-4">  
-                                                            <h4>Device Type</h4>
-                                                            <p>
-                                                            <?php
-                                                                $device_name=$this->Admin_model->get_device_by_id($row->project);
-                                                                echo $device_name[0]->device_name;
-                                                            ?>
-                                                            </p>
+<!--                                                        <div class="col-md-1">  
+                                                            <input type="checkbox" data-id="<?= $row->id?>" name="site_id[]" value="<?= $row->id?>">
+                                                        </div>-->
+                                                        <div class="col-md-3">  
+                                                            <h4>Site name</h4>
+                                                            <p> <?php  echo $row->site_name; ?> </p>
                                                         </div>
-                                                        <div class="col-md-4">  
+                                                        <?php if($user_type==2){ ?>
+                                                            <div class="col-md-3">  
+                                                                <h4>Device Type</h4>
+                                                                <p>
+                                                                <?php
+                                                                    $device_name=$this->Admin_model->get_device_by_id($row->device_type);
+                                                                    echo $device_name[0]->device_name;
+                                                                ?>
+                                                                </p>
+                                                            </div>
+                                                        <?php }?>            
+                                                        <div class="col-md-3">  
                                                             <div class="media-body">
                                                                 <div class="media-title mt-0 mb-1">
                                                                     <h4>Device IMEI number</h4>
@@ -60,8 +69,17 @@
                                                                 
                                                             </div>
                                                         </div>
+                                                        <div class="col-md-3">  
+                                                            <div class="media-body">
+                                                                <div class="media-title mt-0 mb-1">
+                                                                    <a href="<?php echo base_url();?>User_Manufracture/edit_user_site?user_id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>&id=<?php echo $row->id?>" class="btn btn-info btn-sm waves-effect waves-light"><b>Edit User Site<br>Information</b></a>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                        <input type="hidden" value="<?= $row->user_id?>" name="user_id_hidden" id="user_id_hidden">
                                                         <?php if($user_type==1){ ?>
-                                                        <div class="col-md-4">
+                                                        <div class="col-md-3">
                                                             <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> 
                                                         </div>
                                                         <?php } ?>
@@ -104,23 +122,16 @@
                                                 <select id="deivce" name="deivce" class="form-control select2" data-live-search="true" >
 
                                                         <option disabled selected>Select Device Type</option>
-                                                                <?php foreach ($device_details as $value_device) { 
-                                                                    foreach ($user_device_site_information as $value_user) {
-                                                                        if($value_user->project==$value_device['id']){
-
-
-                                                                ?>
-                                                                   <option data-imei_no="<?= $value_user->imei_no?>" value="<?php echo $value_device['id'];?>">
-                                                                        <?php echo $value_device['device_name']; ?>      
-                                                                   </option>
-                                                           <?php } } } ?>  
+                                                            <?php foreach ($device_details as $value_device) { ?>
+                                                                <option  value="<?php echo $value_device['id'];?>">
+                                                                    <?php echo $value_device['device_name']; ?>      
+                                                                </option>
+                                                           <?php  }  ?>  
                                                     </select>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="device_parameter">
-                                                
-                                            </div>
+                                            <div class="device_parameter"></div>
                                         </div>
                                         <br> <br>
                                         <div class="row">
@@ -159,6 +170,7 @@
                         data: { 'id' : id },
                         dataType: 'json',
                         success: function(data){
+                            $(".device_parameter").html('');
                             $(".device_parameter").append('<br><br><div class="col-md-12"><label class="radio-inline"><input type="radio" name="exportsradio" value="single" >Single device data </label><label class="radio-inline"><input type="radio" name="exportsradio" value="all">All device data</label></div><br><br>');
                             $.each(data, function (index, value) {
                                 $(".device_parameter").append('<div class="col-md-6"><label class="checkbox-inline"><input type="checkbox" name="device_parameter_checkbox[]" value="'+index+'">'+value+'</label></div>');
@@ -194,17 +206,17 @@
                             values=JSON.stringify(values);
                             var device_type=$("input[name=exportsradio]:checked").val();
                             var device=$("#deivce").val();
-                            var imei_no=$("#deivce").find(':selected').data('imei_no')
-                            
-                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device_parameter='+values+'&device='+device+'&imei_no='+imei_no;  
+                            var user_id=$("#user_id_hidden").val();
+                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device_parameter='+values+'&device='+device+'&user_id='+user_id;  
                         }else{
                             var device=$("#deivce").val();
-                            var imei_no=$("#deivce").find(':selected').data('imei_no')
+                            var user_id=$("#user_id_hidden").val();
                             var device_type=$("input[name=exportsradio]:checked").val();
                             var values='';
-                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device='+device+'&imei_no='+imei_no; 
+                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device='+device+'&user_id='+user_id; 
                         }
                     }
+                    
                     
                 })
                 

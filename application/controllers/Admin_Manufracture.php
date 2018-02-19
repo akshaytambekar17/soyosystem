@@ -713,9 +713,9 @@ class Admin_Manufracture extends CI_Controller
     		foreach ($user_details as $key => $value) {
     			if($state_value['id']==$value->state){
     				$i++;
-    				$result_data[$state_value['name']]=$i;
+    				$result_data[$state_value['abbr']]=$i;
     			}else{
-    				$result_data[$state_value['name']]=$i;
+    				$result_data[$state_value['abbr']]=$i;
     			}
     		}
     	}

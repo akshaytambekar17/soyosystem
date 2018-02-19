@@ -28,21 +28,37 @@ $('.carousel .item').each(function(){
 });
 </script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript" src="<?php echo base_url();?>assets/js//html2canvas.js"></script>
+<script type="text/javascript" src="<?php echo base_url();?>assets/js/html2canvas.js"></script>
 <script type="text/javascript">
 
 	function screenshot(){
 		html2canvas([document.getElementById('sales_graph_div')], {   
-        	onrendered: function(canvas)  
-        	{
-	            var img = canvas.toDataURL();
-	            $.post("<?php echo base_url();?>Admin_Manufracture/imagesave", {data: img}, function (file) {
-	            window.location.href =  "<?php echo base_url();?>Admin_Manufracture/download?path="+ file});   
-	        }
-    	});
+                    onrendered: function(canvas)  
+                    {
+                        var img = canvas.toDataURL();
+                        $.post("<?php echo base_url();?>Admin_Manufracture/imagesave", {data: img}, function (file) {
+                        window.location.href =  "<?php echo base_url();?>Admin_Manufracture/download?path="+ file});   
+                    }
+                });
+	}
+	function screenshot_revenue(){
+		html2canvas([document.getElementById('revenue_graph_div')], {   
+                    onrendered: function(canvas)  
+                    {
+                        var img = canvas.toDataURL();
+                        $.post("<?php echo base_url();?>Admin_Manufracture/imagesave", {data: img}, function (file) {
+                        window.location.href =  "<?php echo base_url();?>Admin_Manufracture/download?path="+ file});   
+                    }
+                });
 	}
 	function sale_bar_graph(ths){	
   		var id=$(ths).data('id');
+                var div_id=$(ths).attr('id');
+                $.each($(".sales_bar_graph_class"), function() {
+                    var each_id=$(this).attr('id')
+                    $("#"+each_id).removeClass("active");
+                });
+                $("#"+div_id).addClass('active').removeClass("active1");
   		var name=$(ths).data('name');
 		$.ajax({
           	type: "POST",
@@ -87,59 +103,70 @@ $('.carousel .item').each(function(){
           	}
         });  		
     }
+    function time_function(ths){
+        $.each($(".revenue_report_a"), function() {
+            var each_id=$(this).attr('id');
+            $("#"+each_id).removeClass("active");
+        });
+        $(ths).addClass("active");
+    }
     function revenue_line_graph(ths){
     	var device_id=$(ths).data('id');
-  		var device_name=$(ths).data('name');
-    	var time_id=$('#revenue_report_time').find('.revenue_report_a.active').data('id');
-    	if(time_id==''){
+        var device_name=$(ths).data('name');
+        $.each($(".revenue_line_graph_class"), function() {
+            $(this).removeClass("active");
+        });
+        $(ths).addClass('active');
+        var time_id=$('#revenue_report_time').find('.revenue_report_a.active').data('id');
+        if(time_id==''){
     		alert("Please select time period");
     	}else{
-    		if(time_id=='year'){
-    			var time_name="Year";
-    		}else if(time_id="month"){
-    			var time_name="Month";	
-    		}else{
-    			var time_name="Day";	
-    		}
+            if(time_id=='year'){
+                    var time_name="Year";
+            }else if(time_id="month"){
+                    var time_name="Month";	
+            }else{
+                    var time_name="Day";	
+            }
 
-    		$.ajax({
-	          	type: "POST",
-	          	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getrevenuegraph",
-	          	data: { 'device_id' : device_id,'device_name' : device_name,'time_id' : time_id },
-	          	dataType: 'json',
-	          	success: function(data1){
-	          		
-					google.charts.load("current", {packages:['corechart', 'line']});
-				    google.charts.setOnLoadCallback(drawChart);
-					function drawChart() {
-						var data = new google.visualization.DataTable();
-	  
-				      	data.addColumn('string', time_name);
-				      	data.addColumn('number', 'Values');
-			      	 	$.each(data1, function (index, value) {
-				      	 	data.addRow([index, parseInt(value)]);
-		                    	
-	             		});
-				      	
-				      	var options = {
-					        chart: {
-					          title: 'Revenue Graph',
-					          subtitle: 'Device name '+ device_name,
-					        },
-					        width: 1100,
-					        height: 300,
-					        colors: ['blue' ]
+            $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getrevenuegraph",
+                    data: { 'device_id' : device_id,'device_name' : device_name,'time_id' : time_id },
+                    dataType: 'json',
+                    success: function(data1){
+
+                                    google.charts.load("current", {packages:['corechart', 'line']});
+                                google.charts.setOnLoadCallback(drawChart);
+                                    function drawChart() {
+                                            var data = new google.visualization.DataTable();
+
+                                    data.addColumn('string', time_name);
+                                    data.addColumn('number', 'Values');
+                                    $.each(data1, function (index, value) {
+                                            data.addRow([index, parseInt(value)]);
+
+                            });
+
+                                    var options = {
+                                            chart: {
+                                              title: 'Revenue Graph',
+                                              subtitle: 'Device name '+ device_name,
+                                            },
+                                            width: 1100,
+                                            height: 300,
+                                            colors: ['blue' ]
 
 
-				      	};
-				      	var chart = new google.charts.Line(document.getElementById('linechart_values'));
-	      				chart.draw(data, options);
-	      				
-			  		}
-	      		 	
-	          		
-	          	}
-	        });
+                                    };
+                                    var chart = new google.charts.Line(document.getElementById('linechart_values'));
+                                    chart.draw(data, options);
+
+                                    }
+
+
+                    }
+            });
     	}
 
 
@@ -327,7 +354,7 @@ $('.carousel .item').each(function(){
 	<div class="row dashboard">
 		<div class="col-md-12 col-lg-12">
 			<div class="card card-md" style="height: 500px;">
-				<div class="card-header revenue_graph_div">
+				<div class="card-header revenue_graph_div" id="revenue_graph_div">
 				<div class="row" style="padding: 10px">
 						<div class="col-md-5">
 							<h2>Revenue Graph</h2> 
@@ -339,9 +366,9 @@ $('.carousel .item').each(function(){
 										<i class="batch-icon batch-icon-calendar"></i>
 									</a>
 									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button" id="revenue_report_time">
-										<a class="dropdown-item revenue_report_a " href="javascript:void(0)" data-id="year">This Year</a>
-										<a class="dropdown-item revenue_report_a" href="javascript:void(0)" data-id="month">This Month</a>
-										<a class="dropdown-item revenue_report_a" href="javascript:void(0)" data-id="week">This Week</a>
+                                                                            <a class="dropdown-item revenue_report_a " href="javascript:void(0)" data-id="year" id="year" onclick="time_function(this)">Year</a>
+                                                                            <a class="dropdown-item revenue_report_a" href="javascript:void(0)" data-id="month" id="month" onclick="time_function(this)">Month</a>
+<!--										<a class="dropdown-item revenue_report_a" href="javascript:void(0)" data-id="week">This Week</a>-->
 									</div>
 								</span>
 							</div>
@@ -380,12 +407,12 @@ $('.carousel .item').each(function(){
 					</div>
 					<div class="row">
 						<div class="col-md-6">
-							<input type='button' id='but_screenshot' value='Export to Image' class="btn btn-success" onclick='screenshot();'>
+							<input type='button' id='but_screenshot' value='Export to Image' class="btn btn-success" onclick='screenshot_revenue();'>
 							
 						</div>
 					</div>
 				</div>
-				<div class="card-body" id="revenue_graph_div">
+				<div class="card-body" id="">
 					<!-- <div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Sales ($)" data-chart-legend-2="Orders" data-chart-height="281">
 						<canvas id="sales-overview"></canvas>
 						</div> -->

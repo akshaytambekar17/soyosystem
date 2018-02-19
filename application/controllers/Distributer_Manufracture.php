@@ -117,5 +117,25 @@ class Distributer_Manufracture extends CI_Controller
             }
             redirect('Distributer_Manufracture/list_project_view','refresh');
 	}
+    public function getsalebargraph(){
+        $post=$this->input->post();
+        $distributer_id=$this->session->userdata('distributer')['user_id'];
+        $user_details=$this->User_model->get_user_list_by_added_by($distributer_id,$post['id']);
+        $state=$this->Common_model->get_state();
+        $result_data=array();
+        foreach($state as $state_value){
+            $i=0;
+            foreach ($user_details as $key => $value) {
+                if($state_value['id']==$value->state){
+                    $i++;
+                    $result_data[$state_value['abbr']]=$i;
+                }else{
+                    $result_data[$state_value['abbr']]=$i;
+                }
+            }
+        }
+        echo json_encode($result_data);
+
+    }
 }
 ?>

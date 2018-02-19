@@ -58,6 +58,14 @@ class User_model extends CI_Model
         $result= $this->db->get();
         return $result->result_array();
     }
+    public function get_soyo_device_request_user_id($user_id){
+        $this->db->select("*");
+        $this->db->from("soyo_device_request sdr");
+        $this->db->join('soyo_user_site_information susi','susi.imei_no=sdr.imei');
+        $this->db->where('susi.user_id',$user_id);
+        $result= $this->db->get();
+        return $result->result_array();
+    }
     public function get_soyo_device_request($imei_no){
         $this->db->select("*");
         $this->db->from("soyo_device_request");
@@ -83,9 +91,14 @@ class User_model extends CI_Model
         $query = $this->db->where('user_id',$id)->get('soyo_users');
         return $query->result();
     }
-    public function get_user_site_by_id($id)
+    public function get_user_site_by_user_id($id)
     {
         $query = $this->db->where('user_id',$id)->get('soyo_user_site_information');
+        return $query->result();
+    }
+    public function get_user_site_by_id($id)
+    {
+        $query = $this->db->where('id',$id)->get('soyo_user_site_information');
         return $query->result();
     }
     public function get_user_list_by_devicetype($id)
@@ -93,7 +106,18 @@ class User_model extends CI_Model
         $this->db->select('*');
         $this->db->from('soyo_users su');
         $this->db->join('soyo_user_site_information susi','susi.user_id=su.user_id');
-        $this->db->where('susi.project',$id);
+        $this->db->where('susi.device_type',$id);
+        $query=$this->db->get();
+        return $query->result();
+    }
+    public function get_user_list_by_added_by($id,$device_id)
+    {
+        $this->db->select('*');
+        $this->db->from('soyo_users su');
+        $this->db->join('soyo_user_site_information susi','susi.user_id=su.user_id');
+        $this->db->where('susi.device_type',$device_id);
+        $this->db->where('su.added_by',$id);
+        //$this->db->group_by('su.user_id');
         $query=$this->db->get();
         return $query->result();
     }
@@ -149,6 +173,15 @@ class User_model extends CI_Model
     function add_user_site($data)
     {
         if($this->db->insert('soyo_user_site_information', $data)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    function edit_user_site($data)
+    {
+        $this->db->where('id',$data['id']);
+        if($this->db->update('soyo_user_site_information',$data)){
             return true;
         }else{
             return false;

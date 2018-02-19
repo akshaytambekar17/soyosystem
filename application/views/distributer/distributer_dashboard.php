@@ -41,9 +41,16 @@ $('.carousel .item').each(function(){
 	}
 	function sale_bar_graph(ths){	
   		var id=$(ths).data('id');
+	    var div_id=$(ths).attr('id');
+	    $.each($(".sales_bar_graph_class"), function() {
+	        var each_id=$(this).attr('id')
+	        $("#"+each_id).removeClass("active");
+	    });
+        $("#"+div_id).addClass('active');
+  		var name=$(ths).data('name');
 		$.ajax({
           	type: "POST",
-          	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getsalebargraph",
+          	url: "<?php echo base_url(); ?>" + "/Distributer_Manufracture/getsalebargraph",
           	data: { 'id' : id },
           	dataType: 'json',
           	success: function(data1){
@@ -54,7 +61,7 @@ $('.carousel .item').each(function(){
 					var data = new google.visualization.DataTable();
   
 			      	data.addColumn('string', 'States');
-			      	data.addColumn('number', 'Values');
+			      	data.addColumn('number', 'Users');
 		      	 	$.each(data1, function (index, value) {
 			      	 	data.addRow([index, parseInt(value)]);
 	                    	
@@ -63,7 +70,7 @@ $('.carousel .item').each(function(){
 			      	var options = {
 				        chart: {
 				          title: 'Sales Graph',
-				          subtitle: 'Show States and Count of Device'
+				          subtitle: 'Device name '+ name,
 				        },
 				        width: 1100,
 				        height: 300,
@@ -83,7 +90,7 @@ $('.carousel .item').each(function(){
           		
           	}
         });  		
-  }
+    }
   </script>
 <style type="text/css">
 	.device-panel img
@@ -152,7 +159,7 @@ $('.carousel .item').each(function(){
 									<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 										<i class="batch-icon batch-icon-calendar"></i>  Select Deivce Type
 									</a>
-									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button">
+									<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button" id="sales_report_id_div">
 										<?php 
 											$i=1;
 											foreach($device_list as $device){ 
@@ -163,7 +170,7 @@ $('.carousel .item').each(function(){
 													$active='';
 												}
 										?>
-											<a class="dropdown-item sales_bar_graph_class <?= $active?>" href="javascript:void(0)" id="<?= $device['id']?>_device" onclick="sale_bar_graph(this)" data-id="<?= $device['id']?>"><?= $device['device_name']?></a>
+											<a class="dropdown-item sales_bar_graph_class <?= $active?>" href="javascript:void(0)" id="<?= $device['id']?>_device" onclick="sale_bar_graph(this)" data-id="<?= $device['id']?>" data-name="<?= $device['device_name']?>"><?= $device['device_name']?></a>
 										<?php } ?>
 										
 									</div>
@@ -323,7 +330,95 @@ $('.carousel .item').each(function(){
 	</div>
 </div-->
 </div>
+<script type="text/javascript">
+	var id=$('#sales_report_id_div').find('.sales_bar_graph_class.active').data('id');
+	var name=$('#sales_report_id_div').find('.sales_bar_graph_class.active').data('name');
 
+	$.ajax({
+          	type: "POST",
+          	url: "<?php echo base_url(); ?>" + "/Distributer_Manufracture/getsalebargraph",
+          	data: { 'id' : id },
+          	dataType: 'json',
+          	success: function(data1){
+          		
+          		google.charts.load("current", {packages:['bar']});
+			    google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					var data = new google.visualization.DataTable();
+  
+			      	data.addColumn('string', 'States');
+			      	data.addColumn('number', 'Users');
+		      	 	$.each(data1, function (index, value) {
+			      	 	data.addRow([index, parseInt(value)]);
+	                    	
+             		});
+			      	
+			      	var options = {
+				        chart: {
+				          title: 'Sales Graph',
+				          subtitle: 'Device name '+ name,
+				        },
+				        width: 1100,
+				        height: 300,
+				        colors: ['red' ]
+
+				        /*axes: {
+		         		 	x: {
+					            0: {side: 'top'}
+				          	}
+				        }*/
+			      	};
+			      	var chart = new google.charts.Bar(document.getElementById('columnchart_values'));
+      				chart.draw(data, options);
+      				
+		  		}
+      		 	
+          		
+          	}
+        });  			
+	/*var device_id=$('#revenue_report_id_div').find('.revenue_line_graph_class.active').data('id');
+	var device_name=$('#revenue_report_id_div').find('.revenue_line_graph_class.active').data('name');
+	//var time_id=$('#revenue_report_time').find('.revenue_report_a.active').data('id');
+	var time_id="year";
+	$.ajax({
+          	type: "POST",
+          	url: "<?php echo base_url(); ?>" + "/Admin_Manufracture/getrevenuegraph",
+          	data: { 'device_id' : device_id,'device_name' : device_name,'time_id' : time_id },
+          	dataType: 'json',
+          	success: function(data1){
+          		
+				google.charts.load("current", {packages:['corechart', 'line']});
+			    google.charts.setOnLoadCallback(drawChart);
+				function drawChart() {
+					var data = new google.visualization.DataTable();
+  
+			      	data.addColumn('string', 'Year');
+			      	data.addColumn('number', 'Values');
+		      	 	$.each(data1, function (index, value) {
+			      	 	data.addRow([index, parseInt(value)]);
+	                    	
+             		});
+			      	
+			      	var options = {
+				        chart: {
+				          title: 'Revenue Graph',
+				          subtitle: 'Device name '+ device_name,
+				        },
+				        width: 1100,
+				        height: 300,
+				        colors: ['blue' ]
+
+
+			      	};
+			      	var chart = new google.charts.Line(document.getElementById('linechart_values'));
+      				chart.draw(data, options);
+      				
+		  		}
+      		 	
+          		
+          	}
+        });*/
+</script>
 </body>
 
 </html>
