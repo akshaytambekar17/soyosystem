@@ -259,11 +259,10 @@ class Admin_Manufracture extends CI_Controller
 		if($this->input->post()){
 			//echo "<pre>"; print_r($this->input->post()); die;
 			$this->form_validation->set_rules('device_name','Device name','required');
-			$this->form_validation->set_rules('category','Drive Manufacture','required');
 			$this->form_validation->set_message('required', '%s is required');
 			$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 				
-			if($this->form_validation->run())
+			if($this->form_validation->run()==TRUE)
 			{
 
 				$data_to_update=array(	'device_name'=>$this->input->post('device_name'),
@@ -298,7 +297,6 @@ class Admin_Manufracture extends CI_Controller
 		if($this->input->post()){
 			//echo "<pre>"; print_r($this->input->post()); die;
 			$this->form_validation->set_rules('device_name','Device name','required');
-			$this->form_validation->set_rules('category','Drive Manufacture','required');
 			$this->form_validation->set_message('required', '%s is required');
 			$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
