@@ -114,9 +114,10 @@
 
 					<div class="navbar-collapse" id="navbar-header-content">
 						<ul class="navbar-nav navbar-language-translation mr-auto">
-							<li class="nav-item dropdown">
-									<!-- <i class="batch-icon batch-icon-book-alt-"></i>
-									English -->
+							<li class="nav-item logo-nav-item">
+									<a class="navbar-brand" href="<?php echo base_url();?>Admin_Manufracture">
+										<img src="<?php echo base_url();?>assets/img/logo.png" width="145" height="32.3" alt="Soyo Systems">
+									</a>
 							</li>
 						</ul>
 						<ul class="navbar-nav navbar-notifications float-right">

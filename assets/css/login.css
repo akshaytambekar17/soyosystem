@@ -1,0 +1,47 @@
+body {
+  line-height: 1.4;
+  font-family: "Source Sans Pro", sans-serif;
+  -webkit-font-smoothing: antialiased;
+	background-image:url("../img/Slider1.jpg");
+}
+.logo
+{
+	margin-top:0%;
+	margin-bottom:0%;
+	height:7%;
+	width:100%;
+}
+.heading
+{
+	margin-bottom:0%;
+}
+.heading h1
+{
+	color:#0390b2;
+	font-size: 50px;
+  	font-weight:500;
+}
+.paragraph
+{
+	margin-top:0%;
+}
+.paragraph p
+{
+	color:#fff;
+	font-size: 14px;
+  	font-weight:400;
+	text-align:justify;
+}
+.address
+{
+	margin-top:0%;
+}
+.address p
+{
+	color:#fff;
+}
+.address h6
+{
+	color:#0390b2;
+}
+
