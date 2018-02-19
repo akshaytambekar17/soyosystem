@@ -48,27 +48,26 @@
 												?>
 											</div>
 											<div class="form-group">
-												<label for="exampleInputEmail1">Select Drive Manufacture</label>
 												<?php
 													if($this->form_validation->run() == FALSE)
 												{echo form_error('category');}
 												?>
 												<select id="category" name="category" class="form-control select2" placeholder="Select Category" data-live-search="true" >
 				                            		
-				                             	<option disabled selected>Select Category</option>
-						                        <option value="flags" <?= !empty($device_details[0]->category)?
-						                        	$device_details[0]->category=='flags'?"selected":'':''?> >
-			                                   			Flags      
-			                                   	</option>
-			                                   	<option value="values" <?= !empty($device_details[0]->category)?
-						                        	$device_details[0]->category=='values'?"selected":'':''?> >
-			                                   			Values      
-			                                   	</option>
+                                                                                                    <option disabled selected>Select Category</option>
+                                                                                                            <option value="flags" <?= !empty($device_details[0]->category)?
+                                                                                                                    $device_details[0]->category=='flags'?"selected":'':''?> >
+                                                                                                                    Flags      
+                                                                                                    </option>
+                                                                                                    <option value="values" <?= !empty($device_details[0]->category)?
+                                                                                                                    $device_details[0]->category=='values'?"selected":'':''?> >
+                                                                                                                    Values      
+                                                                                                    </option>
 					                                   
-					                            </select>
-						                        <label class="control-label" for="memberfamilyrelation-name">Device  Paramters </label>
+                                                                                                </select>
+                                                                                                <label class="control-label" for="memberfamilyrelation-name">Device  Paramters </label>
 
-												<div class="col-sm-12 fields_wrap">
+                                                                <div class="col-sm-12 fields_wrap">
 				                                    <?php  $count=1;
 				                                    		$flags=1;
 				                                    		$values=1;	
