@@ -68,9 +68,9 @@ class Admin_Manufracture extends CI_Controller
 			$this->form_validation->set_rules('fname', 'First Name', 'trim|required|alpha');
 			$this->form_validation->set_rules('lname', 'Last Name', 'trim|required|alpha');
 			$this->form_validation->set_rules('mobile', 'Mobile Number', 'trim|required|numeric');
-			$this->form_validation->set_rules('state', 'State', 'trim|required|alpha');
-			$this->form_validation->set_rules('district', 'District', 'trim|required|alpha');
-			$this->form_validation->set_rules('city', 'City', 'trim|required|alpha');
+			$this->form_validation->set_rules('state', 'State', 'trim|required');
+			$this->form_validation->set_rules('district', 'District', 'trim|required');
+			$this->form_validation->set_rules('city', 'City', 'trim|required');
 			$this->form_validation->set_rules('email', 'Email', 'trim|required');
 			$this->form_validation->set_rules('username', 'Username', 'trim|required');
 			$this->form_validation->set_rules('password', 'Password', 'required');

@@ -96,7 +96,7 @@
                                                         {
                                                             echo form_error('adhar');
                                                         }
-                                                       echo form_input(['type'=>'text','name'=>'adhar','class'=>'form-control form-group','pattern'=>'[0-9]{16}','placeholder'=>'Aadhaar Number','value'=>!empty($user_details[0]->adhar)?$user_details[0]->adhar:'']);
+                                                       echo form_input(['type'=>'text','name'=>'adhar','class'=>'form-control form-group','pattern'=>'[0-9]{12}','placeholder'=>'Aadhaar Number','value'=>!empty($user_details[0]->adhar)?$user_details[0]->adhar:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">

@@ -3,8 +3,18 @@
 	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
 <style>
+
+	.mobiletower{width:3%;}		
   .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
   .toggle.ios .toggle-handle { border-radius: 20px; }
+  ul.mobiletower li{ display:inline-block; border: 1px solid #ccc;}
+  ul.mobiletower li:hover { border-color: #e00; background-color: #e00; }
+  ul.mobiletower .oneicon { width: 3px; height: 8px; }
+  ul.mobiletower .towicon {   width: 4px; height: 12px;}
+  ul.mobiletower .threeicon { width: 4px; height: 15px; }
+  ul.mobiletower .fouricon { width: 4px; height: 18px; }
+  ul.mobiletower .fiveicon { width: 4px; height: 22px; }
+
 </style>
 </head>
 
@@ -36,7 +46,14 @@
 				</div>
 			</span>
 			<span>
-				<img src="<?php echo base_url();?>assets/img/network.png" width="50" height="20" alt="Soyo Systems" class="pull-right">
+				<!-- <img src="<?php echo base_url();?>assets/img/network.png" width="50" height="20" alt="Soyo Systems" class="pull-right"> -->
+				<ul class="pull-right list-inline mobiletower"> 
+					<li class="oneicon"></li>
+					<li class="towicon"></li>
+					<li class="threeicon"></li>
+					<li class="fouricon"></li>
+					<li class="fiveicon"></li>
+				</ul>
 			</span>
 
 		</div>
