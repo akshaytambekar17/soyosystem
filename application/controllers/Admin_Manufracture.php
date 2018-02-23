@@ -643,7 +643,7 @@ class Admin_Manufracture extends CI_Controller
                 $footer[0]=$i;
                 $footer[1]=$value->fname." ". $value->lname;
                 $footer[2]=$value->adhar;
-                $device_type=$this->Admin_model->get_device_by_id($value->project);
+                $device_type=$this->Admin_model->get_device_by_id($value->device_type);
 				$footer[3]=$device_type[0]->device_name;
 				$footer[4]=$value->imei_no;
                 $footer[5]=$value->installation_date;

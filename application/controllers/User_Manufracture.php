@@ -20,12 +20,19 @@ class User_Manufracture extends CI_Controller
 
 	public function index()
 	{
-        $session=$this->session->userdata('user');
-		$data['dev_val']=$this->User_model->get_dev_val();
-        $data['product']=$this->Home_model->get_products();
-        $data['device']=$this->Admin_model->get_devices_by_user($session['user_id']);
-  		$data['main_content'] = 'user/user_dashboard';
-        $this->load->view('includes/header_u',$data);
+            $session=$this->session->userdata('user');
+            $data['dev_val']=$this->User_model->get_dev_val();
+            $data['product']=$this->Home_model->get_products();
+            $data['user_sites']=$this->User_model->get_user_site_by_user_id($session['user_id']);
+            if(isset($_GET['site_id'])){
+                $details=$this->User_model->get_latest_user_site_by_site_id($_GET['site_id']);
+                $data['latest_user_sites']=array_slice($details, 0, 23, true);
+            }else{
+                $details=$this->User_model->get_latest_user_site_by_user_id($session['user_id']);
+                $data['latest_user_sites']=array_slice($details, 0, 23, true);
+            }
+            $data['main_content'] = 'user/user_dashboard';
+            $this->load->view('includes/header_u',$data);
 	}
     public function refresh_view()
     {
@@ -594,6 +601,111 @@ class User_Manufracture extends CI_Controller
         $id=$this->input->post('id');
         $result=$this->User_model->updateuserstatus($status,$id);
         echo true;
+    }
+    public function updatesitestatus(){
+        $status=$this->input->post('status');
+        $imei=$this->input->post('imei');
+        $result=$this->User_model->updatesitestatus($status,$imei);
+        echo true;
+    }
+    public function export_device_view()
+    {
+        $session=$this->session->userdata('user');
+        $data['device_param']=$this->User_model->get_soyo_device_param();
+        $data['user_device_site_information']=$this->User_model->get_all_user_with_user_site_information_by_user($session['user_id']);
+        $data['device_details']=$this->Admin_model->get_device_list();
+        $data['user_sites']=$this->User_model->get_user_site_by_user_id($session['user_id']);
+        $data['main_content'] = 'user/device_export';
+        $this->load->view('includes/header_u',$data);
+    }
+    public function user_export() {
+
+        $get=$this->input->get();
+
+        $device = $_GET['device'];
+        $user_id=$_GET['user_id'];
+        $device_type = $_GET['device_type'];
+        if(!empty($_GET['device_parameter'])){
+            $device_parameter = json_decode($_GET['device_parameter']);
+        }else{
+            $device_parameter='';
+        }
+        $device_details = $this->User_model->get_soyo_device_request_user_id($user_id);
+        $user_site=$this->User_model->get_all_user_with_user_site_information_by_user($user_id);
+        $device_parameter_all=$this->Admin_model->get_device_parameters_by_id($device);
+        //echo "<pre>"; print_r($device_details);die;
+        if (!empty($device_details)) {
+
+            $name="All_device_paramerter_";
+            $filename = $name."_reports_" . rand() . ".csv";
+            ob_clean();
+            header('Content-Type: text/csv; charset=utf-8');
+            header("Content-Disposition: attachment; filename=\"$filename\"");
+
+            $out = fopen("php://output", 'w');
+
+            $flag = false;
+            if (!$flag) {
+                $i = 2;
+                $header=array(0=>'Device IMEI',
+                              1=>'Site Name' 
+                            );
+                if(!empty($device_parameter)){
+                    foreach($device_parameter as $datas){
+                        $header[$i] = $datas;
+                        $i++;
+                    }
+                }else{
+                    foreach($device_parameter_all as $datas){
+                        $header[$i] = $datas->unique_id;
+                        $i++;
+                    }
+                }
+                fputcsv($out, array_values($header), ',', '"');
+                $flag = true;
+            }
+            $i=2;
+            $footer=array();
+            $flag=false;
+            if(!empty($device_parameter)){
+                foreach($user_site as $value_site){
+                    $footer[0]=$value_site->imei_no;
+                    $footer[1]=$value_site->site_name;
+                    foreach ($device_details as $key=>$value) {
+                        if($value['imei']==$value_site->imei_no){
+                            foreach($device_parameter as $dev_value){
+                                if($dev_value ==$value['parameter']){
+                                    $footer[$i]=$value['value'];
+                                    $i++;
+                                }
+                            }
+                        }
+                    }
+                    fputcsv($out, array_values($footer), ',', '"');
+                    $footer=array();
+                }
+
+            }else{
+                foreach($user_site as $value_site){
+                    $footer[0]=$value_site->imei_no;
+                    $footer[1]=$value_site->site_name;
+                    foreach ($device_details as $key => $value) {
+                        if($value['imei']==$value_site->imei_no){
+                            foreach($device_parameter_all as $dev_value){
+                                if($dev_value->unique_id==$value['parameter']){
+                                    $footer[$i]=$value['value'];
+                                    $i++;
+                                }
+                            }
+                        }
+                    }
+                    fputcsv($out, array_values($footer), ',', '"');
+                    $footer=array();
+                }
+            }
+            fclose($out);
+            exit;
+        }
     }
 
 }
