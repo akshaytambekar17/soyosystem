@@ -20,12 +20,19 @@ class User_Manufracture extends CI_Controller
 
 	public function index()
 	{
-        $session=$this->session->userdata('user');
-		$data['dev_val']=$this->User_model->get_dev_val();
-        $data['product']=$this->Home_model->get_products();
-        $data['device']=$this->Admin_model->get_devices_by_user($session['user_id']);
-  		$data['main_content'] = 'user/user_dashboard';
-        $this->load->view('includes/header_u',$data);
+            $session=$this->session->userdata('user');
+            $data['dev_val']=$this->User_model->get_dev_val();
+            $data['product']=$this->Home_model->get_products();
+            $data['user_sites']=$this->User_model->get_user_site_by_user_id($session['user_id']);
+            if(isset($_GET['site_id'])){
+                $details=$this->User_model->get_latest_user_site_by_site_id($_GET['site_id']);
+                $data['latest_user_sites']=array_slice($details, 0, 23, true);
+            }else{
+                $details=$this->User_model->get_latest_user_site_by_user_id($session['user_id']);
+                $data['latest_user_sites']=array_slice($details, 0, 23, true);
+            }
+            $data['main_content'] = 'user/user_dashboard';
+            $this->load->view('includes/header_u',$data);
 	}
     public function refresh_view()
     {
@@ -593,6 +600,12 @@ class User_Manufracture extends CI_Controller
         $status=$this->input->post('status');
         $id=$this->input->post('id');
         $result=$this->User_model->updateuserstatus($status,$id);
+        echo true;
+    }
+    public function updatesitestatus(){
+        $status=$this->input->post('status');
+        $imei=$this->input->post('imei');
+        $result=$this->User_model->updatesitestatus($status,$imei);
         echo true;
     }
 

@@ -1,4 +1,3 @@
-
 /*
   html2canvas 0.5.0-alpha1 <http://html2canvas.hertzen.com>
   Copyright (c) 2015 Niklas von Hertzen
@@ -3372,13 +3371,5 @@ CanvasRenderer.prototype.resizeImage = function(imageContainer, size) {
 function hasEntries(array) {
     return array.length > 0;
 }
-
-
-/*
-  html2canvas 0.5.0-alpha1 <http://html2canvas.hertzen.com>
-  Copyright (c) 2015 Niklas von Hertzen
-
-  Released under MIT License
-*/
 
 }).call({}, typeof(window) !== "undefined" ? window : undefined, typeof(document) !== "undefined" ? document : undefined);

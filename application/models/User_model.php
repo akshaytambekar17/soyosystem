@@ -103,6 +103,11 @@ class User_model extends CI_Model
         $query = $this->db->where('user_id',$id)->get('soyo_user_site_information');
         return $query->result();
     }
+    public function get_user_site_by_imei($imei)
+    {
+        $query = $this->db->where('imei_no',$imei)->get('soyo_user_site_information');
+        return $query->result();
+    }
     public function get_user_site_by_id($id)
     {
         $query = $this->db->where('id',$id)->get('soyo_user_site_information');
@@ -211,11 +216,23 @@ class User_model extends CI_Model
         return $insert;
     }
     
-    function updateuserstatus($status,$id)
+    public function updateuserstatus($status,$id)
     {
         $data=array('status'=>$status);
         $this->db->where('user_id',$id);
         if($this->db->update('soyo_users',$data)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public function updatesitestatus($status,$imei)
+    {
+        $data=array('status'=>$status,
+                    'imei'=>$imei,
+                    'created_at'=>date('Y-m-d h:i:sa'),
+            );
+        if($this->db->insert('soyo_site_pump_status',$data)){
             return true;
         }else{
             return false;
@@ -238,6 +255,46 @@ class User_model extends CI_Model
         $this->db->where('su.project_id',$id);
         $query=$this->db->get();
         return $query->result();
+    }
+    public function get_latest_user_site_by_user_id($id)
+    {
+        $this->db->where('user_id',$id);
+        $this->db->order_by("id","desc");
+        $query =$this->db->get('soyo_user_site_information');
+        $user_sites=$query->result();
+        if(!empty($user_sites)){
+            $this->db->where('imei',$user_sites[0]->imei_no);
+            $this->db->order_by("id","desc");
+            $query =$this->db->get('soyo_device_request');
+            return $query->result();
+        }else{
+            return false;
+        }
+        
+    }
+    public function get_latest_user_site_by_site_id($site_id)
+    {
+        $this->db->where('id',$site_id);
+        $query =$this->db->get('soyo_user_site_information');
+        $user_sites=$query->result();
+        if(!empty($user_sites)){
+            $this->db->where('imei',$user_sites[0]->imei_no);
+            $this->db->order_by("id","desc");
+            $query =$this->db->get('soyo_device_request');
+            return $query->result();
+        }else{
+            return false;
+        }
+        
+    }
+    public function getsitepumpstatus($imei)
+    {
+        $this->db->where('imei',$imei);
+        $this->db->order_by("id","desc");
+        $query =$this->db->get('soyo_site_pump_status');
+        $user_sites=$query->result();
+        return $user_sites;
+        
     }
 }   
 ?>
