@@ -1,11 +1,11 @@
 <?php
 class User_Manufracture extends CI_Controller
 {
-	public function __construct()
-	{
-		parent::__construct();
-		//$this->load->view('includes/include');
-		$this->load->model('User_model');
+    public function __construct()
+    {
+        parent::__construct();
+        //$this->load->view('includes/include');
+        $this->load->model('User_model');
         $this->load->model('Home_model');
        $this->load->library('form_validation');
         //$this->load->helper('form');
@@ -16,10 +16,10 @@ class User_Manufracture extends CI_Controller
         $this->load->helper(array('form', 'url'));
         $this->form_validation->set_message('required', '%s is required');
         $this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
-	}
+    }
 
-	public function index()
-	{
+    public function index()
+    {
             $session=$this->session->userdata('user');
             $data['dev_val']=$this->User_model->get_dev_val();
             $data['product']=$this->Home_model->get_products();
@@ -33,7 +33,7 @@ class User_Manufracture extends CI_Controller
             }
             $data['main_content'] = 'user/user_dashboard';
             $this->load->view('includes/header_u',$data);
-	}
+    }
     public function refresh_view()
     {
         $this->load->view('user/user_dashboard');
@@ -173,8 +173,8 @@ class User_Manufracture extends CI_Controller
             }
         }
         $data['state']=$this->Common_model->get_state();    
-        $data['device_manufacture']=$this->Common_model->get_device_manufacture();	
-        $data['projects']=$this->Distributer_model->get_all_projects();	
+        $data['device_manufacture']=$this->Common_model->get_device_manufacture();  
+        $data['projects']=$this->Distributer_model->get_all_projects(); 
         $data['main_content']='user/form_user';
         if($get['user_type']==1){
             $this->load->view('includes/header',$data);
@@ -268,7 +268,7 @@ class User_Manufracture extends CI_Controller
         $data['user_site_details']=$this->User_model->get_user_site_by_id($get['id']);
         $data['state']=$this->Common_model->get_state();    
         $data['device_manufacture']=$this->Common_model->get_device_manufacture();  
-        $data['projects']=$this->Distributer_model->get_all_projects();	
+        $data['projects']=$this->Distributer_model->get_all_projects(); 
         $data['get_user_type']=$get['user_type'];   
         $data['main_content']='user/form_user';
         if($get['user_type']==1){
@@ -279,8 +279,8 @@ class User_Manufracture extends CI_Controller
             $this->load->view('includes/header_u',$data);
         }
     }
-	public function all_user_view()
-	{
+    public function all_user_view()
+    {
         $get=$this->input->get();
         if($get['user_type']==1){
             $data['user']=$this->User_model->get_all_user();
@@ -386,9 +386,9 @@ class User_Manufracture extends CI_Controller
             }
         }
         $data['state']=$this->Common_model->get_state();    
-        $data['vfd_type']=$this->Admin_model->get_vfd_list();	
-        $data['device_type']=$this->Admin_model->get_device_list();	
-        $data['projects']=$this->Distributer_model->get_all_projects();	
+        $data['vfd_type']=$this->Admin_model->get_vfd_list();   
+        $data['device_type']=$this->Admin_model->get_device_list(); 
+        $data['projects']=$this->Distributer_model->get_all_projects(); 
         $data['user_id']=$get['id'];
         $data['user_type']=$get['user_type'];
         $data['main_content']='user/form_user_site';
@@ -476,9 +476,9 @@ class User_Manufracture extends CI_Controller
         }
         $data['user_site_details']=$this->User_model->get_user_site_by_id($get['id']);    
         $data['state']=$this->Common_model->get_state();    
-        $data['vfd_type']=$this->Admin_model->get_vfd_list();	
-        $data['device_type']=$this->Admin_model->get_device_list();	
-        $data['projects']=$this->Distributer_model->get_all_projects();	
+        $data['vfd_type']=$this->Admin_model->get_vfd_list();   
+        $data['device_type']=$this->Admin_model->get_device_list(); 
+        $data['projects']=$this->Distributer_model->get_all_projects(); 
         $data['user_id']=$get['user_id'];
         $data['user_type']=$get['user_type'];
         $data['main_content']='user/form_user_site';
