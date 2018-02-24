@@ -229,6 +229,16 @@ class Home_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array(); 
     }
+    function get_notifcations_by_view_user_dashboard($user_id)
+    {
+    	$this->db->select('*');
+		$this->db->from('soyo_notification');
+		$this->db->where('send_to',$user_id);
+		$this->db->where('type',2);
+		$this->db->order_by('id','desc');
+		$query = $this->db->get();
+		return $query->result_array(); 
+    }
     function update_notifcations_by_view($user_id=1)
     {
     	$data=array('view'=>1);

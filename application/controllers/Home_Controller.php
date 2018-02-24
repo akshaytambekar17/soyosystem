@@ -172,7 +172,7 @@ class Home_Controller extends CI_Controller
 	{
 		$get=$this->input->get();	
 		if($get['user_id']){
-			$query=$this->Home_model->get_notifcations_by_view_user($get['user_id']);
+			$query=$this->Home_model->get_notifcations_by_view_user_dashboard($get['user_id']);
 		}else{
 			$query=$this->Home_model->get_notifications();
 		}
