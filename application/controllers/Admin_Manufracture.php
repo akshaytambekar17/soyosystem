@@ -563,7 +563,7 @@ class Admin_Manufracture extends CI_Controller
 	public function getdistrictlist() {
         
         $state=$this->input->post('state'); 
-        $district_hidden=$this -> input -> post('district_hidden'); 
+        $district_hidden=$this->input->post('district_hidden'); 
 		
         $district= $this ->Common_model->get_district_by_state($state);
      	  
@@ -807,5 +807,6 @@ class Admin_Manufracture extends CI_Controller
 			redirect('Home_Controller/add_product','refresh');
 		}
     }
+
 }
 ?>

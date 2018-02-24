@@ -50,7 +50,7 @@
 															<a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>" class="btn btn-secondary btn-sm waves-effect waves-light" target="_blank">Open Dashboard</a>
 														</div>
 														<div class="col-md-4">
-															<a href="<?php echo base_url();?>Admin_Manufracture/delete_distributer?id=<?php echo $row->user_id?>" class="btn btn-danger btn-sm waves-effect waves-light">Delete Distributer</a>
+															<a href="<?php echo base_url();?>Admin_Manufracture/delete_distributer?id=<?php echo $row->user_id?>" class="btn btn-danger btn-sm waves-effect waves-light deletedistributer" data-confirm="Are you sure to delete this distributer?">Delete Distributer</a>
 														</div>
 													</div>
 												</div>
@@ -69,6 +69,20 @@
 		</div>
 	</div>
 
+<script>
+	var deleteLinks = document.querySelectorAll('.deletedistributer');
 
+for (var i = 0; i < deleteLinks.length; i++) {
+  deleteLinks[i].addEventListener('click', function(event) {
+      event.preventDefault();
+
+      var choice = confirm(this.getAttribute('data-confirm'));
+
+      if (choice) {
+        window.location.href = this.getAttribute('href');
+      }
+  });
+}
+</script>
 </body>
 </html>

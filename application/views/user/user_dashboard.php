@@ -228,12 +228,7 @@
             <div class="card-header">
                 Energy
                 <div class="header-btn-block">
-                    <span class="data-range dropdown">
-                        <a href="<?php echo base_url(); ?>/User_Manufracture/export_device_view" class="btn btn-primary" data-flip="false" aria-haspopup="true" aria-expanded="false">
-                            <i class="batch-icon batch-icon-calendar"></i>
-                            Export
-                        </a>
-                    </span>
+                   
                 </div>
             </div>
             <div class="card-body">

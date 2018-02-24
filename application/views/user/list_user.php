@@ -77,19 +77,22 @@
                                                 <div class="col-md-8">
                                                     <div class="row">
                                                         <?php if($user_type==2){ ?>
-                                                            <div class="col-md-3">
-                                                                <a href="<?php echo base_url();?>User_Manufracture/add_user_site?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-success btn-sm waves-effect waves-light"><b>Add<br>Device IMEI</b></a>
-                                                            </div>
+                                                        <div class="col-md-3">
+                                                            <a href="<?php echo base_url();?>User_Manufracture/add_user_site?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-success btn-sm waves-effect waves-light"><b>Add<br>Device IMEI</b></a>
+                                                        </div>
                                                         <?php } ?>
                                                         <div class="col-md-3">
                                                             <a href="<?php echo base_url();?>User_Manufracture/view_devices?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-view btn-sm waves-effect waves-light"><b>View<br> Devices IMEI</b></a>
 
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-2">
+                                                            <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-secondary waves-effect waves-light" target="_blank">Open <br>Dashboard</a>
+                                                        </div>
+                                                        <div class="col-md-2">
                                                             <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-info btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-secondary waves-effect waves-light" target="_blank">Open <br>Dashboard</a>
+                                                        <div class="col-md-2">
+                                                            <a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light deleteuser" data-confirm="Are you sure to delete this user?">Delete <br>User</a>
                                                         </div>
 <!--                                                    <div class="col-md-4">
                                                             <a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Delete User</a>
@@ -113,72 +116,6 @@
                             </div>
                         </div>
                     </div>
-                    <!--div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="">
-                                    <div class="profile-page-center" style="min-height: 210px;">
-                                        <h3>Export device data</h3>
-                                        <br>
-                                        <div class="col-md-12">
-                                            <label class="radio-inline">
-                                                <input type="radio" name="exportsradio" value="single" >Single device data
-                                            </label>
-                                            <label class="radio-inline">
-                                                <input type="radio" name="exportsradio" value="all">All device data
-                                            </label>
-                                        </div>
-                                        <div class="col-md-5" id="device-div">
-                                            <br>
-                                            <select id="device" name="device" class="form-control"  data-live-search="true">
-                                                <option selected="selected" disabled="disabled">Select Device</option>
-                                                <?php foreach($device_param as $dp){ ?>
-                                                    <option value="<?= $dp['dvc_id']?>"><?= $dp['dev_imei']?></option>
-                                                <?php } ?>
-
-                                            </select>
-                                        </div>
-                                        <br> <br>
-                                        <div class="col-md-12">
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="itv">itv</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="itc">itc</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="itp">itp</label> 
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acc1">acc1</label> 
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acc2">acc2</label> 
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acc3">acc3</label> 
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv1">acv1</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv2">acv2</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv3">acv3</label> 
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv1">frq</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv2">enrg</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="acv3">lph</label> 
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="temp">temp</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="sig_str">sig_str</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="p_stat">p_stat</label> 
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="nlc">nlc</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="drc">drc</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="srt_ckt">srt_ckt</label> 
-                                        </div>
-                                        <div class="col-md-12">
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="x_heat">x_heat</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="o_load">o_load</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="dcb_err">dcb_err</label> 
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="temp_sen_abst">temp_sen_abst</label>
-                                            <label class="checkbox-inline"><input type="checkbox" name="machine_name[]" value="emrg">emrg</label>
-                                        </div>
-                                        <br> <br>
-                                        <div class="col-md-12">
-                                            <button type="button" class="btn btn-success" id="export">Export</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div-->
                 </main>
             </div>
         </div>
@@ -248,6 +185,21 @@
                 });
 
             }
+        </script>
+        <script>
+            var deleteLinks = document.querySelectorAll('.deleteuser');
+
+        for (var i = 0; i < deleteLinks.length; i++) {
+          deleteLinks[i].addEventListener('click', function(event) {
+              event.preventDefault();
+
+              var choice = confirm(this.getAttribute('data-confirm'));
+
+              if (choice) {
+                window.location.href = this.getAttribute('href');
+              }
+          });
+        }
         </script>
 
 </body>

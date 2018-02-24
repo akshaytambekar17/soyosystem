@@ -7,7 +7,7 @@ class User_Manufracture extends CI_Controller
         //$this->load->view('includes/include');
         $this->load->model('User_model');
         $this->load->model('Home_model');
-       $this->load->library('form_validation');
+        $this->load->library('form_validation');
         //$this->load->helper('form');
         
         //$this->load->library('validation');
@@ -707,6 +707,5 @@ class User_Manufracture extends CI_Controller
             exit;
         }
     }
-
 }
 ?>
