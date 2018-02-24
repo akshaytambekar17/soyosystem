@@ -51,14 +51,14 @@ class Webservice_Controller extends CI_Controller
             $get=$this->input->get();
             $user_data=$this->Webservice_model->get_all_details($get);
             if($user_data){
-			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?status=".$user_data[0]['status']."&username=".$user_data[0]['username']."&password=".$user_data[0]['password'];
+                echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?pump_status=".$user_data['pump_status']."&pump_request=".$user_data['pump_request']."&uploading_status=".$user_data['uploading_status']."&password_changes=".$user_data['password_changes'];
             }else{
-                    echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?error=1";
+                echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?error=1";
             }		
 	}
 	public function getsiteinformation(){
             $get=$this->input->get();
-            $user_data=$this->Webservice_model->get_user_site_by_imei($get['imei']);
+            $user_data=$this->User_model->get_user_site_by_imei($get['imei']);
             if($user_data){
 			echo "http://soyosystem.aspirevisions.com/Webservice_Controller/return?pump-diameter=".$user_data[0]->pipe_diameter."&no_lbows=".$user_data[0]->no_lbows;
             }else{

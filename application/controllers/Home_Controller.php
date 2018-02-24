@@ -170,21 +170,22 @@ class Home_Controller extends CI_Controller
 	}
 	public function list_notification()
 	{
-		$query=$this->Home_model->get_notifications();
+		$get=$this->input->get();	
+		if($get['user_id']){
+			$query=$this->Home_model->get_notifcations_by_view_user($get['user_id']);
+		}else{
+			$query=$this->Home_model->get_notifications();
+		}
 		if($query){
-			$this->Home_model->update_notifcations_by_view();
+			$this->Home_model->update_notifcations_by_view($get['user_id']);
 		}
 		$data['notifications']=$query;
 		$data['main_content']='admin/list_notifications';
-		if($this->uri->segment(3) == 1)
-		{
+		if($get['user_type'] == 1){
 			$this->load->view('includes/header',$data);
-		}
-		else if($this->uri->segment(3) == 2)
-		{
+		}else if($get['user_type'] == 2){
 			$this->load->view('includes/header_d',$data);
-		}
-		else{
+		}else{
 			$this->load->view('includes/header_u',$data);
 		}		
 	}

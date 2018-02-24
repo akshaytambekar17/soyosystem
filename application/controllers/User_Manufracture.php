@@ -31,6 +31,25 @@ class User_Manufracture extends CI_Controller
                 $details=$this->User_model->get_latest_user_site_by_user_id($session['user_id']);
                 $data['latest_user_sites']=array_slice($details, 0, 23, true);
             }
+            if(!empty($details)){
+                $volts=array();
+                $currents=array();
+                foreach(array_slice($details, 0, 23, true) as $value){
+                    if($value->parameter=='P4' || $value->parameter=='P5' || $value->parameter=='P6'){
+                        $volts[]=$value->value;
+                    }
+                    if($value->parameter=='P7' || $value->parameter=='P8' || $value->parameter=='P9'){
+                        $currents[]=$value->value;
+                    }
+                }
+                
+                $volt=array_sum($volts)/3;
+                $current=array_sum($currents)/3;
+                $power=number_format((float)$volt*$current, 2, '.', '');;
+            }else{
+                $power=0;
+            }
+            $data['power']=$power;
             $data['main_content'] = 'user/user_dashboard';
             $this->load->view('includes/header_u',$data);
 	}
@@ -607,6 +626,42 @@ class User_Manufracture extends CI_Controller
         $imei=$this->input->post('imei');
         $result=$this->User_model->updatesitestatus($status,$imei);
         echo true;
+    }
+    public function getpumpbargraph(){
+    	$post=$this->input->post();
+    	$user_details=$this->User_model->get_site_pump_status_by_imei($post['imei_no']);
+    	
+    	$months = array('1' => 'Jan', '2'=>'Feb', '3'=>'Mar', '4'=>'Apr', '5'=>'May', '6'=>'Jun', '7'=>'Jul', '8'=>'Aug', '9'=>'Sep', '10'=>'Oct', '11'=>'Nov', '12'=>'Dec');
+    	$years = array('2018' => '2018', '2019'=>'2019', '2020'=>'2020', '2021'=>'2021', '2022'=>'2022');
+    	if($post['time_id']=='year'){
+    		$time=$years;
+    		$date_inital="Y";
+    	}else if($post['time_id']=='month'){
+    		$time=$months;
+    		$date_inital="m";
+    	}else{
+    		$time=$day;
+    		$date_inital="d";
+    	}
+
+    	$result_data=array();
+        foreach($time as $time_key=>$time_value){
+            $i=0;
+            foreach ($user_details as $key => $value) {
+                if($value->status==1){
+                    if($time_key==date($date_inital,strtotime($value->created_at))){
+                            $i++;
+                            $result_data[$time_value]=$i;
+                    }else{
+                            $result_data[$time_value]=$i;
+                    }
+                }else{
+                    $result_data[$time_value]=$i;
+                }
+            }
+    	}
+    	echo json_encode($result_data);
+
     }
 
 }

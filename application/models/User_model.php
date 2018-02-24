@@ -296,5 +296,13 @@ class User_model extends CI_Model
         return $user_sites;
         
     }
+    public function get_site_pump_status_by_imei($imei)
+    {
+        $this->db->where('imei',$imei);
+        $query =$this->db->get('soyo_site_pump_status');
+        $user_sites=$query->result();
+        return $user_sites;
+        
+    }
 }   
 ?>

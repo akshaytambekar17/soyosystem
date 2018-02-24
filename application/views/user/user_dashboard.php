@@ -1,7 +1,8 @@
 <html>
 <head>
-	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-
+    <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>assets/js/html2canvas.js"></script>
 <style>
 
 	
@@ -108,6 +109,8 @@
                         		?>
                         		
                         	</p>
+                                <input type="hidden" value="<?= $site[0]->site_name?>" id="site_name_hidden" name="site_name_hidden">
+                                <input type="hidden" value="<?= $latest_user_sites[0]->imei?>" id="imei_no" name="imei_no">
                         </div>
                         <div class="col-md-8">
                         	<div class="row">
@@ -127,7 +130,19 @@
 			                        						}
 			                        					}
 			                        					if($lus->parameter=='P14'){
-			                        						$network_value=$lus->value;
+			                        						$network_value=ceil($lus->value);
+			                        					}
+			                        					if($lus->parameter=='P6'){
+			                        						$voltage3=$lus->value;
+			                        					}
+			                        					if($lus->parameter=='P11'){
+			                        						$energy=$lus->value;
+			                        					}
+			                        					if($lus->parameter=='P12'){
+			                        						$lph=$lus->value;
+			                        					}
+			                        					if($lus->parameter=='P3'){
+			                        						$itp=$lus->value;
 			                        					}
 			                        				}
 			                        			}
@@ -135,18 +150,20 @@
 
 
 	                        				?>
+                                                            <input type="hidden" id="fault_indication" value="1">
 		                        				<div class="led-box">
-												    <div class="led-red"></div>
-											  	</div>	
-												Fault Found	 &nbsp;|&nbsp; 
-											<?php } else{ ?>
-												<div class="led-box">
-												    <div class="led-green"></div>
-											  	</div>
-											  	No Fault Found 
-										  	<?php } ?>
-											
-										</div>
+                                                                            <div class="led-red"></div>
+                                                                        </div>	
+                                                                        Fault Found 
+                                                                <?php } else{ ?>
+                                                                <input type="hidden" id="fault_indication" value="0">
+                                                                        <div class="led-box">
+                                                                            <div class="led-green"></div>
+                                                                        </div>
+                                                                        No Fault Found 
+                                                                <?php } ?>
+
+                                                        </div>
                         			</a>
                         	</div>
                         	<div class="col-md-4">
@@ -166,7 +183,7 @@
                                     	}
                                     ?>
                                     Pump ON/OFF
-                                    <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small"  data-on="Enabled" data-off="Disabled" onchange="status(this)" data-imei="<?= $latest_user_sites[0]->imei?>" <?= $checked?> > 
+                                    <input id="pump_checkbox" data-toggle="toggle" data-style="ios" type="checkbox" data-size="small"  data-on="Enabled" data-off="Disabled" onchange="status(this)" data-imei="<?= $latest_user_sites[0]->imei?>" <?= $checked?> > 
                                 </span>
                         	</div>
                         	<div class="col-md-4">
@@ -189,7 +206,7 @@
                                         	<li class="towicon"></li>	
                                         	<li class="threeicon"></li>	
                                         	<li class="fouricon"></li>
-                                		<?php}else{ ?>
+                                		<?php } else{ ?>
                                 			<li class="oneicon"></li>
                                         	<li class="towicon"></li>	
                                         	<li class="threeicon"></li>	
@@ -210,9 +227,6 @@
                             
                         </div>
                     </div>
-			
-			 
-
 		</div>
 	</div>
 </div>
@@ -220,27 +234,26 @@
 	<div class="col-md-8 col-lg-8 col-xl-8 mb-5">
 		<div class="card">
 			<div class="card-header">
-				Energy
-				<div class="header-btn-block">
-					<span class="data-range dropdown">
-						<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
-							<i class="batch-icon batch-icon-calendar"></i>
-							Export
-						</a>
-						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button">
-							<a class="dropdown-item" href="today">Today</a>
-							<a class="dropdown-item active" href="week">This Week</a>
-							<a class="dropdown-item" href="month">This Month</a>
-							<a class="dropdown-item" href="year">This Year</a>
-						</div>
+				Total pump On time
+                                <div class="header-btn-block">
+                                    <span class="data-range dropdown">
+                                            <a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-sales-overview-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
+                                                <i class="batch-icon batch-icon-calendar"></i>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbar-dropdown-sales-overview-header-button" id="revenue_report_time">
+                                                <a class="dropdown-item revenue_report_a " href="javascript:void(0)" data-id="year" id="year" onclick="time_function(this)">Year</a>
+                                                <a class="dropdown-item revenue_report_a" href="javascript:void(0)" data-id="month" id="month" onclick="time_function(this)">Month</a>
+<!--										<a class="dropdown-item revenue_report_a" href="javascript:void(0)" data-id="week">This Week</a>-->
+                                            </div>
 					</span>
 				</div>
 			</div>
-			<div class="card-body">
-				<div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Sales ($)" data-chart-legend-2="Orders">
-					<canvas id="demo-bar-chart"></canvas>
-				</div>
-			</div>
+			<div class="card-body " id="sales_graph_div">
+					<!-- <div class="card-chart" data-chart-color-1="#07a7e3" data-chart-color-2="#32dac3" data-chart-legend-1="Sales ($)" data-chart-legend-2="Orders" data-chart-height="281">
+						<canvas id="sales-overview"></canvas>
+						</div> -->
+                            <div id="columnchart_values" style="width: 800px; height: 300px;"></div>
+                        </div>
 		</div>
 		<br>
 		<div class="row">
@@ -251,7 +264,7 @@
 							<i class="batch-icon batch-icon-list batch-icon-xxl"></i>
 						</div>
 						<div class="tile-right">
-							<div class="tile-number"><?= !empty($dev_val[0]->acv3)?$dev_val[0]->acv3:'0'?></div>
+							<div class="tile-number"><?= !empty($voltage3)?$voltage3:'0'?></div>
 							<div class="tile-description">AC Voltage 3</div>
 						</div>
 					</div>
@@ -264,7 +277,7 @@
 							<i class="batch-icon batch-icon-tag-alt-2 batch-icon-xxl"></i>
 						</div>
 						<div class="tile-right">
-							<div class="tile-number"><?= !empty($dev_val[0]->enrg)?$dev_val[0]->enrg:'0'?></div>
+							<div class="tile-number"><?= !empty($energy)?$energy:'0'?></div>
 							<div class="tile-description">Device Energy</div>
 						</div>
 					</div>
@@ -278,7 +291,7 @@
 							<i class="batch-icon batch-icon-user-alt batch-icon-xxl"></i>
 						</div>
 						<div class="tile-right">
-							<div class="tile-number"><?= !empty($dev_val[0]->lph)?$dev_val[0]->lph:'0'?></div>
+							<div class="tile-number"><?= !empty($lph)?$lph:'0'?></div>
 							<div class="tile-description">Litter Per Hr. [LPH]</div>
 						</div>
 					</div>
@@ -291,7 +304,7 @@
 							<i class="batch-icon batch-icon-bulb-alt batch-icon-xxl"></i>
 						</div>
 						<div class="tile-right">
-							<div class="tile-number"><?= !empty($dev_val[0]->itp)?$dev_val[0]->itp:'0'?></div>
+							<div class="tile-number"><?= !empty($itp)?$itp:'0'?></div>
 							<div class="tile-description">Input Terminal Power</div>
 						</div>
 					</div>
@@ -302,9 +315,9 @@
 	<div class="col-md-4 col-lg-4 col-xl-4 mb-5">
 		<div class="card">
 			<div class="card-header">
-				Power
+				Total Power
 				<div class="header-btn-block">
-					<span class="data-range dropdown">
+<!--					<span class="data-range dropdown">
 						<a href="#" class="btn btn-primary dropdown-toggle" id="navbar-dropdown-traffic-sources-header-button" data-toggle="dropdown" data-flip="false" aria-haspopup="true" aria-expanded="false">
 							<i class="batch-icon batch-icon-calendar"></i>
 						</a>
@@ -314,13 +327,14 @@
 							<a class="dropdown-item" href="month">This Month</a>
 							<a class="dropdown-item active" href="year">This Year</a>
 						</div>
-					</span>
+					</span>-->
 				</div>
 			</div>
-			
+                    <input type="hidden" value="<?= $power?>" id="power" name="power">
 			<div class="card-body">
 				<div class="col-md-12 col-lg-12 col-xl-12 mb-5">
-					<div class="js-gauge js-gauge--1 gauge"></div>
+<!--                                    <div class="js-gauge js-gauge--1 gauge"></div>-->
+                                    <div id="container-speed" style="width: 300px; height: 200px; float: left"></div>
 				</div>
 			</div>
 		</div><br>
@@ -381,49 +395,224 @@
 </div>
 
 
-		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
-		<script type="text/javascript" src="<?php echo base_url();?>assets/js/kuma-gauge.jquery.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
+        <!-- <script type="text/javascript" src="<?php echo base_url();?>assets/js/kuma-gauge.jquery.js"></script> -->
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+	    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+	    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
 
+    <script>
+        if($("#fault_indication").val()==1){
+            $('#pump_checkbox').attr('disabled', true);
+        }else{
+            $('#pump_checkbox').attr('disabled', false);
+        }
+            /*$('.js-gauge--1').kumaGauge({
+                    value : Math.floor((Math.random() * 99) + 1)
+            });
 
-		<script>
-			$('.js-gauge--1').kumaGauge({
-				value : Math.floor((Math.random() * 99) + 1)
-			});
+            $('.js-gauge--1').kumaGauge('update', {
+                    value : Math.floor((Math.random() * 99) + 1)
+            });
 
-			$('.js-gauge--1').kumaGauge('update', {
-				value : Math.floor((Math.random() * 99) + 1)
-			});
+            $('.js-gauge--2').kumaGauge({
+                    value : Math.floor((Math.random() * 99) + 1),
+                    fill : '#F34A53',
+                    gaugeBackground : '#1E4147',
+                    gaugeWidth : 10,
+                    showNeedle : false,
+                    label : {
+                display : true,
+                left : '',
+                right : 'Max',
+                fontFamily : 'Helvetica',
+                fontColor : '#1E4147',
+                fontSize : '11',
+                fontWeight : 'bold'
+            }
+            });*/
+            var imei_no=$('#imei_no').val();
+            var site_name=$('#site_name_hidden').val();
+            var time_id="year";
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url(); ?>" + "/User_Manufracture/getpumpbargraph",
+                data: { 'imei_no' : imei_no, 'time_id' : time_id},
+                dataType: 'json',
+                success: function(data1){
 
-			$('.js-gauge--2').kumaGauge({
-				value : Math.floor((Math.random() * 99) + 1),
-				fill : '#F34A53',
-				gaugeBackground : '#1E4147',
-				gaugeWidth : 10,
-				showNeedle : false,
-				label : {
-		            display : true,
-		            left : 'Min',
-		            right : 'Max',
-		            fontFamily : 'Helvetica',
-		            fontColor : '#1E4147',
-		            fontSize : '11',
-		            fontWeight : 'bold'
-		        }
-			});
-	
+                        google.charts.load("current", {packages:['bar']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        function drawChart() {
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Year');
+                            data.addColumn('number', 'Values');
+                            $.each(data1, function (index, value) {
+                                data.addRow([index, parseInt(value)]);
+                            });
+                            var options = {
+                                            chart: {
+                                              title: 'Pump Status Graph',
+                                              subtitle: 'Site name '+ site_name,
+                                            },
+                                            width: 800,
+                                            height: 300,
+                                            colors: ['red' ]
 
-			var update = setInterval(function() {
-				var newVal = Math.floor((Math.random() * 99) + 1);
-				$('.js-gauge--1').kumaGauge('update',{
-					value : newVal
-				});		
-			}, 1000);
-			$("#site_name").change(function(){
-				var site_id=$(this).val();
-				window.location.href = "<?php echo base_url(); ?>" + "/User_Manufracture/index?site_id="+site_id;
-			});
-			function status(ths){
+                                        };
+                            var chart = new google.charts.Bar(document.getElementById('columnchart_values'));
+                            chart.draw(data, options);
+
+                        }
+                }
+            });
+
+            var update = setInterval(function() {
+                    var newVal = Math.floor((Math.random() * 99) + 1);
+                    $('.js-gauge--1').kumaGauge('update',{
+                            value : newVal
+                    });		
+            }, 1000);
+            $("#site_name").change(function(){
+                    var site_id=$(this).val();
+                    window.location.href = "<?php echo base_url(); ?>" + "/User_Manufracture/index?site_id="+site_id;
+            });
+            
+            var gaugeOptions = {
+
+                                chart: {
+                                    type: 'solidgauge'
+                                },
+                                title: null,
+                                pane: {
+                                    center: ['50%', '85%'],
+                                    size: '140%',
+                                    startAngle: -90,
+                                    endAngle: 90,
+                                    background: {
+                                        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
+                                        innerRadius: '60%',
+                                        outerRadius: '100%',
+                                        shape: 'arc'
+                                    }
+                                },
+                                tooltip: {
+                                    enabled: false
+                                },
+                                // the value axis
+                                yAxis: {
+                                    stops: [
+                                        [0.1, '#55BF3B'], // green
+                                        [0.5, '#DDDF0D'], // yellow
+                                        [0.9, '#DF5353'] // red
+                                    ],
+                                    lineWidth: 0,
+                                    minorTickInterval: null,
+                                    tickAmount: 2,
+                                    title: {
+                                        y: -70
+                                    },
+                                    labels: {
+                                        y: 16
+                                    }
+                                },
+                                plotOptions: {
+                                    solidgauge: {
+                                        dataLabels: {
+                                            y: 5,
+                                            borderWidth: 0,
+                                            useHTML: true
+                                        }
+                                    }
+                                }
+                            };
+                            var power=parseFloat($("#power").val());
+                            // The speed gauge
+                            var chartSpeed = Highcharts.chart('container-speed', Highcharts.merge(gaugeOptions, {
+                                yAxis: {
+                                    min: 0,
+                                    max: 1000000,
+                                    title: {
+                                        text: 'Power'
+                                    }
+                                },
+
+                                credits: {
+                                    enabled: false
+                                },
+
+                                series: [{
+                                    name: 'Power',
+                                    data: [power],
+                                    dataLabels: {
+                                        format: '<div style="text-align:center"><span style="font-size:25px;color:' +
+                                            ((Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black') + '">{y}</span><br/>' +
+                                               '<span style="font-size:12px;color:silver">watt</span></div>'
+                                    },
+                                    tooltip: {
+                                        valueSuffix: ' Watt'
+                                    }
+                                }]
+
+                            }));
+            
+            
+            function time_function(ths){
+                $.each($(".revenue_report_a"), function() {
+                    var each_id=$(this).attr('id');
+                    $("#"+each_id).removeClass("active");
+                });
+                $(ths).addClass("active");
+                var imei_no=$('#imei_no').val();
+                var site_name=$('#site_name_hidden').val();
+                var time_id=$('#revenue_report_time').find('.revenue_report_a.active').data('id');
+                if(time_id==''){
+                        alert("Please select time period");
+                }else{
+                    if(time_id=='year'){
+                            var time_name="Year";
+                    }else if(time_id="month"){
+                            var time_name="Month";	
+                    }else{
+                            var time_name="Day";	
+                    }
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo base_url(); ?>" + "/User_Manufracture/getpumpbargraph",
+                        data: { 'imei_no' : imei_no, 'time_id' : time_id},
+                        dataType: 'json',
+                        success: function(data1){
+
+                                google.charts.load("current", {packages:['bar']});
+                                google.charts.setOnLoadCallback(drawChart);
+                                function drawChart() {
+                                    var data = new google.visualization.DataTable();
+                                    data.addColumn('string', time_name);
+                                    data.addColumn('number', 'Values');
+                                    $.each(data1, function (index, value) {
+                                        data.addRow([index, parseInt(value)]);
+                                    });
+                                    var options = {
+                                                    chart: {
+                                                      title: 'Pump Status Graph',
+                                                      subtitle: 'Site name '+ site_name,
+                                                    },
+                                                    width: 800,
+                                                    height: 300,
+                                                    colors: ['red' ]
+
+                                                };
+                                    var chart = new google.charts.Bar(document.getElementById('columnchart_values'));
+                                    chart.draw(data, options);
+
+                                }
+                        }
+                    });
+                }
+            }
+
+            function status(ths){
                 var imei=$(ths).data('imei');
                 if($(ths).is(':checked')){
                     var status=1;
@@ -438,7 +627,7 @@
                     data: { 'status' : status ,'imei':imei},
                     dataType: 'html',
                     success: function(data){
-                        
+
                         $('html, body').animate({ scrollTop: 0 }, 'slow');
                         $('.alert-box').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> Pump  is '+status_name+' successfully <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                         $('.alert').fadeIn().delay(10000).fadeOut(function () {
@@ -448,7 +637,7 @@
                 });
 
             }
-		</script>
+    </script>
 
 <?php
 	//header("Refresh:7;url=".base_url()."User_Manufracture");
