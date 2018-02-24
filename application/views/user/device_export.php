@@ -49,17 +49,15 @@
                                                             <h4>Site name</h4>
                                                             <p> <?php  echo $row->site_name; ?> </p>
                                                         </div>
-                                                        <?php if($user_type==2){ ?>
-                                                            <div class="col-md-3">  
-                                                                <h4>Device Type</h4>
-                                                                <p>
-                                                                <?php
-                                                                    $device_name=$this->Admin_model->get_device_by_id($row->device_type);
-                                                                    echo $device_name[0]->device_name;
-                                                                ?>
-                                                                </p>
-                                                            </div>
-                                                        <?php }?>            
+                                                        <div class="col-md-3">  
+                                                            <h4>Device Type</h4>
+                                                            <p>
+                                                            <?php
+                                                                $device_name=$this->Admin_model->get_device_by_id($row->device_type);
+                                                                echo $device_name[0]->device_name;
+                                                            ?>
+                                                            </p>
+                                                        </div>            
                                                         <div class="col-md-3">  
                                                             <div class="media-body">
                                                                 <div class="media-title mt-0 mb-1">
@@ -69,24 +67,14 @@
                                                                 
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-3">  
-                                                            <div class="media-body">
-                                                                <div class="media-title mt-0 mb-1">
-                                                                    <a href="<?php echo base_url();?>User_Manufracture/edit_user_site?user_id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>&id=<?php echo $row->id?>" class="btn btn-info btn-sm waves-effect waves-light"><b>Edit User Site<br>Information</b></a>
-                                                                </div>
-                                                                
-                                                            </div>
-                                                        </div>
-                                                        <input type="hidden" value="<?= $row->user_id?>" name="user_id_hidden" id="user_id_hidden">
-                                                        <?php if($user_type==1){ ?>
+                                                         <input type="hidden" value="<?= $row->user_id?>" name="user_id_hidden" id="user_id_hidden">
+                                                     
                                                         <div class="col-md-3">
-                                                            <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> 
+                                                            <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> >
                                                         </div>
-                                                        <?php } ?>
-
-                                                    </div>
+                                                      
+                                                	</div>
                                                 </div>
-                                                
                                             </li>
 
 
@@ -112,13 +100,7 @@
                                         <h3>Export device data</h3>
                                         <br>
                                         <div class="row">
-                                            <div class="col-md-12">
-                                                <!-- <label class="radio-inline">
-                                                    <input type="radio" name="exportsradio" value="single" >Single device data
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="exportsradio" value="all">All device data
-                                                </label> -->
+                                            <div class="col-md-4">
                                                 <select id="deivce" name="deivce" class="form-control select2" data-live-search="true" >
 
                                                         <option disabled selected>Select Device Type</option>
@@ -128,6 +110,16 @@
                                                                 </option>
                                                            <?php  }  ?>  
                                                     </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                               	<select id="site" name="site" class="form-control select2" data-live-search="true" >
+						                            <option disabled selected>Select Site Name</option>
+						                            <?php foreach ($user_sites as $user_site) { ?>
+						                                <option  value="<?php echo $user_site->id;?>">
+						                                    <?php echo $user_site->site_name; ?>      
+						                            </option>
+						                           <?php  }  ?>  
+							                    </select>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -207,13 +199,13 @@
                             var device_type=$("input[name=exportsradio]:checked").val();
                             var device=$("#deivce").val();
                             var user_id=$("#user_id_hidden").val();
-                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device_parameter='+values+'&device='+device+'&user_id='+user_id;  
+                            window.location= '<?php echo base_url(); ?>User_Manufracture/user_export?device_type='+device_type+'&device_parameter='+values+'&device='+device+'&user_id='+user_id;  
                         }else{
                             var device=$("#deivce").val();
                             var user_id=$("#user_id_hidden").val();
                             var device_type=$("input[name=exportsradio]:checked").val();
                             var values='';
-                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device='+device+'&user_id='+user_id; 
+                            window.location= '<?php echo base_url(); ?>User_Manufracture/user_export?device_type='+device_type+'&device='+device+'&user_id='+user_id; 
                         }
                     }
                     

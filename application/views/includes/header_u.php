@@ -87,7 +87,13 @@
 						<a class="nav-link" href="<?php echo base_url();?>Home_Controller/list_notification?user_id=<?=$session['user_id']?>&user_type=<?=$session['user_type']?>">
 							<i class="batch-icon batch-icon-watch"></i>
 							Notification
-						</a>
+						</a><br>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="<?php echo base_url(); ?>/User_Manufracture/export_device_view" >
+                            <i class="batch-icon batch-icon-calendar"></i>
+                            Export
+                        </a><br>
 					</li>
 					<!-- <li class="nav-item"><br>
 						<a class="nav-link" href="starter-kit.html">

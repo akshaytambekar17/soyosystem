@@ -66,7 +66,7 @@
 															<a href="<?php echo base_url();?>Admin_Manufracture/edit_vfd?id=<?php echo $row['id']?>" class="btn btn-success waves-effect waves-light">Edit VFD</a>
 														</div>
 														<div class="col-md-6">
-															<a href="<?php echo base_url();?>Admin_Manufracture/delete_vfd?id=<?php echo $row['id']?>" class="btn btn-secondary waves-effect waves-light">Delete VFD</a>
+															<a href="<?php echo base_url();?>Admin_Manufracture/delete_vfd?id=<?php echo $row['id']?>" class="btn btn-secondary waves-effect waves-light deletevfd" data-confirm="Are you sure to delete this VFD?">Delete VFD</a>
 														</div>
 													</div>
 												</div>
@@ -93,6 +93,21 @@
 
 	});
 	
+</script>
+<script>
+	var deleteLinks = document.querySelectorAll('.deletevfd');
+
+for (var i = 0; i < deleteLinks.length; i++) {
+  deleteLinks[i].addEventListener('click', function(event) {
+      event.preventDefault();
+
+      var choice = confirm(this.getAttribute('data-confirm'));
+
+      if (choice) {
+        window.location.href = this.getAttribute('href');
+      }
+  });
+}
 </script>
 
 </body>
