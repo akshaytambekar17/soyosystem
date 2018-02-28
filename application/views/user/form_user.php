@@ -75,7 +75,7 @@
                                                         {
                                                             echo form_error('mobile');
                                                         }
-                                                         echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','placeholder'=>'Mobile Number','value'=>!empty($user_details[0]->mobile)?$user_details[0]->mobile:'']);
+                                                         echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','placeholder'=>'Mobile Number','pattern'=>'[789][0-9]{9}','value'=>!empty($user_details[0]->mobile)?$user_details[0]->mobile:'']);
                                                     ?>
                                                 </div>
                                                 <div class="form-group">

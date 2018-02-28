@@ -75,7 +75,7 @@
 
                                                         <button type="submit" class="btn btn-primary btn-gradient btn-block">
                                                                 <i class="batch-icon batch-icon-key"></i>
-                                                                <?= !empty($project_details)?'EDIT':'ADD'?> PROJECT
+                                                                <?= !empty($project_details)?'UPDATE':'ADD'?> PROJECT
                                                         </button>
 
                                                     </div>

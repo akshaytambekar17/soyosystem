@@ -26,7 +26,7 @@
 
 	?>
 	<div class="container-fluid">
-		<div class="row">
+		<div class="row dashboard">
 			<div class="right-column">
 				<main class="main-content p-5" role="main">
 					<div class="row">
@@ -126,6 +126,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<script type="text/javascript">
 		$(document).ready(function(){
 				

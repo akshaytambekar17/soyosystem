@@ -85,7 +85,7 @@
 				                                         <div class="col-sm-5">
 				                                             <div class="form-group">
 			                                                 	<input aria-invalid="true" id="unique_id" class="form-control" name="unique_id[<?=$count;?>]" maxlength="200" type="text" value="<?=$value->unique_id?>" 
-			                                                 	placeholder="Unique id">
+			                                                 	placeholder="Unique id" disabled>
 				                                             </div>
 				                                         </div>
 				                                          

@@ -1,4 +1,3 @@
-
 <html>
 <head>
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>	
@@ -206,7 +205,7 @@ $('.carousel .item').each(function(){
 					</div>
 					<div class="tile-right">
 						<div class="tile-number"><?= count($distributers_list)?></div>
-						<div class="tile-description">Distributers</div>
+						<div class="tile-description">Distributors</div>
 					</div>
 				</div>
 			</div>
@@ -218,7 +217,7 @@ $('.carousel .item').each(function(){
 						<i class="batch-icon batch-icon-grid batch-icon-xxl"></i>
 					</div>
 					<div class="tile-right">
-						<div class="tile-number">26</div>
+						<div class="tile-number"><?= count($project_list)?></div>
 						<div class="tile-description">Total Projects</div>
 					</div>
 				</div>
@@ -467,7 +466,7 @@ $('.carousel .item').each(function(){
 							{
 								echo "<div class='col-md-4'>";
 								echo "<img src='".base_url()."assets/uploads/".$row->product_img."' height='200px' width='200px'>";
-								echo "<div class='container'><a href='".base_url()."Home_Controller/add_product'><h4 class=''>".$row->product_name."</h4></a></div>";
+								echo "<div class='container'><a><h4 class=''>".$row->product_name."</h4></a></div>";
 								echo "</div>";
 							}
 							?>
@@ -476,7 +475,7 @@ $('.carousel .item').each(function(){
 			</div>
 		</div>
 	</div>
-</div>
+
 
 <script type="text/javascript">
 	var id=$('#sales_report_id_div').find('.sales_bar_graph_class.active').data('id');
@@ -567,7 +566,6 @@ $('.carousel .item').each(function(){
           	}
         });
 </script>
-<?php $this->load->view('includes/footer');?>
 </body>
 
 </html>

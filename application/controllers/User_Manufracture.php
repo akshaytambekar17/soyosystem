@@ -7,7 +7,7 @@ class User_Manufracture extends CI_Controller
         //$this->load->view('includes/include');
         $this->load->model('User_model');
         $this->load->model('Home_model');
-       $this->load->library('form_validation');
+        $this->load->library('form_validation');
         //$this->load->helper('form');
         
         //$this->load->library('validation');
@@ -31,6 +31,25 @@ class User_Manufracture extends CI_Controller
                 $details=$this->User_model->get_latest_user_site_by_user_id($session['user_id']);
                 $data['latest_user_sites']=array_slice($details, 0, 23, true);
             }
+            if(!empty($details)){
+                $volts=array();
+                $currents=array();
+                foreach(array_slice($details, 0, 23, true) as $value){
+                    if($value->parameter=='P4' || $value->parameter=='P5' || $value->parameter=='P6'){
+                        $volts[]=$value->value;
+                    }
+                    if($value->parameter=='P7' || $value->parameter=='P8' || $value->parameter=='P9'){
+                        $currents[]=$value->value;
+                    }
+                }
+                
+                $volt=array_sum($volts)/3;
+                $current=array_sum($currents)/3;
+                $power=number_format((float)$volt*$current, 2, '.', '');;
+            }else{
+                $power=0;
+            }
+            $data['power']=$power;
             $data['main_content'] = 'user/user_dashboard';
             $this->load->view('includes/header_u',$data);
     }
@@ -165,16 +184,18 @@ class User_Manufracture extends CI_Controller
                     //redirect('User_Manufracture/add_user?user_type='.$get['user_type'],'refresh');
                     redirect('User_Manufracture/add_user?user_type=2','refresh');
                 }else{
-                    $this ->session-> set_flashdata('Error','Username already exist');
+                    $this->session->set_flashdata('Error','Username already exist');
                     $get['user_type']=2;
                 }
             }else{
                 $get['user_type']=2;
             }
         }
+        $d_id=$this->session->userdata('distributer');
         $data['state']=$this->Common_model->get_state();    
         $data['device_manufacture']=$this->Common_model->get_device_manufacture();  
-        $data['projects']=$this->Distributer_model->get_all_projects(); 
+        //$data['projects']=$this->Distributer_model->get_all_projects(); 
+        $data['projects']=$this->Distributer_model->get_all_projects_by_dist_id($d_id['user_id']);
         $data['main_content']='user/form_user';
         if($get['user_type']==1){
             $this->load->view('includes/header',$data);
@@ -461,12 +482,14 @@ class User_Manufracture extends CI_Controller
                 if($result){
                     $this ->session-> set_flashdata('Message','User Site Information Updated Successfully'); 
                     //redirect('User_Manufracture/add_user?user_type='.$get['user_type'],'refresh');
-                    redirect('User_Manufracture/view_devices?id='.$this->input->post('user_id').'&user_type=2','refresh');
+                    redirect('User_Manufracture/view_devices?id='.$this->input->post('user_id').'&user_type='.$this->input->post('user_type'));
+                    //echo $get['user_type'];
                 }else{
                     $this ->session-> set_flashdata('Error','Something went wrong');
                     $get['user_type']=2;
                     $get['id']=$this->input->post('id');
                     $get['user_id']=$this->input->post('user_id');
+
                 }
             }else{
                 $get['user_type']=2;
@@ -514,6 +537,7 @@ class User_Manufracture extends CI_Controller
         $device = $_GET['device'];
         $user_id=$_GET['user_id'];
         $device_type = $_GET['device_type'];
+        $user_type = $_GET['user_type'];
         if(!empty($_GET['device_parameter'])){
             $device_parameter = json_decode($_GET['device_parameter']);
         }else{
@@ -595,6 +619,11 @@ class User_Manufracture extends CI_Controller
             fclose($out);
             exit;
         }
+        else
+        {
+            $this->session->set_flashdata("Error","No device data found to export");
+            redirect(base_url().'User_Manufracture/view_devices?id='.$user_id.'&user_type='.$user_type);
+        }
     }
     public function updateuserstatus(){
         $status=$this->input->post('status');
@@ -608,6 +637,44 @@ class User_Manufracture extends CI_Controller
         $result=$this->User_model->updatesitestatus($status,$imei);
         echo true;
     }
+
+    public function getpumpbargraph(){
+        $post=$this->input->post();
+        $user_details=$this->User_model->get_site_pump_status_by_imei($post['imei_no']);
+        
+        $months = array('1' => 'Jan', '2'=>'Feb', '3'=>'Mar', '4'=>'Apr', '5'=>'May', '6'=>'Jun', '7'=>'Jul', '8'=>'Aug', '9'=>'Sep', '10'=>'Oct', '11'=>'Nov', '12'=>'Dec');
+        $years = array('2018' => '2018', '2019'=>'2019', '2020'=>'2020', '2021'=>'2021', '2022'=>'2022');
+        if($post['time_id']=='year'){
+            $time=$years;
+            $date_inital="Y";
+        }else if($post['time_id']=='month'){
+            $time=$months;
+            $date_inital="m";
+        }else{
+            $time=$day;
+            $date_inital="d";
+        }
+
+        $result_data=array();
+        foreach($time as $time_key=>$time_value){
+            $i=0;
+            foreach ($user_details as $key => $value) {
+                if($value->status==1){
+                    if($time_key==date($date_inital,strtotime($value->created_at))){
+                            $i++;
+                            $result_data[$time_value]=$i;
+                    }else{
+                            $result_data[$time_value]=$i;
+                    }
+                }else{
+                    $result_data[$time_value]=$i;
+                }
+            }
+        }
+        echo json_encode($result_data);
+
+    }
+
     public function export_device_view()
     {
         $session=$this->session->userdata('user');
@@ -618,7 +685,23 @@ class User_Manufracture extends CI_Controller
         $data['main_content'] = 'user/device_export';
         $this->load->view('includes/header_u',$data);
     }
+    public function delete_user()
+    {
+        $get=$this->input->get();
+        $query=$this->User_model->delete_user($get['id']);
+        if($query)
+        {
+            $this->session->set_flashdata('Message','User deleted successfully');
+            redirect(base_url().'User_Manufracture/all_user_view?user_type='.$get['user_type']);
+        }
+        else
+        {
+            $this->session->set_flashdata('Error','User not deleted');
+            redirect(base_url().'User_Manufracture/all_user_view?user_type='.$get['user_type']);
+        }
+    }
     public function user_export() {
+
 
         $get=$this->input->get();
 
@@ -707,6 +790,5 @@ class User_Manufracture extends CI_Controller
             exit;
         }
     }
-
 }
 ?>

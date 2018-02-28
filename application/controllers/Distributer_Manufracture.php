@@ -15,12 +15,16 @@ class Distributer_Manufracture extends CI_Controller
 
 	public function index()
 	{
+		$session=$this->session->userdata('distributer');
 		$data['distributers_list']=$this->Home_model->get_distributers_list();
 		$data['users_list']=$this->Home_model->get_users_list();
+		$data['users']=$this->User_model->get_all_user_by_distributer($session['user_id']);
+		$data['device_list']=$this->Admin_model->get_device_list();
+		$data['project_list']=$this->Distributer_model->get_all_projects_by_dist_id($session['user_id']);
 		$data['device_list']=$this->Admin_model->get_device_list();
 		$data['product']=$this->Home_model->get_products();
   		$data['main_content'] = 'distributer/distributer_dashboard';
-        $this->load->view('includes/header_d',$data);
+        	$this->load->view('includes/header_d',$data);
 	}
 	public function all_distributer_view()
 	{
@@ -100,7 +104,9 @@ class Distributer_Manufracture extends CI_Controller
 	}
 	public function list_project_view()
 	{
-            $data['projects']=$this->Distributer_model->get_all_projects();
+	    $session=$this->session->userdata('distributer');
+            //$data['projects']=$this->Distributer_model->get_all_projects();
+            $data['projects']=$this->Distributer_model->get_all_projects_by_dist_id($session['user_id']);
             //echo "<pre>"; print_r($data['projects']); die;
             $data['main_content'] = 'distributer/list_project';
             $this->load->view('includes/header_d',$data);

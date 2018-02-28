@@ -61,7 +61,7 @@
 									<hr />
 									<div class="comment-block edit-profile">
 										<div class="form-group">
-											<h3>Edit Distributer Personal Details</h3>
+											<h3>Edit Distributor Personal Details</h3>
 											<?php
 											
 												

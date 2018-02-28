@@ -2,31 +2,31 @@
 
 class User_model extends CI_Model
 {
-	public function __construct()
-	{
-		parent::__construct();
-		$this->load->library('session');
-	 	$this->load->driver('cache');
-	}
-	public function get_dev_val()
-	{
-		$user_session=$this->session->userdata('user');
-		$get_imei=$this->db->where('username',$user_session['user_name'])->get('soyo_user_system');
-		$get_config=$this->db->where('dev_imei',$get_imei->row('sys_imei'))->get('soyo_device_param');
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->library('session');
+        $this->load->driver('cache');
+    }
+    public function get_dev_val()
+    {
+        $user_session=$this->session->userdata('user');
+        $get_imei=$this->db->where('username',$user_session['user_name'])->get('soyo_user_system');
+        $get_config=$this->db->where('dev_imei',$get_imei->row('sys_imei'))->get('soyo_device_param');
         if($get_imei->num_rows() > 0)
         {
             return $get_config->result();
         }
-		else
+        else
         {
             return false;
         }
-	}
-	public function get_all_user()
-	{
-		$query = $this->db->where('type','3')->get('soyo_users');
+    }
+    public function get_all_user()
+    {
+        $query = $this->db->where('type','3')->get('soyo_users');
                 return $query->result();
-	}
+    }
     public function get_all_user_with_user_site_information()
     {
 
@@ -151,25 +151,26 @@ class User_model extends CI_Model
         }
         return $insert;*/
         $this->db->select('*');
-    	$this->db->from('soyo_users');
-    	$this->db->where('user_id !=',$data['user_id'],false);
-    	$this->db->where('username',$data['username']);
-    	$query = $this->db->get();
+        $this->db->from('soyo_users');
+        $this->db->where('user_id !=',$data['user_id'],false);
+        $this->db->where('username',$data['username']);
+        $query = $this->db->get();
         $result=$query->result();
         if(count($result)<=0){
             
             $this->db->where('user_id',$data['user_id']);
             $insert=$this->db->update('soyo_users',$data);
             $insert=true;
-    	}else{
+        }else{
             $insert=false;
-    	}
+        }
         
         return $insert;
     }
     function update_user_site($data)
     {
         $this->db->where('user_id',$data['user_id']);
+        $this->db->where('id',$data['id']);
         if($this->db->update('soyo_user_site_information',$data)){
             return true;
         }else{
@@ -178,9 +179,9 @@ class User_model extends CI_Model
     }
     function add_user($data)
     {
-    	$this->db->insert('soyo_users', $data);
-	   $insert_id = $this->db->insert_id();
-	   return $insert_id;
+        $this->db->insert('soyo_users', $data);
+       $insert_id = $this->db->insert_id();
+       return $insert_id;
     }
     function add_user_site($data)
     {
@@ -295,6 +296,20 @@ class User_model extends CI_Model
         $user_sites=$query->result();
         return $user_sites;
         
+    }
+    public function get_site_pump_status_by_imei($imei)
+    {
+        $this->db->where('imei',$imei);
+        $query =$this->db->get('soyo_site_pump_status');
+        $user_sites=$query->result();
+        return $user_sites;
+        
+    }
+    public function delete_user($id)
+    {
+        $this->db->where('user_id',$id);
+        $query=$this->db->delete('soyo_users');
+        return $query;
     }
 }   
 ?>

@@ -29,11 +29,12 @@
 					            </div>
 					        <?php }?> 
 							<div class="card">
-								<div class="card-user-profile">
-									<div class="profile-page-center" style="width: 100%;">
+								
+									<div class="profile-page-center card-header" style="width: 100%;">
 										<h1 class="card-user-profile-name">All VFD</h1>
-										<hr />
-										<ul class="list-unstyled mt-5">
+									</div>
+									<div class="card-body">
+										<ul class="list-unstyled ">
 										<?php foreach($vfd_list as $row){ ?>
 											<li class="media">
 												<div class="col-md-4">
@@ -63,14 +64,14 @@
 												<div class="col-md-4">
 													<div class="row">
 														<div class="col-md-6">
-															<a href="<?php echo base_url();?>Admin_Manufracture/edit_vfd?id=<?php echo $row['id']?>" class="btn btn-success waves-effect waves-light">Edit VFD</a>
+															<a href="<?php echo base_url();?>Admin_Manufracture/edit_vfd?id=<?php echo $row['id']?>" class="btn btn-sm btn-success waves-effect waves-light">Edit<br> VFD</a>
 														</div>
 														<div class="col-md-6">
-															<a href="<?php echo base_url();?>Admin_Manufracture/delete_vfd?id=<?php echo $row['id']?>" class="btn btn-secondary waves-effect waves-light">Delete VFD</a>
+															<a href="<?php echo base_url();?>Admin_Manufracture/delete_vfd?id=<?php echo $row['id']?>" class="btn btn-sm btn-secondary waves-effect waves-light deletevfd" data-confirm="Are you sure to delete this VFD?">Delete<br> VFD</a>
 														</div>
 													</div>
 												</div>
-											</li>
+											</li><hr>
 										<?php } ?>
 										</ul>
 									</div>
@@ -93,6 +94,21 @@
 
 	});
 	
+</script>
+<script>
+	var deleteLinks = document.querySelectorAll('.deletevfd');
+
+for (var i = 0; i < deleteLinks.length; i++) {
+  deleteLinks[i].addEventListener('click', function(event) {
+      event.preventDefault();
+
+      var choice = confirm(this.getAttribute('data-confirm'));
+
+      if (choice) {
+        window.location.href = this.getAttribute('href');
+      }
+  });
+}
 </script>
 
 </body>

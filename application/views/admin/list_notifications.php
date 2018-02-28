@@ -43,7 +43,7 @@
 										?>
 										<span class="task-list-completed">
 											<?php //if(count($notification)>0){ ?>
-												<?= count($notification)?>
+												<?= count($notifications)?>
 											<?php //} ?>
 										</span> Notifications
 									</h6>

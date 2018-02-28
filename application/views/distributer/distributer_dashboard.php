@@ -111,7 +111,7 @@ $('.carousel .item').each(function(){
 					<i class="batch-icon batch-icon-list-alt batch-icon-xxl"></i>
 				</div>
 				<div class="tile-right">
-					<div class="tile-number">24</div>
+					<div class="tile-number"><?= count($project_list) ?></div>
 					<div class="tile-description">Total Projects</div>
 				</div>
 			</div>
@@ -124,7 +124,7 @@ $('.carousel .item').each(function(){
 					<i class="batch-icon batch-icon-users batch-icon-xxl"></i>
 				</div>
 				<div class="tile-right">
-					<div class="tile-number">90</div>
+					<div class="tile-number"><?= count($users) ?></div>
 					<div class="tile-description">Total Users</div>
 				</div>
 			</div>
@@ -137,7 +137,7 @@ $('.carousel .item').each(function(){
 					<i class="batch-icon batch-icon-switch-on batch-icon-xxl"></i>
 				</div>
 				<div class="tile-right">
-					<div class="tile-number">200</div>
+					<div class="tile-number"><?= count($device_list) ?></div>
 					<div class="tile-description">No of Pumps</div>
 				</div>
 			</div>

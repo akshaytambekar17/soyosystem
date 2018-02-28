@@ -67,6 +67,12 @@
                                                                 
                                                             </div>
                                                         </div>
+                                                         <input type="hidden" value="<?= $row->user_id?>" name="user_id_hidden" id="user_id_hidden">
+                                                     
+                                                        <div class="col-md-3">
+                                                            <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> >
+                                                        </div>
+                                                      
                                                 	</div>
                                                 </div>
                                             </li>
@@ -95,12 +101,6 @@
                                         <br>
                                         <div class="row">
                                             <div class="col-md-4">
-                                                <!-- <label class="radio-inline">
-                                                    <input type="radio" name="exportsradio" value="single" >Single device data
-                                                </label>
-                                                <label class="radio-inline">
-                                                    <input type="radio" name="exportsradio" value="all">All device data
-                                                </label> -->
                                                 <select id="deivce" name="deivce" class="form-control select2" data-live-search="true" >
 
                                                         <option disabled selected>Select Device Type</option>
@@ -112,7 +112,7 @@
                                                     </select>
                                             </div>
                                             <div class="col-md-4">
-                                               	<select id="deivce" name="deivce" class="form-control select2" data-live-search="true" >
+                                               	<select id="site" name="site" class="form-control select2" data-live-search="true" >
 						                            <option disabled selected>Select Site Name</option>
 						                            <?php foreach ($user_sites as $user_site) { ?>
 						                                <option  value="<?php echo $user_site->id;?>">

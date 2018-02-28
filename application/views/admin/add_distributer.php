@@ -34,7 +34,7 @@
 					        <?php }?> 
 							<div class="card">
 								<div class="card-header">
-									Distributer Registration
+									Distributor Registration
 									<?php
 									if($this->session->flashdata('registration_success'))
 									{

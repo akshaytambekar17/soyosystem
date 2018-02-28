@@ -23,11 +23,27 @@
 
 <body>
 
-	<div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
             <div class="right-column">
                 <main class="main-content p-5" role="main">
                     <div class="row mb-4">
+                        <?php if($message = $this ->session->flashdata('Message')){?>
+                                <div class="col-md-12 ">
+                                    <div class="alert alert-dismissible alert-success">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <?=$message ?>
+                                    </div>
+                                </div>
+                        <?php }?> 
+                        <?php if($message = $this ->session->flashdata('Error')){?>
+                            <div class="col-md-12 ">
+                                <div class="alert alert-dismissible alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    <?=$message ?>
+                                </div>
+                            </div>
+                        <?php }?> 
                         <div class="col-md-12 alert-box">
                             <div class="card">
                                 <div class="">
@@ -78,6 +94,7 @@
                                                             </div>
                                                         </div>
                                                         <input type="hidden" value="<?= $row->user_id?>" name="user_id_hidden" id="user_id_hidden">
+                                                        <input type="hidden" value="<?php echo $_GET['user_type'];?>" name="user_type_hidden" id="user_type_hidden">
                                                         <?php if($user_type==1){ ?>
                                                         <div class="col-md-3">
                                                             <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> 
@@ -153,7 +170,7 @@
 
             </div>
         </div>
-	</div>
+    </div>
 
 
         <script>
@@ -207,13 +224,15 @@
                             var device_type=$("input[name=exportsradio]:checked").val();
                             var device=$("#deivce").val();
                             var user_id=$("#user_id_hidden").val();
-                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device_parameter='+values+'&device='+device+'&user_id='+user_id;  
+                            var user_type=$("#user_type_hidden").val();
+                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device_parameter='+values+'&device='+device+'&user_id='+user_id+'&user_type='+user_type;  
                         }else{
                             var device=$("#deivce").val();
                             var user_id=$("#user_id_hidden").val();
+                            var user_type=$("#user_type_hidden").val();
                             var device_type=$("input[name=exportsradio]:checked").val();
                             var values='';
-                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device='+device+'&user_id='+user_id; 
+                            window.location= '<?php echo base_url(); ?>User_Manufracture/export?device_type='+device_type+'&device='+device+'&user_id='+user_id+'&user_type='+user_type; 
                         }
                     }
                     
