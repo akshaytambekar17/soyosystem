@@ -68,12 +68,7 @@
                                                             </div>
                                                         </div>
                                                          <input type="hidden" value="<?= $row->user_id?>" name="user_id_hidden" id="user_id_hidden">
-                                                     
-                                                        <div class="col-md-3">
-                                                            <input data-toggle="toggle" data-style="ios" type="checkbox" data-size="small" data-id="<?php echo $row->user_id?>" data-on="Enabled" data-off="Disabled" onchange="status(this)" id="checkbox_<?= $row->user_id?>" <?= $row->status==1?'checked':''?> >
-                                                        </div>
-                                                      
-                                                	</div>
+                                                    </div>
                                                 </div>
                                             </li>
 
@@ -92,54 +87,54 @@
                     </div>
                     <?php if(!empty($user_device_site_information)){ ?>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="">
-                                    <div class="container-fluid">
-                                    <div class="profile-page-center" style="min-height: 210px;">
-                                        <h3>Export device data</h3>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <select id="deivce" name="deivce" class="form-control select2" data-live-search="true" >
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="">
+                                        <div class="container-fluid">
+                                            <div class="profile-page-center" style="min-height: 210px;">
+                                                <h3>Export device data</h3>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <select id="deivce" name="deivce" class="form-control select2" data-live-search="true" >
 
-                                                        <option disabled selected>Select Device Type</option>
+                                                            <option disabled selected>Select Device Type</option>
                                                             <?php foreach ($device_details as $value_device) { ?>
-                                                                <option  value="<?php echo $value_device['id'];?>">
+                                                                <option  value="<?php echo $value_device['id']; ?>">
                                                                     <?php echo $value_device['device_name']; ?>      
                                                                 </option>
-                                                           <?php  }  ?>  
-                                                    </select>
+                                                            <?php } ?>  
+                                                        </select>
+                                                    </div>
+<!--                                                    <div class="col-md-4">
+                                                        <select id="site" name="site" class="form-control select2" data-live-search="true" >
+                                                            <option disabled selected>Select Site Name</option>
+                                                            <?php //foreach ($user_sites as $user_site) { ?>
+                                                                <option  value="<?php //echo $user_site->id; ?>">
+                                                                    <?php //echo $user_site->site_name; ?>      
+                                                                </option>
+                                                            <?php //} ?>  
+                                                        </select>
+                                                    </div>-->
+                                                </div>
+                                                <div class="row">
+                                                    <div class="device_parameter"></div>
+                                                </div>
+                                                <br> <br>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <button type="button" class="btn btn-success" id="export">Export</button>
+                                                    </div>
+                                                </div>
+                                                <br>
+                                                <br>
                                             </div>
-                                            <div class="col-md-4">
-                                               	<select id="site" name="site" class="form-control select2" data-live-search="true" >
-						                            <option disabled selected>Select Site Name</option>
-						                            <?php foreach ($user_sites as $user_site) { ?>
-						                                <option  value="<?php echo $user_site->id;?>">
-						                                    <?php echo $user_site->site_name; ?>      
-						                            </option>
-						                           <?php  }  ?>  
-							                    </select>
-                                            </div>
+                                            <br>
                                         </div>
-                                        <div class="row">
-                                            <div class="device_parameter"></div>
-                                        </div>
-                                        <br> <br>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <button type="button" class="btn btn-success" id="export">Export</button>
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <br>
-                                        </div>
-                                        <br>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     <?php } ?>
                 </main>
 
@@ -165,7 +160,7 @@
                             $(".device_parameter").html('');
                             $(".device_parameter").append('<br><br><div class="col-md-12"><label class="radio-inline"><input type="radio" name="exportsradio" value="single" >Single device data </label><label class="radio-inline"><input type="radio" name="exportsradio" value="all">All device data</label></div><br><br>');
                             $.each(data, function (index, value) {
-                                $(".device_parameter").append('<div class="col-md-6"><label class="checkbox-inline"><input type="checkbox" name="device_parameter_checkbox[]" value="'+index+'">'+value+'</label></div>');
+                                $(".device_parameter").append('<div class="col-md-6"><label class="checkbox-inline"><input type="checkbox" class="parameter_class" name="device_parameter_checkbox[]" value="'+index+'">'+value+'</label></div>');
                                     
                             });
                             
@@ -179,6 +174,7 @@
                     if($("input[name=exportsradio]:checked").val() =="single"){
                         $("#device-div").show();
                     }else{
+                        $(".parameter_class").prop('checked', true);
                         $("#device-div").hide();
                     }
                     
@@ -190,22 +186,27 @@
                     }else{
                         var radiovalue=$("input[name=exportsradio]:checked").val();
                         if(radiovalue=='single'){
-                             var values = new Array();
-                            $.each($("input[name='device_parameter_checkbox[]']:checked"), function() {
-                                values.push($(this).val());
-                            });
-
-                            values=JSON.stringify(values);
-                            var device_type=$("input[name=exportsradio]:checked").val();
-                            var device=$("#deivce").val();
-                            var user_id=$("#user_id_hidden").val();
-                            window.location= '<?php echo base_url(); ?>User_Manufracture/user_export?device_type='+device_type+'&device_parameter='+values+'&device='+device+'&user_id='+user_id;  
+                            if ($("input[name='device_parameter_checkbox[]']:checked")=="" || $("input[name='device_parameter_checkbox[]']:checked").val() == undefined ) {
+                                alert("please select parameters");
+                            }else{
+                                var values = new Array();
+                                $.each($("input[name='device_parameter_checkbox[]']:checked"), function() {
+                                    values.push($(this).val());
+                                });
+                                values=JSON.stringify(values);
+                                var device_type=$("input[name=exportsradio]:checked").val();
+                                var device=$("#deivce").val();
+                                //var site=$("#site").val();
+                                var user_id=$("#user_id_hidden").val();
+                                window.location= '<?php echo base_url(); ?>User_Manufracture/user_export?device_type='+device_type+'&device_parameter='+values+'&device='+device+'&user_id='+user_id;  
+                            }    
                         }else{
+                            $(".parameter_class").prop('checked', true);
                             var device=$("#deivce").val();
                             var user_id=$("#user_id_hidden").val();
                             var device_type=$("input[name=exportsradio]:checked").val();
                             var values='';
-                            window.location= '<?php echo base_url(); ?>User_Manufracture/user_export?device_type='+device_type+'&device='+device+'&user_id='+user_id; 
+                            window.location= '<?php echo base_url(); ?>User_Manufracture/user_export?device_type='+device_type+'&device='+device+'&user_id='+user_id 
                         }
                     }
                     

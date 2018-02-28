@@ -59,6 +59,17 @@ class User_model extends CI_Model
         $query=$this->db->get();
         return $query->result();
     }
+    public function get_all_user_with_user_site_information_by_both($user,$distributer)
+    {
+        $this->db->select('*');
+        $this->db->from('soyo_users su');
+        $this->db->join('soyo_user_site_information susi','susi.user_id=su.user_id');
+        $this->db->where('su.type','3');
+        $this->db->where('su.user_id',$user);
+        $this->db->where('su.added_by',$distributer);
+        $query=$this->db->get();
+        return $query->result();
+    }
     public function get_soyo_device_param(){
         $this->db->select("*");
         $this->db->from("soyo_device_param");

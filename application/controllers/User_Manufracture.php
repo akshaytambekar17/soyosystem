@@ -729,11 +729,13 @@ class User_Manufracture extends CI_Controller
                 foreach($user_site as $value_site){
                     $footer[0]=$value_site->imei_no;
                     $footer[1]=$value_site->site_name;
+                    $device_details = $this->User_model->get_latest_user_site_by_site_id($value_site->id);
+                    $device_details=array_slice($device_details, 0, 24); 
                     foreach ($device_details as $key=>$value) {
-                        if($value['imei']==$value_site->imei_no){
+                        if($value->imei==$value_site->imei_no){
                             foreach($device_parameter as $dev_value){
-                                if($dev_value ==$value['parameter']){
-                                    $footer[$i]=$value['value'];
+                                if($dev_value ==$value->parameter){
+                                    $footer[$i]=$value->value;
                                     $i++;
                                 }
                             }
@@ -747,11 +749,13 @@ class User_Manufracture extends CI_Controller
                 foreach($user_site as $value_site){
                     $footer[0]=$value_site->imei_no;
                     $footer[1]=$value_site->site_name;
+                    $device_details = $this->User_model->get_latest_user_site_by_site_id($value_site->id);
+                    $device_details=array_slice($device_details, 0, 24); 
                     foreach ($device_details as $key => $value) {
-                        if($value['imei']==$value_site->imei_no){
+                        if($value->imei==$value_site->imei_no){
                             foreach($device_parameter_all as $dev_value){
-                                if($dev_value->unique_id==$value['parameter']){
-                                    $footer[$i]=$value['value'];
+                                if($dev_value->unique_id==$value->parameter){
+                                    $footer[$i]=$value->value;
                                     $i++;
                                 }
                             }

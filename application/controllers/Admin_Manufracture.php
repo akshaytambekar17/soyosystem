@@ -443,79 +443,58 @@ class Admin_Manufracture extends CI_Controller
 		$data['main_content']='admin/sales_report';
 		$this->load->view('includes/header',$data);
 	}
-	public function change_password(){
-		if($this->uri->segment(3) == 1)
-		{
-			$session=$this->session->userdata('admin');
-		}
-		else if($this->uri->segment(3) == 2)
-		{
-			$session=$this->session->userdata('distributer');
-		}
-		else
-		{
-			$session=$this->session->userdata('user');
-		}
-		if($session['user_id']){
-			if($this->input->post()){
+	public function change_password() {
+        if ($this->uri->segment(3) == 1) {
+            $session = $this->session->userdata('admin');
+        } else if ($this->uri->segment(3) == 2) {
+            $session = $this->session->userdata('distributer');
+        } else {
+            $session = $this->session->userdata('user');
+        }
+        if ($session['user_id']) {
+            if ($this->input->post()) {
 
-				$this->form_validation->set_rules('new_password', 'New Password', 'required');
-				$this->form_validation->set_rules('confrim_password', 'Confirm Password', 'required|matches[new_password]');
-				if($this->form_validation->run() == TRUE){
-					
-					$result=$this->Admin_model->change_password($this->input->post('new_password'),$session['user_id']);
-					$this ->session-> set_flashdata('Message','Password has successfully changed'); 
-		redirect('Admin_Manufracture/change_password/'.$session['user_id'],'refresh');
+                $this->form_validation->set_rules('new_password', 'New Password', 'required');
+                $this->form_validation->set_rules('confrim_password', 'Confirm Password', 'required|matches[new_password]');
+                if ($this->form_validation->run() == TRUE) {
+                    $result = $this->Admin_model->change_password($this->input->post('new_password'), $session['user_id']);
+                    $this->session->set_flashdata('Message', 'Password has successfully changed');
+                    //redirect('Admin_Manufracture/change_password/' . $session['user_id'], 'refresh');
+                    redirect('Admin_Manufracture/index', 'refresh');
+                } else {
+                    $data['main_content'] = 'admin/change_password';
+                    if ($session['user_type'] == 1) {
+                        $this->load->view('includes/header', $data);
+                    } else if ($session['user_type'] == 2) {
+                        $this->load->view('includes/header_d', $data);
+                    } else {
+                        $this->load->view('includes/header_u', $data);
+                    }
+                }
+            }
+            //$data['device_parameters_data']=$this->Admin_model->get_device_parameters_data();
+            //echo "<pre>"; print_r($data['device_parameters_data']); die;		
+            $data['main_content'] = 'admin/change_password';
+            if ($session['user_type'] == 1) {
+                $this->load->view('includes/header', $data);
+            } else if ($session['user_type'] == 2) {
+                $this->load->view('includes/header_d', $data);
+            } else {
+                $this->load->view('includes/header_u', $data);
+            }
+        } else {
+            $data['main_content'] = 'admin/change_password';
+            if ($session['user_type'] == 1) {
+                $this->load->view('includes/header', $data);
+            } else if ($session['user_type'] == 2) {
+                $this->load->view('includes/header_d', $data);
+            } else {
+                $this->load->view('includes/header_u', $data);
+            }
+        }
+    }
 
-				}else{
-					$data['main_content']='admin/change_password';
-					if($session['user_type'] == 1)
-					{
-						$this->load->view('includes/header',$data);	
-					}
-					else if($session['user_type'] == 2)
-					{
-						$this->load->view('includes/header_d',$data);	
-					}
-					else
-					{	
-						$this->load->view('includes/header_u',$data);	
-					}	
-				}
-			}	
-			//$data['device_parameters_data']=$this->Admin_model->get_device_parameters_data();
-			//echo "<pre>"; print_r($data['device_parameters_data']); die;		
-			$data['main_content']='admin/change_password';	
-			if($session['user_type'] == 1)
-				{
-					$this->load->view('includes/header',$data);	
-				}
-				else if($session['user_type'] == 2)
-				{
-					$this->load->view('includes/header_d',$data);	
-				}
-				else
-				{	
-					$this->load->view('includes/header_u',$data);	
-				}	
-		}else{
-			$data['main_content']='admin/change_password';
-			if($session['user_type'] == 1)
-				{
-					$this->load->view('includes/header',$data);	
-				}
-				else if($session['user_type'] == 2)
-				{
-					$this->load->view('includes/header_d',$data);	
-				}
-				else
-				{
-					
-					$this->load->view('includes/header_u',$data);	
-				}				
-		}
-	}
-	/*public function view_noti(){
+    /*public function view_noti(){
 		$data['device_parameters_data']=$this->Admin_model->get_device_parameters_data();
 		//echo "<pre>"; print_r($data['device_parameters_data']); die;			
 		$data['main_content']='admin/sales_report';
@@ -604,6 +583,8 @@ class Admin_Manufracture extends CI_Controller
             $user_details = $this->User_model->get_all_user_with_user_site_information_by_user($_GET['user_id']);
         }else if(empty($_GET['user_id']) && !empty($_GET['distributer_id'])){
         	$user_details = $this->User_model->get_all_user_with_user_site_information_by_distributer($_GET['distributer_id']);
+        }else if(!empty($_GET['user_id']) && !empty($_GET['distributer_id'])){
+            $user_details = $this->User_model->get_all_user_with_user_site_information_by_both($_GET['user_id'],$_GET['distributer_id']);
         }else{
             $user_details = $this->User_model->get_all_user_with_user_site_information();
         }
@@ -612,10 +593,14 @@ class Admin_Manufracture extends CI_Controller
             if(!empty($_GET['user_id']) && empty($_GET['distributer_id'])){
                 $name=$user_details[0]->fname."_". $user_details[0]->lname;
             }else if(empty($_GET['user_id']) && !empty($_GET['distributer_id'])){
-	        	$name= "By_Distributor_";
-	        }else{
+                $name= "By_Distributor_";
+            }else if(!empty($_GET['user_id']) && !empty($_GET['distributer_id'])){
+                $name=$user_details[0]->fname."_". $user_details[0]->lname;
+            }else{
                 $name="All_Users_";
             }
+                
+            
             $filename = $name."_reports_" . rand() . ".csv";
             ob_clean();
             header('Content-Type: text/csv; charset=utf-8');
@@ -625,13 +610,13 @@ class Admin_Manufracture extends CI_Controller
             $flag = false;
             if (!$flag) {
                 
-                $header=array( 0=>'#',
-            			       1=>'Name',
-                			   2=>'Aadhar number',
-                			   3=>'Device Type',
-                			   4=>'Device Imei',
-                			   5=>'Installation Date',
-                		);
+                $header=array(  0=>'#',
+                                1=>'Name',
+                                2=>'Aadhar number',
+                                3=>'Device Type',
+                                4=>'Device Imei',
+                                5=>'Installation Date',
+                            );
                 fputcsv($out, array_values($header), ',', '"');
                 $flag = true;
             }
@@ -643,9 +628,14 @@ class Admin_Manufracture extends CI_Controller
                 $footer[0]=$i;
                 $footer[1]=$value->fname." ". $value->lname;
                 $footer[2]=$value->adhar;
-                $device_type=$this->Admin_model->get_device_by_id($value->device_type);
-				$footer[3]=$device_type[0]->device_name;
-				$footer[4]=$value->imei_no;
+                if($value->device_type!=19){
+                    $device_number=19;
+                }else{
+                    $device_number=$value->device_type;
+                }
+                $device_type=$this->Admin_model->get_device_by_id($device_number);
+                $footer[3]=$device_type[0]->device_name;
+                $footer[4]=$value->imei_no;
                 $footer[5]=$value->installation_date;
             	fputcsv($out, array_values($footer), ',', '"');
                 $footer=array();

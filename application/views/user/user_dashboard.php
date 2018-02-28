@@ -383,7 +383,7 @@
 							{
 								echo "<div class='col-md-4'>";
 								echo "<img src='".base_url()."assets/uploads/".$row->product_img."' height='200px' width='200px'>";
-								echo "<div class='container'><a href='".base_url()."Home_Controller/add_product'><h4 class=''>".$row->product_name."</h4></a></div>";
+								echo "<div class='container'><a href='javascript:void(0)'><h4 class=''>".$row->product_name."</h4></a></div>";
 								echo "</div>";
 							}
 							?>
