@@ -28,7 +28,7 @@
 
 <body>
 
-	<div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
             <div class="right-column">
                 <main class="main-content p-5" role="main">
@@ -125,7 +125,7 @@
                 </main>
             </div>
         </div>
-	</div>
+    </div>
 
 
         <script>
