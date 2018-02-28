@@ -231,7 +231,8 @@
                                         <?php
                                                     
                                             echo form_input(['type'=>'hidden','name'=>'user_id','value'=>!empty($user_site_details[0]->user_id)?$user_site_details[0]->user_id:$user_id]);
-                                            echo form_input(['type'=>'hidden','name'=>'user_type','value'=>!empty($user_site_details[0]->type)?$get_user_type:$user_type]);
+                                           // echo form_input(['type'=>'hidden','name'=>'user_type','value'=>!empty($user_site_details[0]->type)?$get_user_type:$user_type]);
+                                            echo form_input(['type'=>'hidden','name'=>'user_type','value'=>$_GET['user_type']]);
                                             echo form_input(['type'=>'hidden','name'=>'id','value'=>!empty($user_site_details[0]->id)?$user_site_details[0]->id:'']);
                                             echo form_input(['type'=>'hidden','name'=>'site_image_hidden','value'=>!empty($user_site_details[0]->site_image)?$user_site_details[0]->site_image:'']);
                                         ?>

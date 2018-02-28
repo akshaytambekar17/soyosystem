@@ -16,6 +16,11 @@
 
       .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
       .toggle.ios .toggle-handle { border-radius: 20px; }
+      .btn-font
+        {
+            font-size:10px;
+        }
+      
 
     </style>
     
@@ -23,18 +28,14 @@
 
 <body>
 
-	<div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
             <div class="right-column">
                 <main class="main-content p-5" role="main">
                     <div class="row mb-4">
                         <div class="col-md-12 alert-box">
                             <div class="card">
-                                <div class="">
-                                    <div class="profile-page-center">
-                                            <h1 class="card-user-profile-name">&nbsp;All Users</h1>
-                                        <hr />
-                                        <?php if($message = $this ->session->flashdata('Message')){?>
+                            <?php if($message = $this ->session->flashdata('Message')){?>
                                             <div class="col-md-12 ">
                                                 <div class="alert alert-dismissible alert-success">
                                                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -49,7 +50,11 @@
                                                     <?=$message ?>
                                                 </div>
                                             </div>
-                                        <?php }?> 
+                                        <?php }?>
+                                
+                                    <div class="profile-page-center">
+                                            <h1 class="card-user-profile-name">&nbsp;All Users</h1>
+                                        <hr /> 
                                         <ul class="list-unstyled mt-5">
                                         <?php
                                         foreach($user as $row)
@@ -58,12 +63,12 @@
                                             <li class="media">
                                                 <div class="col-md-4">
                                                     <div class="row">
-                                                        <div class="col-md-2">  
+                                                        <div class="col-md-3">  
                                                             <div class="profile-picture bg-gradient bg-primary mb-4">
                                                                 <img src="<?php echo base_url();?>assets/uploads/<?php echo !empty($row->profile_image)?$row->profile_image:'admin.png' ?>" width="55" height="55">
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-10">  
+                                                        <div class="col-md-9">  
                                                             <div class="media-body">
                                                                 <div class="media-title mt-0 mb-1">
                                                                     <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>"><?php echo $row->fname." ".$row->lname;?></a> <small> <em><?php echo $row->dist.", ".$row->city;?></em></small>
@@ -76,23 +81,24 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="row">
+                                                        <div class="col-md-2">
+                                                            <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-secondary waves-effect waves-light pull-left btn-font" target="_blank">Open <br>Dashboard</a>
+                                                        </div>&nbsp;&nbsp;&nbsp;&nbsp;
                                                         <?php if($user_type==2){ ?>
-                                                        <div class="col-md-3">
-                                                            <a href="<?php echo base_url();?>User_Manufracture/add_user_site?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-success btn-sm waves-effect waves-light"><b>Add<br>Device IMEI</b></a>
+                                                        <div class="col-md-2">
+                                                            <a href="<?php echo base_url();?>User_Manufracture/add_user_site?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-success btn-sm waves-effect waves-light btn-font">Add<br>Device</a>
                                                         </div>
                                                         <?php } ?>
-                                                        <div class="col-md-3">
-                                                            <a href="<?php echo base_url();?>User_Manufracture/view_devices?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-view btn-sm waves-effect waves-light"><b>View<br> Devices IMEI</b></a>
+                                                        <div class="col-md-2">
+                                                            <a href="<?php echo base_url();?>User_Manufracture/view_devices?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-view btn-sm waves-effect waves-light pull-left btn-font">View<br> Device</a>
 
                                                         </div>
+                                                        
                                                         <div class="col-md-2">
-                                                            <a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-secondary waves-effect waves-light" target="_blank">Open <br>Dashboard</a>
+                                                            <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-info btn-sm waves-effect waves-light pull-left btn-font">Edit<br> Profile</a>
                                                         </div>
                                                         <div class="col-md-2">
-                                                            <a href="<?php echo base_url();?>User_Manufracture/edit_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-info btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
-                                                        </div>
-                                                        <div class="col-md-2">
-                                                            <a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light deleteuser" data-confirm="Are you sure to delete this user?">Delete <br>User</a>
+                                                            <a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light deleteuser pull-left btn-font" data-confirm="Are you sure to delete this user?">Delete <br>User</a>
                                                         </div>
 <!--                                                    <div class="col-md-4">
                                                             <a href="<?php echo base_url();?>User_Manufracture/delete_user?id=<?php echo $row->user_id?>&user_type=<?php echo $user_type?>" class="btn btn-sm btn-danger waves-effect waves-light">Delete User</a>
@@ -104,7 +110,7 @@
                                                         <?php } ?>
                                                     </div>
                                                 </div>
-                                            </li>
+                                            </li><hr>
 
 
                                         <?php
@@ -112,14 +118,14 @@
                                         ?>
                                         </ul>
                                     </div>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </main>
             </div>
         </div>
-	</div>
+    </div>
 
 
         <script>

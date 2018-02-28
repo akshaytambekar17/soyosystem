@@ -160,20 +160,20 @@ class Home_model extends CI_Model
 	{
 		//$uid=$this->session->userdata('user_id');
 		if($this->session->userdata('admin'))
-    	{
-    		$session=$this->session->userdata('admin');
-    		$uid=$session['user_id'];
-    	}
-    	else if($this->session->userdata('distributer'))
-    	{
-    		$session=$this->session->userdata('distributer');
-    		$uid=$session['user_id'];
-    	}
-    	else
-    	{
-    		$session=$this->session->userdata('user');
-    		$uid=$session['user_id'];
-    	}
+	    	{
+	    		$session=$this->session->userdata('admin');
+	    		$uid=$session['user_id'];
+	    	}
+	    	else if($this->session->userdata('distributer'))
+	    	{
+	    		$session=$this->session->userdata('distributer');
+	    		$uid=$session['user_id'];
+	    	}
+	    	else
+	    	{
+	    		$session=$this->session->userdata('user');
+	    		$uid=$session['user_id'];
+	    	}
 		$note_data=$this->db->where('send_to',$uid)->order_by('id','desc')->get('soyo_notification');
 		if($note_data)
 		{
@@ -209,15 +209,16 @@ class Home_model extends CI_Model
 		$query = $this->db->get();
 		return $query->result_array(); 
 	}
-	function get_notifcations_by_view()
-    {
-    	$this->db->select('*');
+	public function get_notifcations_by_view()
+	{
+    		$this->db->select('*');
 		$this->db->from('soyo_notification');
 		$this->db->where('view',0);
 		$this->db->order_by('id','desc');
 		$query = $this->db->get();
 		return $query->result_array(); 
-    }
+        }
+	
     function get_notifcations_by_view_user($user_id)
     {
     	$this->db->select('*');

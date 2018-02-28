@@ -72,7 +72,7 @@
 
 												echo form_input(['type'=>'email','name'=>'email','class'=>'form-control form-group','value'=>$row->email]);
 
-												echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$row->mobile]);
+												echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','pattern'=>'[789][0-9]{9}','value'=>$row->mobile]);
 												/*echo form_input(['type'=>'text','name'=>'state','class'=>'form-control form-group','value'=>$row->state]);
 
 												echo form_input(['type'=>'text','name'=>'dist','class'=>'form-control form-group','value'=>$row->dist]);

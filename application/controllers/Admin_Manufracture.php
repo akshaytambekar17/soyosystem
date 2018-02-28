@@ -27,6 +27,7 @@ class Admin_Manufracture extends CI_Controller
                 
 		$data['distributers_list']=$this->Home_model->get_distributers_list();
 		$data['users_list']=$this->Home_model->get_users_list();
+		$data['project_list']=$this->Admin_model->get_project_list();
 		$data['device_list']=$this->Admin_model->get_device_list();
 		$data['product']=$this->Home_model->get_products();
 		$data['main_content'] = 'admin/admin_dashboard';
@@ -221,7 +222,7 @@ class Admin_Manufracture extends CI_Controller
 		$this->form_validation->set_rules('mobile', 'Mobile Number', 'trim|required|numeric');
 		$this->form_validation->set_rules('state', 'State', 'required');
 		$this->form_validation->set_rules('dist', 'District', 'required');
-		$this->form_validation->set_rules('city', 'City', 'trim|required|alpha');
+		$this->form_validation->set_rules('city', 'City', 'required|alpha');
 
 		if($this->form_validation->run() == TRUE){
 

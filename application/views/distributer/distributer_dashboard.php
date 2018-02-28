@@ -1,27 +1,27 @@
 <html>
     <head>
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>	
+
         <script>
             $('#myCarousel').carousel({
               interval: 40000
             });
-
             $('.carousel .item').each(function(){
-              var next = $(this).next();
-              if (!next.length) {
-                next = $(this).siblings(':first');
-              }
-              next.children(':first-child').clone().appendTo($(this));
+                var next = $(this).next();
+                if (!next.length) {
+                  next = $(this).siblings(':first');
+                }
+                next.children(':first-child').clone().appendTo($(this));
 
-              if (next.next().length>0) {
+                if (next.next().length>0) {
 
-                  next.next().children(':first-child').clone().appendTo($(this)).addClass('rightest');
+                    next.next().children(':first-child').clone().appendTo($(this)).addClass('rightest');
 
-              }
-              else {
-                  $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+                }
+                else {
+                    $(this).siblings(':first').children(':first-child').clone().appendTo($(this));
 
-              }
+                }
             });
         </script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

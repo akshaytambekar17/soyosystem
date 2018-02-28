@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>		
+	<style>
+	.card_header h1
+	{
+		margin-left:5px;
+	}
+</style>
 </head>
 
 <body>
@@ -29,11 +35,13 @@
 					            </div>
 					        <?php }?> 
 							<div class="card">
-								<div class="card-user-profile">
-									<div class="profile-page-center">
+								
+									<div class="card_header">
 										<h1 class="card-user-profile-name">All Device</h1>
-										<hr />
-										<ul class="list-unstyled mt-5">
+										<hr>
+									</div>
+									<div class="card-body">
+										<ul class="list-unstyled ">
 										<?php
 										foreach($device_list as $row)
 										{
@@ -54,15 +62,15 @@
 												</div>
 												<div class="col-md-6">
 													<div class="row">
-														<div class="col-md-6">
-															<a href="<?php echo base_url();?>Admin_Manufracture/edit_device?id=<?php echo $row['id']?>" class="btn btn-primary btn-sm waves-effect waves-light">Edit Device</a>
+														<div class="col-md-4">
+															<a href="<?php echo base_url();?>Admin_Manufracture/edit_device?id=<?php echo $row['id']?>" class="btn btn-info btn-sm pull-left waves-effect waves-light">Edit<br> Device</a>
 														</div>
-														<div class="col-md-6">
-															<a href="<?php echo base_url();?>Admin_Manufracture/delete_device?id=<?php echo $row['id']?>" class="btn btn-secondary btn-sm waves-effect waves-light deletedevice" data-confirm="Are you sure to delete this device?">Delete Device</a>
+														<div class="col-md-4">
+															<a href="<?php echo base_url();?>Admin_Manufracture/delete_device?id=<?php echo $row['id']?>" class="btn btn-danger btn-sm waves-effect waves-light deletedevice pull-left" data-confirm="Are you sure to delete this device?">Delete<br> Device</a>
 														</div>
 													</div>
 												</div>
-											</li>
+											</li><hr>
 										<?php
 										}
 										?>

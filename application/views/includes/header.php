@@ -116,13 +116,13 @@
 					<li class="nav-item"><br>
 						<a class="nav-link nav-parent" href="starter-kit.html">
 							<i class="batch-icon batch-icon-users"></i>
-							Distributers
+							Distributors
 						</a>
 						<ul class="nav nav-pills flex-column">
 							<li class="nav-item">
 								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/add_distributer_view">
 									<i class="batch-icon batch-icon-user-alt-add"></i>
-								Add Distributer</a>
+								Add Distributor</a>
 							</li>
 							<!-- <li class="nav-item">
 								<a class="nav-link" href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view">
@@ -132,7 +132,7 @@
 							<li class="nav-item">
 								<a class="nav-link" href="<?php echo base_url();?>Distributer_Manufracture/all_distributer_view">
 									<i class="batch-icon batch-icon-menu-alt"></i>
-								List</a>
+								Distributor List</a>
 							</li>
 						</ul>
 					</li>
@@ -261,7 +261,7 @@
 					</li> -->
 					<?php //} ?>
 					<li class="nav-item"><br>
-						<a class="nav-link" href="<?php echo base_url();?>Home_Controller/list_notification/<?php echo $session['user_type'];?>">
+						<a class="nav-link" href="<?php echo base_url();?>Home_Controller/list_notification?user_id=<?=$session['user_id']?>&user_type=<?=$session['user_type']?>">
 							<i class="batch-icon batch-icon-watch"></i>
 							Notification
 						</a>
@@ -373,7 +373,7 @@
 											foreach($notifications as $notification){ 
 									?>
 										<li class="media">
-											<a href="<?php echo base_url();?>Home_Controller/list_notification/<?php echo $session['user_type']?>">
+											<a href="<?php echo base_url();?>Home_Controller/list_notification?user_id=<?=$session['user_id']?>&user_type=<?=$session['user_type']?>">
 												<i class="batch-icon batch-icon-bell batch-icon-xl d-flex mr-3"></i>
 												<div class="media-body">
 													<h6 class="mt-0 mb-1 notification-heading"><?= $notification['message']?></h6>
@@ -390,42 +390,6 @@
 											</a>
 										</li>	
 									<?php } ?>
-									<!-- <li class="media">
-										<a href="task-list.html">
-											<i class="batch-icon batch-icon-cloud-download batch-icon-xl d-flex mr-3"></i>
-											<div class="media-body">
-												<h6 class="mt-0 mb-1 notification-heading">Your Download Is Ready</h6>
-												<div class="notification-text">
-													Nibh amet cras sit libero
-												</div>
-												<span class="notification-time">5 minutes ago</span>
-											</div>
-										</a>
-									</li>
-									<li class="media">
-										<a href="task-list.html">
-											<i class="batch-icon batch-icon-tag-alt-2 batch-icon-xl d-flex mr-3"></i>
-											<div class="media-body">
-												<h6 class="mt-0 mb-1 notification-heading">New Order</h6>
-												<div class="notification-text">
-													Cras sit amet nibh libero
-												</div>
-												<span class="notification-time">Yesterday</span>
-											</div>
-										</a>
-									</li>
-									<li class="media">
-										<a href="task-list.html">
-											<i class="batch-icon batch-icon-pull batch-icon-xl d-flex mr-3"></i>
-											<div class="media-body">
-												<h6 class="mt-0 mb-1 notification-heading">Pull Request</h6>
-												<div class="notification-text">
-													Cras sit amet nibh libero
-												</div>
-												<span class="notification-time">3 day ago</span>
-											</div>
-										</a>
-									</li> -->
 								</ul>
 							</li>
 						</ul>

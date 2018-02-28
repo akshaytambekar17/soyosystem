@@ -32,12 +32,13 @@
 				            </div>
 				        <?php }?> 
 						<div class="card">
-							<div class="card-user-profile">
-								<div class="profile-page-center">
-									<div class="comment-block edit-profile">
-										<div class="form-group">
+							<div class="">
+								<div class="card-header">
+									
+										
 											<h3><?= !empty($vfd_details)?'Update':'Add' ?> VFD</h3>
-											<?php echo validation_errors('<div class="error">', '</div>'); ?>
+										</div>
+									<div class="card-body col-md-4 form-group">
 											<?php
 											
 												
@@ -82,7 +83,7 @@
 											</form>
 										</div>
 									</div>
-								</div>
+								
 							</div>
 						</div>
 					</div>

@@ -51,10 +51,10 @@
                                                 <div class="col-md-6">
                                                     <div class="row">
                                                         <div class="col-md-6">
-                                                            <a href="<?php echo base_url();?>Distributer_Manufracture/edit_project_view?id=<?php echo $row->id?>" class="btn btn-default btn-sm waves-effect waves-light"><b>Edit Project</b></a>
+                                                            <a href="<?php echo base_url();?>Distributer_Manufracture/edit_project_view?id=<?php echo $row->id?>" class="btn btn-default btn-sm waves-effect waves-light"><b>Edit<br> Project</b></a>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <a href="<?php echo base_url();?>Distributer_Manufracture/delete_project?id=<?php echo $row->id?>" class="btn btn-sm btn-danger waves-effect waves-light">Delete Project</a>
+                                                            <a href="<?php echo base_url();?>Distributer_Manufracture/delete_project?id=<?php echo $row->id?>" class="btn btn-sm btn-danger waves-effect waves-light">Delete<br> Project</a>
                                                         </div>
                                                     </div>
                                                     </div>

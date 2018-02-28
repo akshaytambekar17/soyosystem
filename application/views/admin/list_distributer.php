@@ -15,7 +15,7 @@
 							<div class="card">
 								<div class="">
 									<div class="profile-page-center">
-										<h1 class="card-user-profile-name">&nbsp;All Distributers</h1>
+										<h1 class="card-user-profile-name">&nbsp;All Distributors</h1>
 										<hr />
 										<ul class="list-unstyled mt-5">
 										<?php
@@ -23,7 +23,7 @@
 										{
 										?>
 											<li class="media">
-												<div class="col-md-6">
+												<div class="col-md-4">
 													<div class="row">
 														<div class="col-md-3">	
 															<div class="profile-picture bg-gradient bg-primary mb-4">
@@ -41,16 +41,16 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-8">
 													<div class="row">
-														<div class="col-md-4">
-															<a href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view?id=<?php echo $row->user_id?>" class="btn btn-default btn-sm waves-effect waves-light"><b>Edit<br> Profile</b></a>
+														<div class="col-md-3">
+															<a href="<?php echo base_url();?>Admin_Manufracture/edit_distributer_view?id=<?php echo $row->user_id?>" class="btn btn-default btn-sm waves-effect waves-light pull-right"><b>Edit<br> Profile</b></a>
 														</div>
-														<div class="col-md-4">
-															<a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>" class="btn btn-secondary btn-sm waves-effect waves-light" target="_blank">Open Dashboard</a>
+														<div class="col-md-3">
+															<a href="<?php echo base_url();?>Home_Controller/login?id=<?php echo $row->user_id?>" class="btn btn-secondary btn-sm waves-effect waves-light" target="_blank">Open<br> Dashboard</a>
 														</div>
-														<div class="col-md-4">
-															<a href="<?php echo base_url();?>Admin_Manufracture/delete_distributer?id=<?php echo $row->user_id?>" class="btn btn-danger btn-sm waves-effect waves-light deletedistributer" data-confirm="Are you sure to delete this distributer?">Delete Distributer</a>
+														<div class="col-md-3">
+															<a href="<?php echo base_url();?>Admin_Manufracture/delete_distributer?id=<?php echo $row->user_id?>" class="btn btn-danger btn-sm waves-effect waves-light deletedistributer" data-confirm="Are you sure you want to delete this distributer?">Delete<br> Distributor</a>
 														</div>
 													</div>
 												</div>

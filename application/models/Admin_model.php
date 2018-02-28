@@ -259,5 +259,10 @@ class Admin_model extends CI_Model
         $this->db->where('p_id',$pid);
         $this->db->delete('soyo_product');
     }
+    public function get_project_list()
+    {
+    	$query=$this->db->get('soyo_projects');
+    	return $query->result_array();
+    }
 }
 ?>

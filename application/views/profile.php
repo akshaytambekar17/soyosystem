@@ -135,7 +135,7 @@
 														{
 															echo form_error('mobile');
 														}
-											echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','value'=>$row->mobile]);
+											echo form_input(['type'=>'text','name'=>'mobile','class'=>'form-control form-group','pattern'=>'[789][0-9]{9}','value'=>$row->mobile]);
 
 											echo "<label>Profile Image</label>";
 											echo form_input(['type'=>'file','name'=>'profile_image','class'=>'form-control form-group']);
